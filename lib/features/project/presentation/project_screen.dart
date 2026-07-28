@@ -10,7 +10,6 @@ import '../../home/providers/home_provider.dart';
 import '../providers/project_provider.dart';
 import 'widgets/pattern_image.dart';
 import 'widgets/row_display.dart';
-import 'widgets/stitch_counter.dart';
 
 class ProjectScreen extends ConsumerWidget {
   const ProjectScreen({
@@ -79,6 +78,7 @@ class _ProjectContent extends ConsumerWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
                   // Pattern image
@@ -90,69 +90,54 @@ class _ProjectContent extends ConsumerWidget {
                     ),
                   ),
 
+                  const SizedBox(height: 16),
+
                   // Progress indicator
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        LinearProgressIndicator(
-                          value: project.progress,
-                          backgroundColor: context.colors.brandLavenderLight,
-                          color: context.colors.brandLavender,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '${project.currentRowNumber} / ${project.totalRows} rows (${(project.progress * 100).toStringAsFixed(0)}%)',
-                          style: context.text.bodyMedium?.copyWith(
-                            color: context.colors.brandDark,
-                          ),
-                        ),
-                      ],
+                  LinearProgressIndicator(
+                    value: project.progress,
+                    backgroundColor: context.colors.brandLavenderLight,
+                    color: context.colors.brandLavender,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '${project.currentRowNumber} / ${project.totalRows} rows (${(project.progress * 100).toStringAsFixed(0)}%)',
+                    style: context.text.bodyMedium?.copyWith(
+                      color: context.colors.brandDark,
                     ),
                   ),
 
+                  const SizedBox(height: 16),
+
                   // Current row display
-                  if (currentRow != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: RowDisplay(row: currentRow),
-                    ),
+                  if (currentRow != null) RowDisplay(row: currentRow),
 
                   const SizedBox(height: 16),
 
                   // Row navigation
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        OutlinedButton.icon(
-                          onPressed: project.currentRowIndex > 0
-                              ? () => _navigateRow(ref, -1)
-                              : null,
-                          icon: const Icon(Icons.arrow_back, size: 16),
-                          label: Text(l10n.previousRow),
-                        ),
-                        OutlinedButton.icon(
-                          onPressed: !project.isCompleted
-                              ? () => _navigateRow(ref, 1)
-                              : null,
-                          icon: const Icon(Icons.arrow_forward, size: 16),
-                          label: Text(l10n.nextRow),
-                          iconAlignment: IconAlignment.end,
-                        ),
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      OutlinedButton.icon(
+                        onPressed: project.currentRowIndex > 0
+                            ? () => _navigateRow(ref, -1)
+                            : null,
+                        icon: const Icon(Icons.arrow_back, size: 16),
+                        label: Text(l10n.previousRow),
+                      ),
+                      OutlinedButton.icon(
+                        onPressed: !project.isCompleted
+                            ? () => _navigateRow(ref, 1)
+                            : null,
+                        icon: const Icon(Icons.arrow_forward, size: 16),
+                        label: Text(l10n.nextRow),
+                        iconAlignment: IconAlignment.end,
+                      ),
+                    ],
                   ),
-
-                  const SizedBox(height: 16),
                 ],
               ),
             ),
           ),
-
-          // Stitch counter (always visible at bottom)
-          StitchCounter(projectId: project.id),
         ],
       ),
     );

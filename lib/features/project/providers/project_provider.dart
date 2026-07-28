@@ -12,16 +12,3 @@ final projectProvider = FutureProvider.family<CrochetProject?, String>(
     return _storageService.load(id);
   },
 );
-
-final stitchCounterProvider =
-    StateNotifierProvider.family<StitchCounterNotifier, int, String>(
-  (ref, projectId) => StitchCounterNotifier(),
-);
-
-class StitchCounterNotifier extends StateNotifier<int> {
-  StitchCounterNotifier() : super(0);
-
-  void increment() => state++;
-  void decrement() => state = state > 0 ? state - 1 : 0;
-  void reset() => state = 0;
-}
