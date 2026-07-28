@@ -1,0 +1,1 @@
+enum RowDirection { leftToRight, rightToLeft }

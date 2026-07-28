@@ -19,4 +19,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeCallToAction => 'Explore our collection';
+
+  @override
+  String get importPattern => 'Import Pattern';
+
+  @override
+  String get importPatternDescription => 'Import a crochet pattern';
+
+  @override
+  String get importPatternHint =>
+      'Select a .txt file or paste your pattern text';
+
+  @override
+  String get selectFile => 'Select File';
+
+  @override
+  String get or => 'or';
+
+  @override
+  String get pastePattern => 'Paste pattern text';
+
+  @override
+  String get pastePatternHint => 'Paste your pattern text here...';
+
+  @override
+  String get importText => 'Import Pattern';
+
+  @override
+  String get project => 'Project';
+
+  @override
+  String get projectNotFound => 'Project not found';
+
+  @override
+  String get previousRow => 'Previous';
+
+  @override
+  String get nextRow => 'Next';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deleteProject => 'Delete Project';
+
+  @override
+  String deleteProjectConfirm(Object name) {
+    return 'Are you sure you want to delete \'$name\'?';
+  }
 }

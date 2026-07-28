@@ -1,0 +1,22 @@
+{
+  "@@locale": "en",
+  "appTitle": "Pixel Crochet",
+  "homeWelcome": "Welcome to Pixel Crochet",
+  "homeDescription": "Handmade crochet with love",
+  "homeCallToAction": "Explore our collection",
+  "importPattern": "Import Pattern",
+  "importPatternDescription": "Import a crochet pattern",
+  "importPatternHint": "Select a .txt file or paste your pattern text",
+  "selectFile": "Select File",
+  "or": "or",
+  "pastePattern": "Paste pattern text",
+  "pastePatternHint": "Paste your pattern text here...",
+  "importText": "Import Pattern",
+  "project": "Project",
+  "projectNotFound": "Project not found",
+  "previousRow": "Previous",
+  "nextRow": "Next",
+  "delete": "Delete",
+  "deleteProject": "Delete Project",
+  "deleteProjectConfirm": "Are you sure you want to delete '{name}'?"
+}

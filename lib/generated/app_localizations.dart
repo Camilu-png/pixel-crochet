@@ -121,6 +121,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Explore our collection'**
   String get homeCallToAction;
+
+  /// No description provided for @importPattern.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Pattern'**
+  String get importPattern;
+
+  /// No description provided for @importPatternDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Import a crochet pattern'**
+  String get importPatternDescription;
+
+  /// No description provided for @importPatternHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a .txt file or paste your pattern text'**
+  String get importPatternHint;
+
+  /// No description provided for @selectFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Select File'**
+  String get selectFile;
+
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get or;
+
+  /// No description provided for @pastePattern.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste pattern text'**
+  String get pastePattern;
+
+  /// No description provided for @pastePatternHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste your pattern text here...'**
+  String get pastePatternHint;
+
+  /// No description provided for @importText.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Pattern'**
+  String get importText;
+
+  /// No description provided for @project.
+  ///
+  /// In en, this message translates to:
+  /// **'Project'**
+  String get project;
+
+  /// No description provided for @projectNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Project not found'**
+  String get projectNotFound;
+
+  /// No description provided for @previousRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previousRow;
+
+  /// No description provided for @nextRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get nextRow;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @deleteProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Project'**
+  String get deleteProject;
+
+  /// No description provided for @deleteProjectConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \'{name}\'?'**
+  String deleteProjectConfirm(Object name);
 }
 
 class _AppLocalizationsDelegate
