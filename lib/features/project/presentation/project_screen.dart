@@ -90,7 +90,7 @@ class _ProjectContent extends ConsumerWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Row ${project.currentRowNumber}/${project.totalRows} · ${(project.progress * 100).toStringAsFixed(0)}%',
+                  '${l10n.rowLabel} ${project.currentRowNumber}/${project.totalRows} · ${(project.progress * 100).toStringAsFixed(0)}%',
                   style: context.text.bodyMedium?.copyWith(
                     color: context.colors.brandDark,
                   ),
@@ -128,7 +128,7 @@ class _ProjectContent extends ConsumerWidget {
                       label: Text('${l10n.goToRow}…'),
                     ),
                     OutlinedButton.icon(
-                      onPressed: !project.isCompleted
+                      onPressed: project.currentRowIndex < project.totalRows - 1
                           ? () => _navigateRow(ref, 1)
                           : null,
                       icon: const Icon(Icons.arrow_forward, size: 16),

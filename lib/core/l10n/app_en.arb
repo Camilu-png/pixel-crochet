@@ -19,5 +19,6 @@
   "deleteProject": "Delete Project",
   "deleteProjectConfirm": "Are you sure you want to delete '{name}'?",
   "goToRow": "Go to Row",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "rowLabel": "Row"
 }

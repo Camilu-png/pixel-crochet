@@ -70,4 +70,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cancel => 'Cancelar';
+
+  @override
+  String get rowLabel => 'Fila';
 }

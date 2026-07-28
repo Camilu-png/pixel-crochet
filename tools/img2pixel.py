@@ -107,6 +107,7 @@ def main():
     lines = [name, f"{w} x {h}"]
 
     for y in range(h):
+        row_number = h - y
         row_pixels = [pixels[y * w + x] for x in range(w)]
         row_names = [closest_color_name(r, g, b) for (r, g, b) in row_pixels]
 
@@ -114,8 +115,8 @@ def main():
         if y % 2 == 1:
             row_names.reverse()
         blocks = compress_blocks(row_names)
-        block_str = ", ".join(f"{count} {color}" for count, color in blocks)
-        lines.append(f"Row {y + 1} {direction}: {block_str}")
+
+        lines.append(f"Row {row_number} {direction}: {', '.join(f'{c} {clr}' for c, clr in blocks)}")
 
     out_path = args.output or os.path.splitext(args.input)[0] + ".txt"
     with open(out_path, "w", encoding="utf-8") as f:

@@ -217,6 +217,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @rowLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Row'**
+  String get rowLabel;
 }
 
 class _AppLocalizationsDelegate

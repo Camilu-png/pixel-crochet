@@ -4,6 +4,7 @@ import '../../../../core/constants/color_map.dart';
 import '../../../../core/models/pattern_row.dart';
 import '../../../../core/models/row_direction.dart';
 import '../../../../core/theme/context_extensions.dart';
+import '../../../../generated/app_localizations.dart';
 
 class RowDisplay extends StatelessWidget {
   const RowDisplay({
@@ -19,6 +20,7 @@ class RowDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -31,7 +33,7 @@ class RowDisplay extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Row ${row.rowNumber}',
+                '${l10n.rowLabel} ${row.rowNumber}',
                 style: context.text.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: context.colors.brandDark,

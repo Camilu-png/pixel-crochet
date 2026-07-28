@@ -29,6 +29,7 @@ void main() {
       expect(project.rows[0].colorBlocks[1].count, 5);
       expect(project.rows[1].direction, RowDirection.rightToLeft);
       expect(project.rows[4].direction, RowDirection.leftToRight);
+      expect(project.rows[4].rowNumber, 5);
     });
 
     test('throws on too few lines', () {

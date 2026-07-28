@@ -37,13 +37,15 @@ class PatternPainter extends CustomPainter {
           ? 0.0
           : size.width - pixelWidth;
 
+      final y = (visibleRows - 1 - i) * pixelHeight;
+
       for (final block in row.colorBlocks) {
         final color = getYarnColor(block.colorName);
         final paint = Paint()..color = color;
 
         for (var j = 0; j < block.count; j++) {
           canvas.drawRect(
-            Rect.fromLTWH(x, i * pixelHeight, pixelWidth, pixelHeight),
+            Rect.fromLTWH(x, y, pixelWidth, pixelHeight),
             paint,
           );
 
@@ -61,7 +63,7 @@ class PatternPainter extends CustomPainter {
           ..strokeWidth = 2;
 
         canvas.drawRect(
-          Rect.fromLTWH(0, i * pixelHeight, size.width, pixelHeight),
+          Rect.fromLTWH(0, y, size.width, pixelHeight),
           highlightPaint,
         );
       }

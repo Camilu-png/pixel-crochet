@@ -15,7 +15,7 @@ class PatternParser {
 
     final name = _parseName(lines[0]);
     final dimensions = _parseDimensions(lines[1]);
-    final rows = <PatternRow>[];
+    var rows = <PatternRow>[];
 
     for (var i = 2; i < lines.length; i++) {
       final row = _parseRow(lines[i]);
@@ -31,6 +31,16 @@ class PatternParser {
     if (rows.length != dimensions.$2) {
       throw FormatException(
         'Row count (${rows.length}) does not match declared height (${dimensions.$2})',
+      );
+    }
+
+    // Reverse list and renumber: first in project = first crochet row (bottom of image)
+    rows = rows.reversed.toList();
+    for (var i = 0; i < rows.length; i++) {
+      rows[i] = PatternRow(
+        rowNumber: i + 1,
+        direction: rows[i].direction,
+        colorBlocks: rows[i].colorBlocks,
       );
     }
 

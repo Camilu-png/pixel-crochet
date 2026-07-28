@@ -110,15 +110,18 @@ class CrochetProject {
       }
     }
 
+    final rows = (json['rows'] as List)
+        .map((r) => PatternRow.fromJson(r as Map<String, dynamic>))
+        .toList();
+    final currentRowIndex = json['currentRowIndex'] as int? ?? 0;
+
     return CrochetProject(
       id: json['id'] as String,
       name: json['name'] as String,
       width: json['width'] as int,
       height: json['height'] as int,
-      rows: (json['rows'] as List)
-          .map((r) => PatternRow.fromJson(r as Map<String, dynamic>))
-          .toList(),
-      currentRowIndex: json['currentRowIndex'] as int? ?? 0,
+      rows: rows,
+      currentRowIndex: currentRowIndex,
       completedBlocks: completedBlocks,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );

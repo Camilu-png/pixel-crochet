@@ -19,5 +19,6 @@
   "deleteProject": "Eliminar Proyecto",
   "deleteProjectConfirm": "¿Estás seguro de que quieres eliminar '{name}'?",
   "goToRow": "Ir a Fila",
-  "cancel": "Cancelar"
+  "cancel": "Cancelar",
+  "rowLabel": "Fila"
 }
