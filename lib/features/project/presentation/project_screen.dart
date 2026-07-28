@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/models/crochet_project.dart';
-import '../../../core/storage/project_storage_service.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
 import '../../../shared/widgets/confirm_dialog.dart';
@@ -11,8 +10,6 @@ import '../../home/providers/home_provider.dart';
 import '../providers/project_provider.dart';
 import 'widgets/pattern_image.dart';
 import 'widgets/row_display.dart';
-
-const _storageService = ProjectStorageService();
 
 class ProjectScreen extends ConsumerWidget {
   const ProjectScreen({super.key, required this.projectId});
@@ -93,7 +90,7 @@ class _ProjectContent extends ConsumerWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '${project.currentRowNumber} / ${project.totalRows} rows (${(project.progress * 100).toStringAsFixed(0)}%)',
+                  'Row ${project.currentRowNumber}/${project.totalRows} · ${(project.progress * 100).toStringAsFixed(0)}%',
                   style: context.text.bodyMedium?.copyWith(
                     color: context.colors.brandDark,
                   ),
@@ -145,32 +142,15 @@ class _ProjectContent extends ConsumerWidget {
     final newIndex = project.currentRowIndex + delta;
     if (newIndex >= 0 && newIndex < project.rows.length) {
       final updated = project.copyWith(currentRowIndex: newIndex);
-      _storageService.save(updated);
+      ref.read(projectsProvider.notifier).updateProject(updated);
       ref.invalidate(projectProvider(project.id));
     }
   }
 
   void _toggleBlock(WidgetRef ref, int blockIndex) {
     final rowIndex = project.currentRowIndex;
-    final currentBlocks = Map<int, Set<int>>.from(
-      project.completedBlocks.map((k, v) => MapEntry(k, Set<int>.from(v))),
-    );
-
-    final rowBlocks = currentBlocks[rowIndex] ?? <int>{};
-    if (rowBlocks.contains(blockIndex)) {
-      rowBlocks.remove(blockIndex);
-    } else {
-      rowBlocks.add(blockIndex);
-    }
-
-    if (rowBlocks.isEmpty) {
-      currentBlocks.remove(rowIndex);
-    } else {
-      currentBlocks[rowIndex] = rowBlocks;
-    }
-
-    final updated = project.copyWith(completedBlocks: currentBlocks);
-    _storageService.save(updated);
+    final updated = project.toggleBlock(rowIndex, blockIndex);
+    ref.read(projectsProvider.notifier).updateProject(updated);
     ref.invalidate(projectProvider(project.id));
   }
 
@@ -184,7 +164,7 @@ class _ProjectContent extends ConsumerWidget {
         onConfirm: () {
           ref.read(projectsProvider.notifier).deleteProject(project.id);
           Navigator.of(dialogContext).pop();
-          context.goNamed('home');
+          dialogContext.goNamed('home');
         },
       ),
     );

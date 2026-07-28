@@ -8,12 +8,14 @@ class PatternPainter extends CustomPainter {
   const PatternPainter({
     required this.project,
     this.highlightRowIndex,
+    this.highlightColor,
     this.startRow = 0,
     this.endRow,
   });
 
   final CrochetProject project;
   final int? highlightRowIndex;
+  final Color? highlightColor;
   final int startRow;
   final int? endRow;
 
@@ -52,8 +54,9 @@ class PatternPainter extends CustomPainter {
       }
 
       if (rowIndex == highlightRowIndex) {
+        final hColor = highlightColor ?? Colors.white.withValues(alpha: 0.3);
         final highlightPaint = Paint()
-          ..color = Colors.white.withValues(alpha: 0.3)
+          ..color = hColor
           ..style = PaintingStyle.stroke
           ..strokeWidth = 2;
 
@@ -68,6 +71,7 @@ class PatternPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant PatternPainter oldDelegate) {
     return oldDelegate.highlightRowIndex != highlightRowIndex ||
+        oldDelegate.highlightColor != highlightColor ||
         oldDelegate.startRow != startRow ||
         oldDelegate.endRow != endRow ||
         oldDelegate.project != project;

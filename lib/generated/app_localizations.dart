@@ -116,12 +116,6 @@ abstract class AppLocalizations {
   /// **'Handmade crochet with love'**
   String get homeDescription;
 
-  /// No description provided for @homeCallToAction.
-  ///
-  /// In en, this message translates to:
-  /// **'Explore our collection'**
-  String get homeCallToAction;
-
   /// No description provided for @importPattern.
   ///
   /// In en, this message translates to:

@@ -18,9 +18,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeDescription => 'Ganchillo hecho a mano con amor';
 
   @override
-  String get homeCallToAction => 'Explora nuestra colección';
-
-  @override
   String get importPattern => 'Importar Patrón';
 
   @override

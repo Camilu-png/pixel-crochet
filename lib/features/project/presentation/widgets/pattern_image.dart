@@ -31,6 +31,10 @@ class PatternImage extends StatelessWidget {
       builder: (context, constraints) {
         final pixelSize = constraints.maxWidth / project.width;
         final imageHeight = project.rows.length * pixelSize;
+        final brightness = Theme.of(context).brightness;
+        final highlightColor = brightness == Brightness.dark
+            ? Colors.white.withValues(alpha: 0.4)
+            : Colors.black.withValues(alpha: 0.15);
 
         return SingleChildScrollView(
           child: CustomPaint(
@@ -38,6 +42,7 @@ class PatternImage extends StatelessWidget {
             painter: PatternPainter(
               project: project,
               highlightRowIndex: highlightRowIndex,
+              highlightColor: highlightColor,
             ),
           ),
         );

@@ -31,8 +31,18 @@ class CrochetProject {
 
   int get totalRows => rows.length;
   int get currentRowNumber => rows.isNotEmpty ? rows[currentRowIndex].rowNumber : 0;
-  double get progress => totalRows > 0 ? currentRowIndex / totalRows : 0.0;
-  bool get isCompleted => currentRowIndex >= totalRows - 1;
+  double get rowProgress => totalRows > 0 ? currentRowIndex / totalRows : 0.0;
+
+  int get totalCompletedBlocks =>
+      completedBlocks.values.fold(0, (sum, blocks) => sum + blocks.length);
+
+  int get totalBlocks =>
+      rows.fold(0, (sum, row) => sum + row.colorBlocks.length);
+
+  double get progress =>
+      totalBlocks > 0 ? totalCompletedBlocks / totalBlocks : 0.0;
+
+  bool get isCompleted => progress >= 1.0;
 
   bool isBlockCompleted(int rowIndex, int blockIndex) =>
       completedBlocks[rowIndex]?.contains(blockIndex) ?? false;
@@ -50,11 +60,30 @@ class CrochetProject {
       name: name ?? this.name,
       width: width ?? this.width,
       height: height ?? this.height,
-      rows: rows ?? this.rows,
+      rows: (rows ?? this.rows).map((r) => r).toList(),
       currentRowIndex: currentRowIndex ?? this.currentRowIndex,
-      completedBlocks: completedBlocks ?? this.completedBlocks,
+      completedBlocks: (completedBlocks ?? this.completedBlocks)
+          .map((k, v) => MapEntry(k, Set<int>.from(v))),
       createdAt: createdAt,
     );
+  }
+
+  CrochetProject toggleBlock(int rowIndex, int blockIndex) {
+    final updated = Map<int, Set<int>>.from(
+      completedBlocks.map((k, v) => MapEntry(k, Set<int>.from(v))),
+    );
+    final rowBlocks = updated[rowIndex] ?? <int>{};
+    if (rowBlocks.contains(blockIndex)) {
+      rowBlocks.remove(blockIndex);
+    } else {
+      rowBlocks.add(blockIndex);
+    }
+    if (rowBlocks.isEmpty) {
+      updated.remove(rowIndex);
+    } else {
+      updated[rowIndex] = rowBlocks;
+    }
+    return copyWith(completedBlocks: updated);
   }
 
   Map<String, dynamic> toJson() => {

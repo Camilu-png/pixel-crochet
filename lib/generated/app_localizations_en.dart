@@ -18,9 +18,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeDescription => 'Handmade crochet with love';
 
   @override
-  String get homeCallToAction => 'Explore our collection';
-
-  @override
   String get importPattern => 'Import Pattern';
 
   @override

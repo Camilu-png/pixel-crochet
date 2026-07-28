@@ -134,7 +134,11 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     setState(() => _isImporting = true);
 
     try {
-      final file = File(result.files.first.path!);
+      final path = result.files.first.path;
+      if (path == null) {
+        throw FormatException('Could not resolve file path');
+      }
+      final file = File(path);
       final content = await file.readAsString();
       await _importPattern(content);
     } catch (e) {

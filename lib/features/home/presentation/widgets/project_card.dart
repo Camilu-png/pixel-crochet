@@ -85,10 +85,16 @@ class _PatternPreview extends StatelessWidget {
       );
     }
 
+    final brightness = Theme.of(context).brightness;
+    final highlightColor = brightness == Brightness.dark
+        ? Colors.white.withValues(alpha: 0.4)
+        : Colors.black.withValues(alpha: 0.15);
+
     return CustomPaint(
       painter: PatternPainter(
         project: project,
         highlightRowIndex: project.currentRowIndex,
+        highlightColor: highlightColor,
       ),
     );
   }
