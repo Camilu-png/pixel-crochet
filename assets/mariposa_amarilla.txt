@@ -1,0 +1,215 @@
+Cardigan de Mariposa
+82 x 213
+Row 1 <-: 53 black, 20 gray, 9 black
+Row 2 ->: 9 black, 20 gray, 53 black
+Row 3 <-: 53 black, 20 gray, 9 black
+Row 4 ->: 9 black, 20 gray, 53 black
+Row 5 <-: 52 black, 22 gray, 8 black
+Row 6 ->: 8 black, 22 gray, 52 black
+Row 7 <-: 52 black, 10 gray, 1 white, 11 gray, 8 black
+Row 8 ->: 8 black, 11 gray, 2 white, 9 gray, 52 black
+Row 9 <-: 52 black, 9 gray, 1 white, 12 gray, 8 black
+Row 10 ->: 7 black, 24 gray, 51 black
+Row 11 <-: 51 black, 24 gray, 7 black
+Row 12 ->: 7 black, 25 gray, 50 black
+Row 13 <-: 50 black, 7 gray, 2 white, 16 gray, 7 black
+Row 14 ->: 6 black, 12 gray, 2 yellow, 2 gray, 3 white, 8 gray, 49 black
+Row 15 <-: 49 black, 9 gray, 2 white, 2 gray, 3 yellow, 11 gray, 6 black
+Row 16 ->: 6 black, 10 gray, 3 yellow, 10 gray, 2 white, 3 gray, 48 black
+Row 17 <-: 48 black, 4 gray, 1 white, 10 gray, 3 yellow, 10 gray, 6 black
+Row 18 ->: 6 black, 9 gray, 3 yellow, 17 gray, 47 black
+Row 19 <-: 47 black, 17 gray, 3 yellow, 9 gray, 6 black
+Row 20 ->: 5 black, 9 gray, 4 yellow, 4 gray, 2 yellow, 12 gray, 46 black
+Row 21 <-: 46 black, 6 gray, 2 white, 4 gray, 4 yellow, 3 gray, 3 yellow, 9 gray, 5 black
+Row 22 ->: 5 black, 8 gray, 3 yellow, 3 gray, 4 yellow, 5 gray, 1 white, 7 gray, 46 black
+Row 23 <-: 45 black, 15 gray, 4 yellow, 2 gray, 3 yellow, 8 gray, 5 black
+Row 24 ->: 5 black, 8 gray, 2 yellow, 2 gray, 5 yellow, 12 gray, 1 white, 2 gray, 45 black
+Row 25 <-: 45 black, 2 gray, 1 white, 13 gray, 5 yellow, 11 gray, 5 black
+Row 26 ->: 5 black, 11 gray, 3 yellow, 5 gray, 4 yellow, 10 gray, 44 black
+Row 27 <-: 44 black, 10 gray, 5 yellow, 19 gray, 4 black
+Row 28 ->: 4 black, 18 gray, 6 yellow, 11 gray, 43 black
+Row 29 <-: 43 black, 2 gray, 2 white, 8 gray, 6 yellow, 6 gray, 2 yellow, 9 gray, 4 black
+Row 30 ->: 4 black, 8 gray, 4 yellow, 4 gray, 6 yellow, 8 gray, 3 white, 3 gray, 42 black
+Row 31 <-: 41 black, 4 gray, 3 white, 8 gray, 6 yellow, 4 gray, 4 yellow, 8 gray, 4 black
+Row 32 ->: 3 black, 8 gray, 5 yellow, 4 gray, 5 yellow, 17 gray, 40 black
+Row 33 <-: 40 black, 9 gray, 1 white, 8 gray, 3 yellow, 5 gray, 5 yellow, 8 gray, 3 black
+Row 34 ->: 3 black, 7 gray, 5 yellow, 17 gray, 1 white, 10 gray, 39 black
+Row 35 <-: 38 black, 30 gray, 3 yellow, 8 gray, 3 black
+Row 36 ->: 3 black, 37 gray, 1 white, 4 gray, 37 black
+Row 37 <-: 36 black, 4 gray, 2 white, 12 gray, 4 yellow, 21 gray, 3 black
+Row 38 ->: 3 black, 20 gray, 5 yellow, 18 gray, 36 black
+Row 39 <-: 35 black, 19 gray, 6 yellow, 20 gray, 2 black
+Row 40 ->: 2 black, 19 gray, 6 yellow, 21 gray, 34 black
+Row 41 <-: 34 black, 21 gray, 7 yellow, 18 gray, 2 black
+Row 42 ->: 2 black, 17 gray, 7 yellow, 23 gray, 33 black
+Row 43 <-: 32 black, 7 gray, 2 white, 15 gray, 8 yellow, 3 gray, 2 yellow, 11 gray, 2 black
+Row 44 ->: 2 black, 6 gray, 2 yellow, 2 gray, 3 yellow, 3 gray, 7 yellow, 8 gray, 4 yellow, 4 gray, 2 white, 7 gray, 32 black
+Row 45 <-: 31 black, 12 gray, 7 yellow, 8 gray, 7 yellow, 2 gray, 3 yellow, 2 gray, 2 yellow, 6 gray, 2 black
+Row 46 ->: 1 black, 7 gray, 2 yellow, 1 gray, 4 yellow, 2 gray, 7 yellow, 7 gray, 9 yellow, 11 gray, 31 black
+Row 47 <-: 30 black, 2 gray, 2 white, 8 gray, 11 yellow, 6 gray, 7 yellow, 2 gray, 3 yellow, 1 gray, 3 yellow, 6 gray, 1 black
+Row 48 ->: 1 black, 6 gray, 2 yellow, 2 gray, 3 yellow, 2 gray, 6 yellow, 7 gray, 11 yellow, 4 gray, 2 white, 2 gray, 1 white, 3 gray, 30 black
+Row 49 <-: 29 black, 7 gray, 3 white, 3 gray, 12 yellow, 7 gray, 6 yellow, 6 gray, 2 yellow, 6 gray, 1 black
+Row 50 ->: 1 black, 6 gray, 2 yellow, 6 gray, 6 yellow, 6 gray, 13 yellow, 3 gray, 2 white, 8 gray, 29 black
+Row 51 <-: 29 black, 14 gray, 13 yellow, 6 gray, 5 yellow, 6 gray, 2 yellow, 6 gray, 1 black
+Row 52 ->: 7 gray, 2 yellow, 6 gray, 4 yellow, 6 gray, 13 yellow, 19 gray, 25 black
+Row 53 <-: 20 black, 25 gray, 13 yellow, 6 gray, 2 yellow, 3 gray, 3 yellow, 10 gray
+Row 54 ->: 9 gray, 5 yellow, 2 gray, 1 yellow, 6 gray, 13 yellow, 7 gray, 2 yellow, 20 gray, 17 black
+Row 55 <-: 15 black, 14 gray, 1 white, 5 gray, 7 yellow, 5 gray, 13 yellow, 8 gray, 6 yellow, 8 gray
+Row 56 ->: 8 gray, 7 yellow, 7 gray, 12 yellow, 4 gray, 9 yellow, 5 gray, 1 white, 5 gray, 2 white, 9 gray, 13 black
+Row 57 <-: 12 black, 23 gray, 10 yellow, 4 gray, 12 yellow, 6 gray, 8 yellow, 7 gray
+Row 58 ->: 7 gray, 8 yellow, 5 gray, 12 yellow, 5 gray, 10 yellow, 25 gray, 10 black
+Row 59 <-: 9 black, 26 gray, 11 yellow, 5 gray, 11 yellow, 5 gray, 8 yellow, 7 gray
+Row 60 ->: 6 gray, 10 yellow, 3 gray, 11 yellow, 5 gray, 11 yellow, 28 gray, 8 black
+Row 61 <-: 7 black, 30 gray, 10 yellow, 6 gray, 10 yellow, 3 gray, 10 yellow, 6 gray
+Row 62 ->: 6 gray, 10 yellow, 3 gray, 9 yellow, 6 gray, 10 yellow, 11 gray, 3 yellow, 4 gray, 2 white, 6 gray, 1 white, 5 gray, 6 black
+Row 63 <-: 5 black, 6 gray, 2 white, 10 gray, 6 yellow, 10 gray, 9 yellow, 8 gray, 7 yellow, 3 gray, 10 yellow, 6 gray
+Row 64 ->: 6 gray, 9 yellow, 4 gray, 6 yellow, 8 gray, 9 yellow, 10 gray, 7 yellow, 19 gray, 4 black
+Row 65 <-: 3 black, 11 gray, 4 yellow, 6 gray, 7 yellow, 10 gray, 8 yellow, 9 gray, 6 yellow, 3 gray, 10 yellow, 5 gray
+Row 66 ->: 5 gray, 10 yellow, 3 gray, 5 yellow, 9 gray, 8 yellow, 10 gray, 7 yellow, 3 gray, 9 yellow, 11 gray, 2 black
+Row 67 <-: 2 black, 11 gray, 11 yellow, 3 gray, 6 yellow, 10 gray, 7 yellow, 10 gray, 4 yellow, 3 gray, 10 yellow, 5 gray
+Row 68 ->: 5 gray, 10 yellow, 3 gray, 3 yellow, 9 gray, 8 yellow, 11 gray, 4 yellow, 3 gray, 13 yellow, 12 gray, 1 black
+Row 69 <-: 1 black, 4 gray, 2 white, 6 gray, 14 yellow, 4 gray, 3 yellow, 11 gray, 9 yellow, 8 gray, 2 yellow, 3 gray, 10 yellow, 5 gray
+Row 70 ->: 5 gray, 10 yellow, 11 gray, 10 yellow, 12 gray, 2 yellow, 3 gray, 15 yellow, 7 gray, 1 white, 6 gray
+Row 71 <-: 16 gray, 14 yellow, 3 gray, 2 yellow, 12 gray, 12 yellow, 8 gray, 10 yellow, 5 gray
+Row 72 ->: 5 gray, 10 yellow, 7 gray, 12 yellow, 13 gray, 2 yellow, 2 gray, 14 yellow, 17 gray
+Row 73 <-: 4 gray, 1 white, 6 gray, 5 yellow, 4 gray, 12 yellow, 2 gray, 2 yellow, 13 gray, 13 yellow, 6 gray, 9 yellow, 5 gray
+Row 74 ->: 5 gray, 9 yellow, 5 gray, 13 yellow, 14 gray, 1 yellow, 2 gray, 9 yellow, 5 gray, 10 yellow, 3 gray, 3 white, 3 gray
+Row 75 <-: 9 gray, 12 yellow, 6 gray, 7 yellow, 18 gray, 12 yellow, 4 gray, 9 yellow, 5 gray
+Row 76 ->: 5 gray, 9 yellow, 4 gray, 11 yellow, 18 gray, 6 yellow, 6 gray, 14 yellow, 9 gray
+Row 77 <-: 8 gray, 15 yellow, 9 gray, 4 yellow, 19 gray, 10 yellow, 3 gray, 9 yellow, 5 gray
+Row 78 ->: 5 gray, 9 yellow, 3 gray, 9 yellow, 32 gray, 15 yellow, 9 gray
+Row 79 <-: 3 gray, 1 white, 5 gray, 16 yellow, 31 gray, 9 yellow, 3 gray, 9 yellow, 5 gray
+Row 80 ->: 5 gray, 8 yellow, 3 gray, 12 yellow, 16 gray, 6 yellow, 6 gray, 15 yellow, 6 gray, 1 white, 4 gray
+Row 81 <-: 14 gray, 12 yellow, 5 gray, 10 yellow, 13 gray, 12 yellow, 3 gray, 8 yellow, 5 gray
+Row 82 ->: 5 gray, 8 yellow, 3 gray, 12 yellow, 12 gray, 12 yellow, 30 gray
+Row 83 <-: 30 gray, 13 yellow, 12 gray, 11 yellow, 3 gray, 8 yellow, 5 gray
+Row 84 ->: 5 gray, 8 yellow, 2 gray, 11 yellow, 12 gray, 13 yellow, 6 gray, 15 yellow, 10 gray
+Row 85 <-: 9 gray, 20 yellow, 3 gray, 13 yellow, 12 gray, 10 yellow, 3 gray, 7 yellow, 5 gray
+Row 86 ->: 5 gray, 7 yellow, 3 gray, 10 yellow, 11 gray, 13 yellow, 3 gray, 22 yellow, 4 gray, 1 white, 3 gray
+Row 87 <-: 2 gray, 3 white, 3 gray, 24 yellow, 2 gray, 13 yellow, 11 gray, 9 yellow, 3 gray, 6 yellow, 6 gray
+Row 88 ->: 6 gray, 6 yellow, 3 gray, 8 yellow, 11 gray, 13 yellow, 2 gray, 25 yellow, 4 gray, 1 white, 3 gray
+Row 89 <-: 8 gray, 26 yellow, 3 gray, 11 yellow, 12 gray, 7 yellow, 3 gray, 6 yellow, 6 gray
+Row 90 ->: 6 gray, 5 yellow, 3 gray, 7 yellow, 12 gray, 11 yellow, 4 gray, 26 yellow, 8 gray
+Row 91 <-: 10 gray, 7 yellow, 23 gray, 10 yellow, 12 gray, 6 yellow, 3 gray, 5 yellow, 6 gray
+Row 92 ->: 6 gray, 5 yellow, 3 gray, 5 yellow, 12 gray, 10 yellow, 41 gray
+Row 93 <-: 3 gray, 2 white, 38 gray, 9 yellow, 12 gray, 4 yellow, 3 gray, 5 yellow, 6 gray
+Row 94 ->: 7 gray, 4 yellow, 3 gray, 3 yellow, 13 gray, 6 yellow, 6 gray, 26 yellow, 9 gray, 1 white, 4 gray
+Row 95 <-: 12 gray, 32 yellow, 4 gray, 5 yellow, 13 gray, 3 yellow, 3 gray, 3 yellow, 7 gray
+Row 96 ->: 7 gray, 3 yellow, 3 gray, 2 yellow, 12 gray, 5 yellow, 4 gray, 35 yellow, 11 gray
+Row 97 <-: 6 gray, 2 white, 3 gray, 37 yellow, 5 gray, 3 yellow, 12 gray, 1 yellow, 3 gray, 3 yellow, 7 gray
+Row 98 ->: 8 gray, 2 yellow, 14 gray, 3 yellow, 4 gray, 40 yellow, 3 gray, 1 white, 7 gray
+Row 99 <-: 11 gray, 42 yellow, 4 gray, 3 yellow, 13 gray, 1 yellow, 8 gray
+Row 100 ->: 8 gray, 1 yellow, 12 gray, 2 yellow, 4 gray, 43 yellow, 11 gray, 1 black
+Row 101 <-: 1 black, 13 gray, 43 yellow, 16 gray, 1 yellow, 8 gray
+Row 102 ->: 23 gray, 44 yellow, 13 gray, 2 black
+Row 103 <-: 3 black, 48 gray, 9 yellow, 22 gray
+Row 104 ->: 23 gray, 2 yellow, 53 gray, 4 black
+Row 105 <-: 5 black, 77 gray
+Row 106 ->: 76 gray, 6 black
+Row 107 <-: 7 black, 75 gray
+Row 108 ->: 74 gray, 8 black
+Row 109 <-: 7 black, 75 gray
+Row 110 ->: 76 gray, 6 black
+Row 111 <-: 5 black, 77 gray
+Row 112 ->: 23 gray, 2 yellow, 53 gray, 4 black
+Row 113 <-: 3 black, 48 gray, 9 yellow, 22 gray
+Row 114 ->: 23 gray, 44 yellow, 13 gray, 2 black
+Row 115 <-: 1 black, 13 gray, 44 yellow, 24 gray
+Row 116 ->: 8 gray, 1 yellow, 12 gray, 1 yellow, 3 gray, 45 yellow, 11 gray, 1 black
+Row 117 <-: 11 gray, 44 yellow, 4 gray, 2 yellow, 12 gray, 1 yellow, 8 gray
+Row 118 ->: 8 gray, 1 yellow, 13 gray, 3 yellow, 5 gray, 41 yellow, 3 gray, 1 white, 7 gray
+Row 119 <-: 6 gray, 2 white, 3 gray, 39 yellow, 5 gray, 3 yellow, 10 gray, 1 yellow, 3 gray, 2 yellow, 8 gray
+Row 120 ->: 7 gray, 3 yellow, 3 gray, 2 yellow, 11 gray, 4 yellow, 4 gray, 37 yellow, 11 gray
+Row 121 <-: 12 gray, 33 yellow, 4 gray, 5 yellow, 13 gray, 2 yellow, 3 gray, 3 yellow, 7 gray
+Row 122 ->: 7 gray, 3 yellow, 4 gray, 2 yellow, 13 gray, 6 yellow, 4 gray, 29 yellow, 9 gray, 1 white, 4 gray
+Row 123 <-: 3 gray, 2 white, 40 gray, 7 yellow, 13 gray, 3 yellow, 3 gray, 4 yellow, 7 gray
+Row 124 ->: 7 gray, 4 yellow, 3 gray, 4 yellow, 13 gray, 9 yellow, 42 gray
+Row 125 <-: 10 gray, 5 yellow, 26 gray, 10 yellow, 12 gray, 5 yellow, 3 gray, 5 yellow, 6 gray
+Row 126 ->: 6 gray, 5 yellow, 3 gray, 6 yellow, 12 gray, 11 yellow, 7 gray, 24 yellow, 8 gray
+Row 127 <-: 8 gray, 26 yellow, 3 gray, 12 yellow, 12 gray, 7 yellow, 3 gray, 5 yellow, 6 gray
+Row 128 ->: 6 gray, 6 yellow, 3 gray, 7 yellow, 12 gray, 12 yellow, 3 gray, 25 yellow, 4 gray, 1 white, 3 gray
+Row 129 <-: 2 gray, 3 white, 3 gray, 24 yellow, 3 gray, 12 yellow, 12 gray, 8 yellow, 3 gray, 6 yellow, 6 gray
+Row 130 ->: 6 gray, 6 yellow, 3 gray, 9 yellow, 11 gray, 14 yellow, 2 gray, 23 yellow, 4 gray, 1 white, 3 gray
+Row 131 <-: 9 gray, 20 yellow, 3 gray, 14 yellow, 11 gray, 10 yellow, 3 gray, 6 yellow, 6 gray
+Row 132 ->: 5 gray, 8 yellow, 2 gray, 11 yellow, 11 gray, 14 yellow, 5 gray, 16 yellow, 10 gray
+Row 133 <-: 31 gray, 13 yellow, 11 gray, 11 yellow, 3 gray, 8 yellow, 5 gray
+Row 134 ->: 5 gray, 8 yellow, 3 gray, 11 yellow, 12 gray, 13 yellow, 27 gray, 1 white, 2 gray
+Row 135 <-: 3 gray, 1 white, 11 gray, 10 yellow, 5 gray, 12 yellow, 12 gray, 12 yellow, 3 gray, 8 yellow, 5 gray
+Row 136 ->: 5 gray, 8 yellow, 3 gray, 12 yellow, 14 gray, 9 yellow, 5 gray, 15 yellow, 11 gray
+Row 137 <-: 9 gray, 16 yellow, 29 gray, 11 yellow, 4 gray, 8 yellow, 5 gray
+Row 138 ->: 5 gray, 9 yellow, 3 gray, 9 yellow, 32 gray, 16 yellow, 8 gray
+Row 139 <-: 3 gray, 1 white, 4 gray, 15 yellow, 10 gray, 4 yellow, 18 gray, 10 yellow, 3 gray, 9 yellow, 5 gray
+Row 140 ->: 5 gray, 9 yellow, 4 gray, 10 yellow, 19 gray, 5 yellow, 7 gray, 15 yellow, 3 gray, 3 white, 2 gray
+Row 141 <-: 3 gray, 1 white, 4 gray, 13 yellow, 6 gray, 7 yellow, 19 gray, 11 yellow, 4 gray, 9 yellow, 5 gray
+Row 142 ->: 5 gray, 9 yellow, 4 gray, 13 yellow, 18 gray, 9 yellow, 5 gray, 10 yellow, 9 gray
+Row 143 <-: 11 gray, 5 yellow, 4 gray, 12 yellow, 2 gray, 2 yellow, 14 gray, 13 yellow, 4 gray, 10 yellow, 5 gray
+Row 144 ->: 5 gray, 10 yellow, 6 gray, 13 yellow, 13 gray, 2 yellow, 2 gray, 14 yellow, 17 gray
+Row 145 <-: 6 gray, 1 white, 8 gray, 15 yellow, 3 gray, 2 yellow, 12 gray, 12 yellow, 8 gray, 10 yellow, 5 gray
+Row 146 ->: 5 gray, 10 yellow, 10 gray, 11 yellow, 12 gray, 2 yellow, 3 gray, 15 yellow, 7 gray, 2 white, 5 gray
+Row 147 <-: 1 black, 12 gray, 14 yellow, 4 gray, 3 yellow, 11 gray, 10 yellow, 8 gray, 1 yellow, 3 gray, 10 yellow, 5 gray
+Row 148 ->: 5 gray, 10 yellow, 3 gray, 2 yellow, 9 gray, 9 yellow, 11 gray, 4 yellow, 3 gray, 13 yellow, 12 gray, 1 black
+Row 149 <-: 2 black, 11 gray, 11 yellow, 3 gray, 6 yellow, 10 gray, 8 yellow, 9 gray, 4 yellow, 3 gray, 10 yellow, 5 gray
+Row 150 ->: 5 gray, 10 yellow, 3 gray, 5 yellow, 9 gray, 8 yellow, 10 gray, 7 yellow, 3 gray, 9 yellow, 11 gray, 2 black
+Row 151 <-: 3 black, 11 gray, 4 yellow, 6 gray, 7 yellow, 11 gray, 7 yellow, 9 gray, 6 yellow, 2 gray, 10 yellow, 6 gray
+Row 152 ->: 6 gray, 10 yellow, 3 gray, 6 yellow, 8 gray, 9 yellow, 10 gray, 7 yellow, 19 gray, 4 black
+Row 153 <-: 5 black, 6 gray, 2 white, 10 gray, 6 yellow, 10 gray, 9 yellow, 8 gray, 7 yellow, 3 gray, 10 yellow, 6 gray
+Row 154 ->: 6 gray, 10 yellow, 3 gray, 8 yellow, 7 gray, 10 yellow, 12 gray, 2 yellow, 4 gray, 2 white, 6 gray, 1 white, 5 gray, 6 black
+Row 155 <-: 7 black, 30 gray, 10 yellow, 6 gray, 10 yellow, 3 gray, 10 yellow, 6 gray
+Row 156 ->: 6 gray, 10 yellow, 3 gray, 11 yellow, 5 gray, 11 yellow, 28 gray, 8 black
+Row 157 <-: 9 black, 26 gray, 11 yellow, 5 gray, 11 yellow, 4 gray, 9 yellow, 7 gray
+Row 158 ->: 7 gray, 9 yellow, 4 gray, 12 yellow, 5 gray, 10 yellow, 24 gray, 11 black
+Row 159 <-: 12 black, 23 gray, 10 yellow, 4 gray, 12 yellow, 6 gray, 8 yellow, 7 gray
+Row 160 ->: 8 gray, 7 yellow, 7 gray, 12 yellow, 4 gray, 9 yellow, 5 gray, 1 white, 5 gray, 2 white, 8 gray, 14 black
+Row 161 <-: 16 black, 13 gray, 1 white, 5 gray, 7 yellow, 5 gray, 13 yellow, 7 gray, 7 yellow, 8 gray
+Row 162 ->: 9 gray, 5 yellow, 2 gray, 1 yellow, 6 gray, 13 yellow, 28 gray, 18 black
+Row 163 <-: 22 black, 23 gray, 13 yellow, 6 gray, 2 yellow, 3 gray, 3 yellow, 10 gray
+Row 164 ->: 7 gray, 2 yellow, 6 gray, 4 yellow, 6 gray, 13 yellow, 17 gray, 27 black
+Row 165 <-: 29 black, 14 gray, 13 yellow, 6 gray, 5 yellow, 5 gray, 3 yellow, 6 gray, 1 black
+Row 166 ->: 1 black, 6 gray, 3 yellow, 5 gray, 6 yellow, 6 gray, 13 yellow, 4 gray, 2 white, 7 gray, 29 black
+Row 167 <-: 29 black, 7 gray, 2 white, 4 gray, 12 yellow, 6 gray, 6 yellow, 6 gray, 3 yellow, 6 gray, 1 black
+Row 168 ->: 1 black, 6 gray, 3 yellow, 1 gray, 3 yellow, 2 gray, 6 yellow, 7 gray, 12 yellow, 7 gray, 2 white, 2 gray, 30 black
+Row 169 <-: 30 black, 2 gray, 1 white, 9 gray, 10 yellow, 7 gray, 7 yellow, 1 gray, 4 yellow, 1 gray, 3 yellow, 6 gray, 1 black
+Row 170 ->: 1 black, 7 gray, 2 yellow, 2 gray, 3 yellow, 2 gray, 7 yellow, 7 gray, 9 yellow, 11 gray, 31 black
+Row 171 <-: 31 black, 13 gray, 6 yellow, 7 gray, 8 yellow, 2 gray, 3 yellow, 2 gray, 2 yellow, 6 gray, 2 black
+Row 172 ->: 2 black, 7 gray, 1 yellow, 3 gray, 2 yellow, 3 gray, 7 yellow, 9 gray, 3 yellow, 4 gray, 2 white, 7 gray, 32 black
+Row 173 <-: 32 black, 7 gray, 2 white, 15 gray, 7 yellow, 4 gray, 2 yellow, 11 gray, 2 black
+Row 174 ->: 2 black, 18 gray, 7 yellow, 22 gray, 33 black
+Row 175 <-: 34 black, 21 gray, 7 yellow, 18 gray, 2 black
+Row 176 ->: 3 black, 18 gray, 7 yellow, 20 gray, 34 black
+Row 177 <-: 35 black, 19 gray, 5 yellow, 20 gray, 3 black
+Row 178 ->: 3 black, 21 gray, 4 yellow, 18 gray, 36 black
+Row 179 <-: 37 black, 3 gray, 2 white, 12 gray, 2 yellow, 23 gray, 3 black
+Row 180 ->: 3 black, 9 gray, 2 yellow, 26 gray, 1 white, 3 gray, 38 black
+Row 181 <-: 38 black, 11 gray, 1 white, 17 gray, 4 yellow, 8 gray, 3 black
+Row 182 ->: 3 black, 8 gray, 5 yellow, 5 gray, 3 yellow, 8 gray, 1 white, 10 gray, 39 black
+Row 183 <-: 40 black, 17 gray, 5 yellow, 4 gray, 5 yellow, 7 gray, 4 black
+Row 184 ->: 4 black, 8 gray, 4 yellow, 4 gray, 6 yellow, 8 gray, 3 white, 4 gray, 41 black
+Row 185 <-: 41 black, 4 gray, 3 white, 8 gray, 6 yellow, 4 gray, 4 yellow, 8 gray, 4 black
+Row 186 ->: 4 black, 9 gray, 3 yellow, 5 gray, 6 yellow, 8 gray, 2 white, 3 gray, 42 black
+Row 187 <-: 43 black, 11 gray, 6 yellow, 18 gray, 4 black
+Row 188 ->: 4 black, 19 gray, 5 yellow, 11 gray, 43 black
+Row 189 <-: 44 black, 9 gray, 5 yellow, 5 gray, 2 yellow, 12 gray, 5 black
+Row 190 ->: 5 black, 12 gray, 4 yellow, 6 gray, 1 yellow, 7 gray, 1 white, 2 gray, 44 black
+Row 191 <-: 45 black, 1 gray, 1 white, 13 gray, 5 yellow, 2 gray, 2 yellow, 8 gray, 5 black
+Row 192 ->: 5 black, 8 gray, 3 yellow, 2 gray, 5 yellow, 14 gray, 45 black
+Row 193 <-: 45 black, 7 gray, 2 white, 5 gray, 4 yellow, 2 gray, 3 yellow, 9 gray, 5 black
+Row 194 ->: 5 black, 9 gray, 3 yellow, 3 gray, 4 yellow, 5 gray, 1 white, 6 gray, 46 black
+Row 195 <-: 46 black, 11 gray, 3 yellow, 4 gray, 4 yellow, 9 gray, 5 black
+Row 196 ->: 6 black, 9 gray, 3 yellow, 18 gray, 46 black
+Row 197 <-: 47 black, 16 gray, 3 yellow, 10 gray, 6 black
+Row 198 ->: 6 black, 10 gray, 3 yellow, 10 gray, 2 white, 4 gray, 47 black
+Row 199 <-: 48 black, 3 gray, 1 white, 10 gray, 3 yellow, 11 gray, 6 black
+Row 200 ->: 6 black, 12 gray, 2 yellow, 3 gray, 2 white, 9 gray, 48 black
+Row 201 <-: 49 black, 7 gray, 3 white, 2 gray, 2 yellow, 12 gray, 7 black
+Row 202 ->: 7 black, 18 gray, 1 white, 7 gray, 49 black
+Row 203 <-: 50 black, 25 gray, 7 black
+Row 204 ->: 7 black, 25 gray, 50 black
+Row 205 <-: 51 black, 11 gray, 1 white, 11 gray, 8 black
+Row 206 ->: 8 black, 11 gray, 2 white, 10 gray, 51 black
+Row 207 <-: 51 black, 10 gray, 1 white, 12 gray, 8 black
+Row 208 ->: 8 black, 23 gray, 51 black
+Row 209 <-: 51 black, 23 gray, 8 black
+Row 210 ->: 9 black, 21 gray, 52 black
+Row 211 <-: 52 black, 21 gray, 9 black
+Row 212 ->: 9 black, 21 gray, 52 black
+Row 213 <-: 52 black, 21 gray, 9 black
