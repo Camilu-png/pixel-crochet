@@ -14,9 +14,11 @@ class CrochetProject {
     required this.height,
     required this.rows,
     this.currentRowIndex = 0,
+    Map<int, Set<int>>? completedBlocks,
     DateTime? createdAt,
   })  : id = id ?? _uuid.v4(),
-        createdAt = createdAt ?? DateTime.now();
+        createdAt = createdAt ?? DateTime.now(),
+        completedBlocks = completedBlocks ?? {};
 
   final String id;
   final String name;
@@ -24,6 +26,7 @@ class CrochetProject {
   final int height;
   final List<PatternRow> rows;
   final int currentRowIndex;
+  final Map<int, Set<int>> completedBlocks;
   final DateTime createdAt;
 
   int get totalRows => rows.length;
@@ -31,12 +34,16 @@ class CrochetProject {
   double get progress => totalRows > 0 ? currentRowIndex / totalRows : 0.0;
   bool get isCompleted => currentRowIndex >= totalRows - 1;
 
+  bool isBlockCompleted(int rowIndex, int blockIndex) =>
+      completedBlocks[rowIndex]?.contains(blockIndex) ?? false;
+
   CrochetProject copyWith({
     String? name,
     int? width,
     int? height,
     List<PatternRow>? rows,
     int? currentRowIndex,
+    Map<int, Set<int>>? completedBlocks,
   }) {
     return CrochetProject(
       id: id,
@@ -45,6 +52,7 @@ class CrochetProject {
       height: height ?? this.height,
       rows: rows ?? this.rows,
       currentRowIndex: currentRowIndex ?? this.currentRowIndex,
+      completedBlocks: completedBlocks ?? this.completedBlocks,
       createdAt: createdAt,
     );
   }
@@ -56,10 +64,23 @@ class CrochetProject {
         'height': height,
         'rows': rows.map((r) => r.toJson()).toList(),
         'currentRowIndex': currentRowIndex,
+        'completedBlocks': completedBlocks.map(
+          (k, v) => MapEntry(k.toString(), v.toList()),
+        ),
         'createdAt': createdAt.toIso8601String(),
       };
 
   factory CrochetProject.fromJson(Map<String, dynamic> json) {
+    final rawCompleted = json['completedBlocks'] as Map<String, dynamic>?;
+    final completedBlocks = <int, Set<int>>{};
+    if (rawCompleted != null) {
+      for (final entry in rawCompleted.entries) {
+        final rowIndex = int.parse(entry.key);
+        final blockIndices = (entry.value as List).cast<int>().toSet();
+        completedBlocks[rowIndex] = blockIndices;
+      }
+    }
+
     return CrochetProject(
       id: json['id'] as String,
       name: json['name'] as String,
@@ -69,6 +90,7 @@ class CrochetProject {
           .map((r) => PatternRow.fromJson(r as Map<String, dynamic>))
           .toList(),
       currentRowIndex: json['currentRowIndex'] as int? ?? 0,
+      completedBlocks: completedBlocks,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
   }

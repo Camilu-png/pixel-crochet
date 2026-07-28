@@ -101,7 +101,15 @@ class _ProjectContent extends ConsumerWidget {
 
                 const SizedBox(height: 16),
 
-                if (currentRow != null) RowDisplay(row: currentRow),
+                if (currentRow != null)
+                  RowDisplay(
+                    row: currentRow,
+                    completedBlocks:
+                        project.completedBlocks[project.currentRowIndex] ??
+                            const {},
+                    onToggleBlock: (blockIndex) =>
+                        _toggleBlock(ref, blockIndex),
+                  ),
 
                 const SizedBox(height: 16),
 
@@ -140,6 +148,30 @@ class _ProjectContent extends ConsumerWidget {
       _storageService.save(updated);
       ref.invalidate(projectProvider(project.id));
     }
+  }
+
+  void _toggleBlock(WidgetRef ref, int blockIndex) {
+    final rowIndex = project.currentRowIndex;
+    final currentBlocks = Map<int, Set<int>>.from(
+      project.completedBlocks.map((k, v) => MapEntry(k, Set<int>.from(v))),
+    );
+
+    final rowBlocks = currentBlocks[rowIndex] ?? <int>{};
+    if (rowBlocks.contains(blockIndex)) {
+      rowBlocks.remove(blockIndex);
+    } else {
+      rowBlocks.add(blockIndex);
+    }
+
+    if (rowBlocks.isEmpty) {
+      currentBlocks.remove(rowIndex);
+    } else {
+      currentBlocks[rowIndex] = rowBlocks;
+    }
+
+    final updated = project.copyWith(completedBlocks: currentBlocks);
+    _storageService.save(updated);
+    ref.invalidate(projectProvider(project.id));
   }
 
   void _confirmDelete(BuildContext context, WidgetRef ref) {

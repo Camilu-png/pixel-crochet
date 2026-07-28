@@ -9,9 +9,13 @@ class RowDisplay extends StatelessWidget {
   const RowDisplay({
     super.key,
     required this.row,
+    this.completedBlocks = const {},
+    this.onToggleBlock,
   });
 
   final PatternRow row;
+  final Set<int> completedBlocks;
+  final ValueChanged<int>? onToggleBlock;
 
   @override
   Widget build(BuildContext context) {
@@ -54,39 +58,53 @@ class RowDisplay extends StatelessWidget {
           Wrap(
             spacing: 8,
             runSpacing: 4,
-            children: row.colorBlocks.map((block) {
+            children: row.colorBlocks.asMap().entries.map((entry) {
+              final blockIndex = entry.key;
+              final block = entry.value;
               final color = getYarnColor(block.colorName);
-              return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: color.withValues(alpha: 0.5),
+              final isCompleted = completedBlocks.contains(blockIndex);
+
+              return GestureDetector(
+                onTap: onToggleBlock != null
+                    ? () => onToggleBlock!(blockIndex)
+                    : null,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
                   ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: color,
-                        shape: BoxShape.circle,
-                      ),
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: isCompleted ? 0.1 : 0.2),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: color.withValues(alpha: isCompleted ? 0.3 : 0.5),
                     ),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${block.count} ${block.colorName}',
-                      style: context.text.bodySmall?.copyWith(
-                        color: context.colors.brandDark,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 12,
+                        height: 12,
+                        decoration: BoxDecoration(
+                          color: color.withValues(alpha: isCompleted ? 0.4 : 1.0),
+                          shape: BoxShape.circle,
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 4),
+                      Text(
+                        '${block.count} ${block.colorName}',
+                        style: context.text.bodySmall?.copyWith(
+                          color: context.colors.brandDark.withValues(
+                            alpha: isCompleted ? 0.4 : 1.0,
+                          ),
+                          decoration: isCompleted
+                              ? TextDecoration.lineThrough
+                              : null,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }).toList(),
