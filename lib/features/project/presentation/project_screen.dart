@@ -12,10 +12,7 @@ import 'widgets/pattern_image.dart';
 import 'widgets/row_display.dart';
 
 class ProjectScreen extends ConsumerWidget {
-  const ProjectScreen({
-    super.key,
-    required this.projectId,
-  });
+  const ProjectScreen({super.key, required this.projectId});
 
   final String projectId;
 
@@ -32,10 +29,7 @@ class ProjectScreen extends ConsumerWidget {
             body: Center(child: Text(l10n.projectNotFound)),
           );
         }
-        return _ProjectContent(
-          project: project,
-          l10n: l10n,
-        );
+        return _ProjectContent(project: project, l10n: l10n);
       },
       loading: () => Scaffold(
         appBar: AppBar(title: Text(l10n.project)),
@@ -50,10 +44,7 @@ class ProjectScreen extends ConsumerWidget {
 }
 
 class _ProjectContent extends ConsumerWidget {
-  const _ProjectContent({
-    required this.project,
-    required this.l10n,
-  });
+  const _ProjectContent({required this.project, required this.l10n});
 
   final CrochetProject project;
   final AppLocalizations l10n;
@@ -83,7 +74,7 @@ class _ProjectContent extends ConsumerWidget {
                 children: [
                   // Pattern image
                   SizedBox(
-                    height: 300,
+                    height: 400,
                     child: PatternImage(
                       project: project,
                       highlightRowIndex: project.currentRowIndex,

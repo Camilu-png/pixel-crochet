@@ -32,23 +32,30 @@ class PatternImage extends StatelessWidget {
 
     final startRow = visibleRowRange?.$1 ?? 0;
     final endRow = visibleRowRange?.$2 ?? project.rows.length;
+    final visibleRows = endRow - startRow;
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: SingleChildScrollView(
-        child: CustomPaint(
-          size: Size(
-            project.width * 4.0,
-            (endRow - startRow) * 4.0,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final pixelSize = constraints.maxWidth / project.width;
+        final imageHeight = visibleRows * pixelSize;
+
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width: constraints.maxWidth,
+            height: imageHeight,
+            child: CustomPaint(
+              size: Size(constraints.maxWidth, imageHeight),
+              painter: _PatternPainter(
+                project: project,
+                startRow: startRow,
+                endRow: endRow,
+                highlightRowIndex: highlightRowIndex,
+              ),
+            ),
           ),
-          painter: _PatternPainter(
-            project: project,
-            startRow: startRow,
-            endRow: endRow,
-            highlightRowIndex: highlightRowIndex,
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
