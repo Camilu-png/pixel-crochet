@@ -17,8 +17,24 @@ const Map<String, Color> yarnColors = {
   'cream': Color(0xFFFFF8E1),
   'coral': Color(0xFFE57373),
   'lavender': Color(0xFF9B8EC4),
+  'charcoal': Color(0xFF424242),
+  'sky': Color(0xFF64B5F6),
+  'mint': Color(0xFF81C784),
+  'forest': Color(0xFF2E7D32),
+  'maroon': Color(0xFFC62828),
+  'burgundy': Color(0xFF880E4F),
+  'beige': Color(0xFFF5E6D3),
+  'tan': Color(0xFFD4A574),
+  'peach': Color(0xFFFFCC80),
+  'gold': Color(0xFFF9A825),
+  'silver': Color(0xFFBDBDBD),
+  'magenta': Color(0xFFE91E63),
+  'indigo': Color(0xFF283593),
+  'olive': Color(0xFF827717),
+  'turquoise': Color(0xFF00BCD4),
+  'rose': Color(0xFFF48FB1),
 };
 
 Color getYarnColor(String name) {
-  return yarnColors[name.toLowerCase()] ?? Colors.transparent;
+  return yarnColors[name.toLowerCase()] ?? Colors.grey;
 }
