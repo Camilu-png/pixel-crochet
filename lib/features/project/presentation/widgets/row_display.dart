@@ -42,8 +42,8 @@ class RowDisplay extends StatelessWidget {
               const SizedBox(width: 8),
               Icon(
                 row.direction == RowDirection.leftToRight
-                    ? Icons.arrow_forward
-                    : Icons.arrow_back,
+                    ? Icons.arrow_back
+                    : Icons.arrow_forward,
                 size: 16,
                 color: context.colors.brandDark.withValues(alpha: 0.6),
               ),
@@ -89,7 +89,9 @@ class RowDisplay extends StatelessWidget {
                         width: 12,
                         height: 12,
                         decoration: BoxDecoration(
-                          color: color.withValues(alpha: isCompleted ? 0.4 : 1.0),
+                          color: color.withValues(
+                            alpha: isCompleted ? 0.4 : 1.0,
+                          ),
                           shape: BoxShape.circle,
                         ),
                       ),
