@@ -33,7 +33,7 @@ class PatternPainter extends CustomPainter {
       final row = project.rows[rowIndex];
       var x = row.direction == RowDirection.leftToRight
           ? 0.0
-          : size.width;
+          : size.width - pixelWidth;
 
       for (final block in row.colorBlocks) {
         final color = getYarnColor(block.colorName);
