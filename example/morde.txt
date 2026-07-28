@@ -1,0 +1,52 @@
+Morde
+50 x 50
+Row 1 <-: 50 white
+Row 2 ->: 50 white
+Row 3 <-: 50 white
+Row 4 ->: 21 white, 8 black, 21 white
+Row 5 <-: 18 white, 14 black, 18 white
+Row 6 ->: 17 white, 16 black, 17 white
+Row 7 <-: 14 white, 21 black, 15 white
+Row 8 ->: 14 white, 23 black, 13 white
+Row 9 <-: 13 white, 6 black, 3 brown, 7 black, 3 brown, 5 black, 13 white
+Row 10 ->: 11 white, 9 black, 1 brown, 7 black, 1 brown, 9 black, 12 white
+Row 11 <-: 11 white, 9 black, 1 white, 9 black, 1 white, 8 black, 11 white
+Row 12 ->: 9 white, 10 black, 1 white, 9 black, 1 white, 10 black, 10 white
+Row 13 <-: 9 white, 11 black, 2 white, 7 black, 2 white, 10 black, 9 white
+Row 14 ->: 8 white, 34 black, 8 white
+Row 15 <-: 8 white, 34 black, 8 white
+Row 16 ->: 8 white, 9 black, 4 brown, 8 black, 4 brown, 9 black, 8 white
+Row 17 <-: 8 white, 8 black, 6 brown, 6 black, 6 brown, 8 black, 8 white
+Row 18 ->: 7 white, 2 coral, 7 black, 6 brown, 6 black, 6 brown, 8 black, 8 white
+Row 19 <-: 9 white, 7 black, 6 brown, 6 black, 6 brown, 5 black, 4 coral, 7 white
+Row 20 ->: 7 white, 7 coral, 2 black, 6 brown, 6 black, 6 brown, 7 black, 9 white
+Row 21 <-: 9 white, 8 black, 5 brown, 6 black, 5 brown, 2 black, 7 coral, 8 white
+Row 22 ->: 9 white, 1 black, 6 coral, 1 black, 5 brown, 5 black, 5 brown, 1 black, 1 white, 6 black, 10 white
+Row 23 <-: 10 white, 5 black, 2 white, 1 black, 6 brown, 2 black, 6 brown, 7 coral, 1 black, 10 white
+Row 24 ->: 11 white, 1 charcoal, 1 black, 6 coral, 12 brown, 1 black, 4 white, 3 black, 11 white
+Row 25 <-: 18 white, 3 black, 9 brown, 6 coral, 14 white
+Row 26 ->: 16 white, 11 coral, 4 gray, 1 black, 18 white
+Row 27 <-: 17 white, 6 gray, 7 coral, 4 black, 16 white
+Row 28 ->: 15 white, 8 black, 4 brown, 2 black, 5 gray, 1 white, 2 gray, 13 white
+Row 29 <-: 13 white, 5 gray, 1 black, 3 brown, 8 black, 3 brown, 2 black, 15 white
+Row 30 ->: 15 white, 1 black, 5 brown, 6 black, 5 brown, 1 black, 17 white
+Row 31 <-: 17 white, 1 black, 5 brown, 6 black, 5 brown, 1 black, 15 white
+Row 32 ->: 15 white, 1 black, 5 brown, 6 black, 5 brown, 1 black, 17 white
+Row 33 <-: 18 white, 1 black, 3 brown, 1 black, 6 white, 1 black, 3 brown, 1 black, 16 white
+Row 34 ->: 17 white, 3 black, 8 white, 4 black, 18 white
+Row 35 <-: 10 white, 1 coral, 5 white, 1 coral, 9 white, 3 coral, 7 white, 1 coral, 13 white
+Row 36 ->: 13 white, 1 coral, 9 white, 1 coral, 9 white, 1 coral, 4 white, 2 coral, 10 white
+Row 37 <-: 10 white, 2 coral, 3 white, 2 coral, 3 white, 3 coral, 3 white, 1 coral, 4 white, 3 coral, 2 white, 1 coral, 13 white
+Row 38 ->: 13 white, 1 coral, 2 white, 1 coral, 2 white, 1 coral, 1 white, 5 coral, 1 white, 1 coral, 2 white, 1 coral, 2 white, 3 coral, 1 white, 3 coral, 10 white
+Row 39 <-: 10 white, 1 coral, 1 white, 3 coral, 1 white, 1 coral, 3 white, 3 coral, 3 white, 1 coral, 4 white, 3 coral, 2 white, 4 coral, 10 white
+Row 40 ->: 10 white, 1 coral, 2 white, 1 coral, 2 white, 1 coral, 2 white, 1 coral, 3 white, 1 coral, 3 white, 1 coral, 2 white, 1 coral, 2 white, 1 coral, 2 white, 1 coral, 2 white, 1 coral, 10 white
+Row 41 <-: 10 white, 1 coral, 5 white, 1 coral, 2 white, 1 coral, 2 white, 1 coral, 3 white, 1 coral, 3 white, 1 coral, 2 white, 1 coral, 2 white, 1 coral, 2 white, 1 coral, 10 white
+Row 42 ->: 10 white, 1 coral, 2 white, 1 coral, 2 white, 3 coral, 4 white, 1 coral, 3 white, 3 coral, 3 white, 1 coral, 5 white, 1 coral, 10 white
+Row 43 <-: 50 white
+Row 44 ->: 50 white
+Row 45 <-: 50 white
+Row 46 ->: 50 white
+Row 47 <-: 50 white
+Row 48 ->: 50 white
+Row 49 <-: 50 white
+Row 50 ->: 50 white
