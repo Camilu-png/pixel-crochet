@@ -40,8 +40,9 @@ class PatternRow {
       other is PatternRow &&
           runtimeType == other.runtimeType &&
           rowNumber == other.rowNumber &&
-          direction == other.direction;
+          direction == other.direction &&
+          colorBlocks == other.colorBlocks;
 
   @override
-  int get hashCode => Object.hash(rowNumber, direction);
+  int get hashCode => Object.hash(rowNumber, direction, colorBlocks);
 }

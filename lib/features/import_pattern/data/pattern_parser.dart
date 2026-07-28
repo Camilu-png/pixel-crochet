@@ -28,6 +28,12 @@ class PatternParser {
       throw FormatException('No valid rows found in pattern');
     }
 
+    if (rows.length != dimensions.$2) {
+      throw FormatException(
+        'Row count (${rows.length}) does not match declared height (${dimensions.$2})',
+      );
+    }
+
     return CrochetProject(
       name: name,
       width: dimensions.$1,

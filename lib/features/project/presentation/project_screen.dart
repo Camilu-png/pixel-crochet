@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/models/crochet_project.dart';
 import '../../../core/storage/project_storage_service.dart';
@@ -10,6 +11,8 @@ import '../../home/providers/home_provider.dart';
 import '../providers/project_provider.dart';
 import 'widgets/pattern_image.dart';
 import 'widgets/row_display.dart';
+
+const _storageService = ProjectStorageService();
 
 class ProjectScreen extends ConsumerWidget {
   const ProjectScreen({super.key, required this.projectId});
@@ -65,71 +68,67 @@ class _ProjectContent extends ConsumerWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  // Pattern image
-                  SizedBox(
-                    height: 400,
-                    child: PatternImage(
-                      project: project,
-                      highlightRowIndex: project.currentRowIndex,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final imageHeight = (constraints.maxHeight * 0.6).clamp(150.0, 400.0);
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: imageHeight,
+                  child: PatternImage(
+                    project: project,
+                    highlightRowIndex: project.currentRowIndex,
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                LinearProgressIndicator(
+                  value: project.progress,
+                  backgroundColor: context.colors.brandLavenderLight,
+                  color: context.colors.brandLavender,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '${project.currentRowNumber} / ${project.totalRows} rows (${(project.progress * 100).toStringAsFixed(0)}%)',
+                  style: context.text.bodyMedium?.copyWith(
+                    color: context.colors.brandDark,
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                if (currentRow != null) RowDisplay(row: currentRow),
+
+                const SizedBox(height: 16),
+
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  children: [
+                    OutlinedButton.icon(
+                      onPressed: project.currentRowIndex > 0
+                          ? () => _navigateRow(ref, -1)
+                          : null,
+                      icon: const Icon(Icons.arrow_back, size: 16),
+                      label: Text(l10n.previousRow),
                     ),
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  // Progress indicator
-                  LinearProgressIndicator(
-                    value: project.progress,
-                    backgroundColor: context.colors.brandLavenderLight,
-                    color: context.colors.brandLavender,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '${project.currentRowNumber} / ${project.totalRows} rows (${(project.progress * 100).toStringAsFixed(0)}%)',
-                    style: context.text.bodyMedium?.copyWith(
-                      color: context.colors.brandDark,
+                    OutlinedButton.icon(
+                      onPressed: !project.isCompleted
+                          ? () => _navigateRow(ref, 1)
+                          : null,
+                      icon: const Icon(Icons.arrow_forward, size: 16),
+                      label: Text(l10n.nextRow),
+                      iconAlignment: IconAlignment.end,
                     ),
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  // Current row display
-                  if (currentRow != null) RowDisplay(row: currentRow),
-
-                  const SizedBox(height: 16),
-
-                  // Row navigation
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      OutlinedButton.icon(
-                        onPressed: project.currentRowIndex > 0
-                            ? () => _navigateRow(ref, -1)
-                            : null,
-                        icon: const Icon(Icons.arrow_back, size: 16),
-                        label: Text(l10n.previousRow),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: !project.isCompleted
-                            ? () => _navigateRow(ref, 1)
-                            : null,
-                        icon: const Icon(Icons.arrow_forward, size: 16),
-                        label: Text(l10n.nextRow),
-                        iconAlignment: IconAlignment.end,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -138,7 +137,7 @@ class _ProjectContent extends ConsumerWidget {
     final newIndex = project.currentRowIndex + delta;
     if (newIndex >= 0 && newIndex < project.rows.length) {
       final updated = project.copyWith(currentRowIndex: newIndex);
-      const ProjectStorageService().save(updated);
+      _storageService.save(updated);
       ref.invalidate(projectProvider(project.id));
     }
   }
@@ -146,14 +145,14 @@ class _ProjectContent extends ConsumerWidget {
   void _confirmDelete(BuildContext context, WidgetRef ref) {
     showDialog(
       context: context,
-      builder: (context) => ConfirmDialog(
+      builder: (dialogContext) => ConfirmDialog(
         title: l10n.deleteProject,
         message: l10n.deleteProjectConfirm(project.name),
         confirmLabel: l10n.delete,
         onConfirm: () {
           ref.read(projectsProvider.notifier).deleteProject(project.id);
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
+          Navigator.of(dialogContext).pop();
+          context.goNamed('home');
         },
       ),
     );

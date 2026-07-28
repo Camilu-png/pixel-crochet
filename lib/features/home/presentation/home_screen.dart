@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/models/crochet_project.dart';
 import '../../../generated/app_localizations.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../shared/widgets/confirm_dialog.dart';
@@ -89,7 +90,7 @@ class HomeScreen extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     AppLocalizations l10n,
-    dynamic project,
+    CrochetProject project,
   ) {
     showDialog(
       context: context,

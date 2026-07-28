@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/constants/color_map.dart';
 import '../../../../core/models/crochet_project.dart';
-import '../../../../core/models/row_direction.dart';
 import '../../../../core/theme/context_extensions.dart';
+import '../../../../shared/painters/pattern_painter.dart';
 
 class ProjectCard extends StatelessWidget {
   const ProjectCard({
@@ -87,67 +86,10 @@ class _PatternPreview extends StatelessWidget {
     }
 
     return CustomPaint(
-      painter: _PatternPainter(project: project),
-      child: Container(),
+      painter: PatternPainter(
+        project: project,
+        highlightRowIndex: project.currentRowIndex,
+      ),
     );
-  }
-}
-
-class _PatternPainter extends CustomPainter {
-  const _PatternPainter({required this.project});
-
-  final CrochetProject project;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final pixelWidth = size.width / project.width;
-    final pixelHeight = size.height / project.rows.length;
-
-    for (var rowIndex = 0; rowIndex < project.rows.length; rowIndex++) {
-      final row = project.rows[rowIndex];
-      var x = row.direction == RowDirection.leftToRight
-          ? 0.0
-          : size.width;
-
-      for (final block in row.colorBlocks) {
-        final color = getYarnColor(block.colorName);
-        final paint = Paint()..color = color;
-
-        for (var i = 0; i < block.count; i++) {
-          final rect = Rect.fromLTWH(
-            x,
-            rowIndex * pixelHeight,
-            pixelWidth,
-            pixelHeight,
-          );
-          canvas.drawRect(rect, paint);
-
-          x += row.direction == RowDirection.leftToRight
-              ? pixelWidth
-              : -pixelWidth;
-        }
-      }
-    }
-
-    // Highlight current row
-    if (project.currentRowIndex < project.rows.length) {
-      final highlightPaint = Paint()
-        ..color = Colors.white.withValues(alpha: 0.3)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
-
-      final rect = Rect.fromLTWH(
-        0,
-        project.currentRowIndex * pixelHeight,
-        size.width,
-        pixelHeight,
-      );
-      canvas.drawRect(rect, highlightPaint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant _PatternPainter oldDelegate) {
-    return oldDelegate.project.currentRowIndex != project.currentRowIndex;
   }
 }
