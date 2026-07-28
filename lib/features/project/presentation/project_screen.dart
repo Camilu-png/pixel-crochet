@@ -111,7 +111,9 @@ class _ProjectContent extends ConsumerWidget {
                 const SizedBox(height: 16),
 
                 Wrap(
-                  alignment: WrapAlignment.spaceBetween,
+                  alignment: WrapAlignment.center,
+                  spacing: 8,
+                  runSpacing: 8,
                   children: [
                     OutlinedButton.icon(
                       onPressed: project.currentRowIndex > 0
@@ -119,6 +121,11 @@ class _ProjectContent extends ConsumerWidget {
                           : null,
                       icon: const Icon(Icons.arrow_back, size: 16),
                       label: Text(l10n.previousRow),
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: () => _goToRow(ref),
+                      icon: const Icon(Icons.unfold_more, size: 16),
+                      label: Text('${l10n.goToRow}…'),
                     ),
                     OutlinedButton.icon(
                       onPressed: !project.isCompleted
@@ -145,6 +152,48 @@ class _ProjectContent extends ConsumerWidget {
       ref.read(projectsProvider.notifier).updateProject(updated);
       ref.invalidate(projectProvider(project.id));
     }
+  }
+
+  void _goToRow(WidgetRef ref) {
+    final controller = TextEditingController(
+      text: '${project.currentRowNumber}',
+    );
+    showDialog(
+      context: ref.context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.goToRow),
+        content: TextField(
+          controller: controller,
+          keyboardType: TextInputType.number,
+          autofocus: true,
+          decoration: InputDecoration(
+            hintText: '1 – ${project.totalRows}',
+            border: const OutlineInputBorder(),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            onPressed: () {
+              final text = controller.text.trim();
+              final rowNumber = int.tryParse(text);
+              if (rowNumber == null || rowNumber < 1 || rowNumber > project.totalRows) {
+                return;
+              }
+              final newIndex = rowNumber - 1;
+              final updated = project.copyWith(currentRowIndex: newIndex);
+              ref.read(projectsProvider.notifier).updateProject(updated);
+              ref.invalidate(projectProvider(project.id));
+              Navigator.of(dialogContext).pop();
+            },
+            child: Text(l10n.goToRow),
+          ),
+        ],
+      ),
+    );
   }
 
   void _toggleBlock(WidgetRef ref, int blockIndex) {

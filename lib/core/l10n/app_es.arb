@@ -17,5 +17,7 @@
   "nextRow": "Siguiente",
   "delete": "Eliminar",
   "deleteProject": "Eliminar Proyecto",
-  "deleteProjectConfirm": "¿Estás seguro de que quieres eliminar '{name}'?"
+  "deleteProjectConfirm": "¿Estás seguro de que quieres eliminar '{name}'?",
+  "goToRow": "Ir a Fila",
+  "cancel": "Cancelar"
 }

@@ -17,5 +17,7 @@
   "nextRow": "Next",
   "delete": "Delete",
   "deleteProject": "Delete Project",
-  "deleteProjectConfirm": "Are you sure you want to delete '{name}'?"
+  "deleteProjectConfirm": "Are you sure you want to delete '{name}'?",
+  "goToRow": "Go to Row",
+  "cancel": "Cancel"
 }

@@ -205,6 +205,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to delete \'{name}\'?'**
   String deleteProjectConfirm(Object name);
+
+  /// No description provided for @goToRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Row'**
+  String get goToRow;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate

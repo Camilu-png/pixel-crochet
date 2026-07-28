@@ -64,4 +64,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String deleteProjectConfirm(Object name) {
     return 'Are you sure you want to delete \'$name\'?';
   }
+
+  @override
+  String get goToRow => 'Go to Row';
+
+  @override
+  String get cancel => 'Cancel';
 }
