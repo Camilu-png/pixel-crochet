@@ -20,7 +20,6 @@ class PatternImage extends StatefulWidget {
 
 class _PatternImageState extends State<PatternImage> {
   final ScrollController _scrollController = ScrollController();
-  double _pixelSize = 0;
 
   @override
   void initState() {
@@ -32,7 +31,7 @@ class _PatternImageState extends State<PatternImage> {
   void didUpdateWidget(PatternImage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.highlightRowIndex != widget.highlightRowIndex) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToCurrentRow());
+      _scrollToCurrentRow();
     }
   }
 
@@ -44,16 +43,19 @@ class _PatternImageState extends State<PatternImage> {
 
   void _scrollToCurrentRow() {
     if (!_scrollController.hasClients) return;
-    if (widget.highlightRowIndex == null || _pixelSize <= 0) return;
+    if (widget.highlightRowIndex == null) return;
 
+    final position = _scrollController.position;
+    final viewportHeight = position.viewportDimension;
+    final totalContentHeight = position.maxScrollExtent + viewportHeight;
     final totalRows = widget.project.rows.length;
-    final viewportHeight = _scrollController.position.viewportDimension;
+    if (totalRows == 0) return;
 
-    final rowY = (totalRows - 1 - widget.highlightRowIndex!) * _pixelSize;
+    final pixelSize = totalContentHeight / totalRows;
+    final rowY = (totalRows - 1 - widget.highlightRowIndex!) * pixelSize;
 
-    double targetOffset = rowY - (viewportHeight / 2) + (_pixelSize / 2);
-
-    targetOffset = targetOffset.clamp(0.0, _scrollController.position.maxScrollExtent);
+    double targetOffset = rowY - (viewportHeight / 2) + (pixelSize / 2);
+    targetOffset = targetOffset.clamp(0.0, position.maxScrollExtent);
 
     _scrollController.jumpTo(targetOffset);
   }
@@ -73,8 +75,8 @@ class _PatternImageState extends State<PatternImage> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        _pixelSize = constraints.maxWidth / widget.project.width;
-        final imageHeight = widget.project.rows.length * _pixelSize;
+        final pixelSize = constraints.maxWidth / widget.project.width;
+        final imageHeight = widget.project.rows.length * pixelSize;
         final brightness = Theme.of(context).brightness;
         final highlightColor = brightness == Brightness.dark
             ? Colors.white.withValues(alpha: 0.4)
