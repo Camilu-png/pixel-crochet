@@ -9,6 +9,7 @@ class PatternPainter extends CustomPainter {
     required this.project,
     this.highlightRowIndex,
     this.highlightColor,
+    this.highlightFillColor,
     this.startRow = 0,
     this.endRow,
   });
@@ -16,6 +17,7 @@ class PatternPainter extends CustomPainter {
   final CrochetProject project;
   final int? highlightRowIndex;
   final Color? highlightColor;
+  final Color? highlightFillColor;
   final int startRow;
   final int? endRow;
 
@@ -57,14 +59,30 @@ class PatternPainter extends CustomPainter {
 
       if (rowIndex == highlightRowIndex) {
         final hColor = highlightColor ?? Colors.white.withValues(alpha: 0.3);
-        final highlightPaint = Paint()
+        final hFillColor = highlightFillColor ?? hColor.withValues(alpha: 0.1);
+
+        final glowPaint = Paint()
+          ..color = hColor.withValues(alpha: 0.3)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
+        canvas.drawRect(
+          Rect.fromLTWH(-4, y - 4, size.width + 8, pixelHeight + 8),
+          glowPaint,
+        );
+
+        final fillPaint = Paint()..color = hFillColor;
+        canvas.drawRect(
+          Rect.fromLTWH(0, y, size.width, pixelHeight),
+          fillPaint,
+        );
+
+        final strokePaint = Paint()
           ..color = hColor
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 2;
+          ..strokeWidth = 3;
 
         canvas.drawRect(
           Rect.fromLTWH(0, y, size.width, pixelHeight),
-          highlightPaint,
+          strokePaint,
         );
       }
     }
@@ -74,6 +92,7 @@ class PatternPainter extends CustomPainter {
   bool shouldRepaint(covariant PatternPainter oldDelegate) {
     return oldDelegate.highlightRowIndex != highlightRowIndex ||
         oldDelegate.highlightColor != highlightColor ||
+        oldDelegate.highlightFillColor != highlightFillColor ||
         oldDelegate.startRow != startRow ||
         oldDelegate.endRow != endRow ||
         oldDelegate.project != project;
