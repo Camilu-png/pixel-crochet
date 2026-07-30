@@ -173,7 +173,6 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
       final updated = _project.copyWith(currentRowIndex: newIndex);
       setState(() => _project = updated);
       ref.read(projectsProvider.notifier).updateProject(updated);
-      ref.invalidate(projectProvider(_project.id));
     }
   }
 
@@ -210,7 +209,6 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
               final updated = _project.copyWith(currentRowIndex: newIndex);
               setState(() => _project = updated);
               ref.read(projectsProvider.notifier).updateProject(updated);
-              ref.invalidate(projectProvider(_project.id));
               Navigator.of(dialogContext).pop();
             },
             child: Text(widget.l10n.goToRow),
