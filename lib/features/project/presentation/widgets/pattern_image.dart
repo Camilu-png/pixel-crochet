@@ -55,11 +55,7 @@ class _PatternImageState extends State<PatternImage> {
 
     targetOffset = targetOffset.clamp(0.0, _scrollController.position.maxScrollExtent);
 
-    _scrollController.animateTo(
-      targetOffset,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
+    _scrollController.jumpTo(targetOffset);
   }
 
   @override
