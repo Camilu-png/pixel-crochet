@@ -60,16 +60,20 @@ class RowDisplay extends StatelessWidget {
           Wrap(
             spacing: 8,
             runSpacing: 4,
-            children: row.colorBlocks.asMap().entries.map((entry) {
-              final blockIndex = entry.key;
-              final block = entry.value;
-              final color = getYarnColor(block.colorName);
-              final isCompleted = completedBlocks.contains(blockIndex);
+            children: () {
+              final n = row.colorBlocks.length;
+              final indices = row.direction == RowDirection.rightToLeft
+                  ? List.generate(n, (i) => n - 1 - i)
+                  : List.generate(n, (i) => i);
+              return indices.map((blockIndex) {
+                final block = row.colorBlocks[blockIndex];
+                final color = getYarnColor(block.colorName);
+                final isCompleted = completedBlocks.contains(blockIndex);
 
-              return GestureDetector(
-                onTap: onToggleBlock != null
-                    ? () => onToggleBlock!(blockIndex)
-                    : null,
+                return GestureDetector(
+                  onTap: onToggleBlock != null
+                      ? () => onToggleBlock!(blockIndex)
+                      : null,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
@@ -111,7 +115,8 @@ class RowDisplay extends StatelessWidget {
                   ),
                 ),
               );
-            }).toList(),
+              }).toList();
+            }(),
           ),
         ],
       ),
