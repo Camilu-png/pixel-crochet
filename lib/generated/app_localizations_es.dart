@@ -135,10 +135,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get corruptedImage => 'El archivo de imagen parece estar corrupto.';
 
   @override
-  String imageDimensionsExceeded(Object max) {
-    return 'Las dimensiones superan ${max}px.';
-  }
+  String get importError => 'Error al importar el patrón';
 
   @override
-  String get importError => 'Error al importar el patrón';
+  String get changeColor => 'Cambiar';
+
+  @override
+  String get yarnColors => 'Colores de estambre';
 }

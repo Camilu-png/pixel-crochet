@@ -39,6 +39,7 @@
   "invalidImageDimensions": "Dimensiones de imagen inválidas.",
   "invalidStitchCount": "Cantidad de puntos inválida.",
   "corruptedImage": "El archivo de imagen parece estar corrupto.",
-  "imageDimensionsExceeded": "Las dimensiones superan {max}px.",
-  "importError": "Error al importar el patrón"
+  "importError": "Error al importar el patrón",
+  "changeColor": "Cambiar",
+  "yarnColors": "Colores de estambre"
 }

@@ -332,17 +332,23 @@ abstract class AppLocalizations {
   /// **'The image file appears to be corrupted.'**
   String get corruptedImage;
 
-  /// No description provided for @imageDimensionsExceeded.
-  ///
-  /// In en, this message translates to:
-  /// **'Image dimensions exceed {max}px.'**
-  String imageDimensionsExceeded(Object max);
-
   /// No description provided for @importError.
   ///
   /// In en, this message translates to:
   /// **'Error importing pattern'**
   String get importError;
+
+  /// No description provided for @changeColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get changeColor;
+
+  /// No description provided for @yarnColors.
+  ///
+  /// In en, this message translates to:
+  /// **'Yarn colors'**
+  String get yarnColors;
 }
 
 class _AppLocalizationsDelegate

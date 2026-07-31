@@ -39,6 +39,7 @@
   "invalidImageDimensions": "Invalid image dimensions.",
   "invalidStitchCount": "Invalid stitch count.",
   "corruptedImage": "The image file appears to be corrupted.",
-  "imageDimensionsExceeded": "Image dimensions exceed {max}px.",
-  "importError": "Error importing pattern"
+  "importError": "Error importing pattern",
+  "changeColor": "Change",
+  "yarnColors": "Yarn colors"
 }
