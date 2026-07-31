@@ -73,4 +73,72 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get rowLabel => 'Fila';
+
+  @override
+  String get importImage => 'Importar Imagen';
+
+  @override
+  String get importImageDescription =>
+      'Selecciona una imagen PNG o JPG de un patrón de pixel art o punto cruz';
+
+  @override
+  String get selectImage => 'Seleccionar Imagen';
+
+  @override
+  String get dimensionsImage => 'Imagen';
+
+  @override
+  String get stitchesWide => 'Puntos ancho';
+
+  @override
+  String get stitchesHigh => 'Puntos alto';
+
+  @override
+  String get totalStitches => 'Puntos';
+
+  @override
+  String maxStitchesExceeded(Object max) {
+    return 'El máximo es $max puntos';
+  }
+
+  @override
+  String get previewPattern => 'Vista Previa';
+
+  @override
+  String get processing => 'Procesando…';
+
+  @override
+  String get patternPreview => 'Vista Previa del Patrón';
+
+  @override
+  String get dimensions => 'Dimensiones';
+
+  @override
+  String detectedColors(Object count) {
+    return 'Colores ($count)';
+  }
+
+  @override
+  String get confirmImport => 'Importar Patrón';
+
+  @override
+  String get imageFormatError =>
+      'Formato no compatible. Selecciona un archivo PNG o JPG.';
+
+  @override
+  String get invalidImageDimensions => 'Dimensiones de imagen inválidas.';
+
+  @override
+  String get invalidStitchCount => 'Cantidad de puntos inválida.';
+
+  @override
+  String get corruptedImage => 'El archivo de imagen parece estar corrupto.';
+
+  @override
+  String imageDimensionsExceeded(Object max) {
+    return 'Las dimensiones superan ${max}px.';
+  }
+
+  @override
+  String get importError => 'Error al importar el patrón';
 }

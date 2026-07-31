@@ -62,7 +62,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 32),
+              const SizedBox(height: 32),
             if (_isImporting)
               const CircularProgressIndicator()
             else ...[
@@ -71,6 +71,13 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
                 onPressed: _pickFile,
                 icon: const Icon(Icons.file_open),
                 label: Text(l10n.selectFile),
+              ),
+              const SizedBox(height: 16),
+              // Image import option
+              OutlinedButton.icon(
+                onPressed: () => context.pushNamed('import-image'),
+                icon: const Icon(Icons.image),
+                label: Text(l10n.importImage),
               ),
               const SizedBox(height: 16),
               // Divider

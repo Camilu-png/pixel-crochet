@@ -36,5 +36,10 @@ const Map<String, Color> yarnColors = {
 };
 
 Color getYarnColor(String name) {
+  if (name.startsWith('#')) {
+    final hex = name.replaceFirst('#', '');
+    final value = int.parse(hex, radix: 16);
+    return Color(0xFF000000 | value);
+  }
   return yarnColors[name.toLowerCase()] ?? Colors.grey;
 }

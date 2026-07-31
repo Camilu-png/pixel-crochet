@@ -223,6 +223,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Row'**
   String get rowLabel;
+
+  /// No description provided for @importImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Image'**
+  String get importImage;
+
+  /// No description provided for @importImageDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a PNG or JPG image of a pixel art or cross-stitch pattern'**
+  String get importImageDescription;
+
+  /// No description provided for @selectImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Image'**
+  String get selectImage;
+
+  /// No description provided for @dimensionsImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Image'**
+  String get dimensionsImage;
+
+  /// No description provided for @stitchesWide.
+  ///
+  /// In en, this message translates to:
+  /// **'Stitches wide'**
+  String get stitchesWide;
+
+  /// No description provided for @stitchesHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Stitches high'**
+  String get stitchesHigh;
+
+  /// No description provided for @totalStitches.
+  ///
+  /// In en, this message translates to:
+  /// **'Stitches'**
+  String get totalStitches;
+
+  /// No description provided for @maxStitchesExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum is {max} stitches'**
+  String maxStitchesExceeded(Object max);
+
+  /// No description provided for @previewPattern.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview Pattern'**
+  String get previewPattern;
+
+  /// No description provided for @processing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing…'**
+  String get processing;
+
+  /// No description provided for @patternPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern Preview'**
+  String get patternPreview;
+
+  /// No description provided for @dimensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Dimensions'**
+  String get dimensions;
+
+  /// No description provided for @detectedColors.
+  ///
+  /// In en, this message translates to:
+  /// **'Colors ({count})'**
+  String detectedColors(Object count);
+
+  /// No description provided for @confirmImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Pattern'**
+  String get confirmImport;
+
+  /// No description provided for @imageFormatError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsupported format. Please select a PNG or JPG file.'**
+  String get imageFormatError;
+
+  /// No description provided for @invalidImageDimensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid image dimensions.'**
+  String get invalidImageDimensions;
+
+  /// No description provided for @invalidStitchCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid stitch count.'**
+  String get invalidStitchCount;
+
+  /// No description provided for @corruptedImage.
+  ///
+  /// In en, this message translates to:
+  /// **'The image file appears to be corrupted.'**
+  String get corruptedImage;
+
+  /// No description provided for @imageDimensionsExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Image dimensions exceed {max}px.'**
+  String imageDimensionsExceeded(Object max);
+
+  /// No description provided for @importError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error importing pattern'**
+  String get importError;
 }
 
 class _AppLocalizationsDelegate

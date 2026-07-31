@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/home/presentation/home_screen.dart';
+import '../../features/import_image/presentation/import_image_screen.dart';
 import '../../features/import_pattern/presentation/import_screen.dart';
 import '../../features/project/presentation/project_screen.dart';
 
@@ -18,6 +19,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/import',
         name: 'import',
         builder: (context, state) => const ImportScreen(),
+      ),
+      GoRoute(
+        path: '/import-image',
+        name: 'import-image',
+        builder: (context, state) => const ImportImageScreen(),
       ),
       GoRoute(
         path: '/project/:id',

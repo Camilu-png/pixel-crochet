@@ -73,4 +73,72 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rowLabel => 'Row';
+
+  @override
+  String get importImage => 'Import Image';
+
+  @override
+  String get importImageDescription =>
+      'Select a PNG or JPG image of a pixel art or cross-stitch pattern';
+
+  @override
+  String get selectImage => 'Select Image';
+
+  @override
+  String get dimensionsImage => 'Image';
+
+  @override
+  String get stitchesWide => 'Stitches wide';
+
+  @override
+  String get stitchesHigh => 'Stitches high';
+
+  @override
+  String get totalStitches => 'Stitches';
+
+  @override
+  String maxStitchesExceeded(Object max) {
+    return 'Maximum is $max stitches';
+  }
+
+  @override
+  String get previewPattern => 'Preview Pattern';
+
+  @override
+  String get processing => 'Processing…';
+
+  @override
+  String get patternPreview => 'Pattern Preview';
+
+  @override
+  String get dimensions => 'Dimensions';
+
+  @override
+  String detectedColors(Object count) {
+    return 'Colors ($count)';
+  }
+
+  @override
+  String get confirmImport => 'Import Pattern';
+
+  @override
+  String get imageFormatError =>
+      'Unsupported format. Please select a PNG or JPG file.';
+
+  @override
+  String get invalidImageDimensions => 'Invalid image dimensions.';
+
+  @override
+  String get invalidStitchCount => 'Invalid stitch count.';
+
+  @override
+  String get corruptedImage => 'The image file appears to be corrupted.';
+
+  @override
+  String imageDimensionsExceeded(Object max) {
+    return 'Image dimensions exceed ${max}px.';
+  }
+
+  @override
+  String get importError => 'Error importing pattern';
 }
