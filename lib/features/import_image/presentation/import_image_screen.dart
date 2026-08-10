@@ -534,7 +534,6 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
       final project = _processor.generateProject(
         fileName,
         _matrix!,
-        _palette!,
       );
 
       await ref.read(projectsProvider.notifier).addProject(project);

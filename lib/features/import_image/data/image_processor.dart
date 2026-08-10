@@ -105,13 +105,13 @@ class ImageProcessor {
   CrochetProject generateProject(
     String name,
     List<List<Color>> matrix,
-    List<DetectedColor> palette,
   ) {
     final rows = <PatternRow>[];
 
-    for (var i = 0; i < matrix.length; i++) {
+    for (var i = matrix.length - 1; i >= 0; i--) {
       final rowColors = matrix[i];
-      final direction = i % 2 == 0
+      final crochetIndex = matrix.length - 1 - i;
+      final direction = crochetIndex % 2 == 0
           ? RowDirection.leftToRight
           : RowDirection.rightToLeft;
 
@@ -135,23 +135,11 @@ class ImageProcessor {
       }
       blocks.add(ColorBlock(colorName: currentId, count: currentCount));
 
-      // Reverse the row direction matches the pattern
-      final finalDirection = direction;
       rows.add(PatternRow(
-        rowNumber: matrix.length - i,
-        direction: finalDirection,
+        rowNumber: crochetIndex + 1,
+        direction: direction,
         colorBlocks: blocks,
       ));
-    }
-
-    // Renumber rows sequentially (bottom-up)
-    rows.sort((a, b) => b.rowNumber.compareTo(a.rowNumber));
-    for (var i = 0; i < rows.length; i++) {
-      rows[i] = PatternRow(
-        rowNumber: i + 1,
-        direction: rows[i].direction,
-        colorBlocks: rows[i].colorBlocks,
-      );
     }
 
     return CrochetProject(
