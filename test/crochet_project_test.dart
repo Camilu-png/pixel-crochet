@@ -16,7 +16,7 @@ void main() {
         height,
         (i) => PatternRow(
           rowNumber: i + 1,
-          direction: RowDirection.leftToRight,
+          direction: RowDirection.readLeftToRight,
           colorBlocks: [ColorBlock(colorName: 'black', count: width)],
         ),
       );
@@ -39,7 +39,7 @@ void main() {
           rows: [
             PatternRow(
               rowNumber: 1,
-              direction: RowDirection.leftToRight,
+              direction: RowDirection.readLeftToRight,
               colorBlocks: [
                 ColorBlock(colorName: 'black', count: 3),
                 ColorBlock(colorName: 'white', count: 7),
@@ -47,7 +47,7 @@ void main() {
             ),
             PatternRow(
               rowNumber: 2,
-              direction: RowDirection.rightToLeft,
+              direction: RowDirection.readRightToLeft,
               colorBlocks: [ColorBlock(colorName: 'red', count: 10)],
             ),
           ],
@@ -118,7 +118,7 @@ void main() {
           rows: [
             PatternRow(
               rowNumber: 1,
-              direction: RowDirection.leftToRight,
+              direction: RowDirection.readLeftToRight,
               colorBlocks: [
                 ColorBlock(colorName: 'red', count: 1),
                 ColorBlock(colorName: 'blue', count: 1),
@@ -163,7 +163,7 @@ void main() {
           rows: [
             PatternRow(
               rowNumber: 1,
-              direction: RowDirection.leftToRight,
+              direction: RowDirection.readLeftToRight,
               colorBlocks: [
                 ColorBlock(colorName: 'red', count: 1),
                 ColorBlock(colorName: 'blue', count: 1),
@@ -172,7 +172,7 @@ void main() {
             ),
             PatternRow(
               rowNumber: 2,
-              direction: RowDirection.rightToLeft,
+              direction: RowDirection.readRightToLeft,
               colorBlocks: [
                 ColorBlock(colorName: 'white', count: 3),
               ],
@@ -192,14 +192,14 @@ void main() {
           rows: [
             PatternRow(
               rowNumber: 1,
-              direction: RowDirection.leftToRight,
+              direction: RowDirection.readLeftToRight,
               colorBlocks: [
                 ColorBlock(colorName: 'black', count: 2),
               ],
             ),
             PatternRow(
               rowNumber: 2,
-              direction: RowDirection.rightToLeft,
+              direction: RowDirection.readRightToLeft,
               colorBlocks: [
                 ColorBlock(colorName: 'white', count: 2),
               ],
@@ -227,7 +227,7 @@ void main() {
           rows: [
             PatternRow(
               rowNumber: 1,
-              direction: RowDirection.leftToRight,
+              direction: RowDirection.readLeftToRight,
               colorBlocks: [ColorBlock(colorName: 'black', count: 3)],
             ),
           ],
@@ -245,7 +245,7 @@ void main() {
           rows: [
             PatternRow(
               rowNumber: 1,
-              direction: RowDirection.leftToRight,
+              direction: RowDirection.readLeftToRight,
               colorBlocks: [
                 ColorBlock(colorName: 'black', count: 2),
                 ColorBlock(colorName: 'white', count: 2),

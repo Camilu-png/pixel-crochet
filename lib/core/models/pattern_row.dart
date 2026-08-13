@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import 'color_block.dart';
 import 'row_direction.dart';
@@ -25,9 +25,12 @@ class PatternRow {
       };
 
   factory PatternRow.fromJson(Map<String, dynamic> json) {
+    final rawDirection = json['direction'] as int? ?? 0;
+    final direction = RowDirection.values[
+        rawDirection.clamp(0, RowDirection.values.length - 1).toInt()];
     return PatternRow(
       rowNumber: json['rowNumber'] as int,
-      direction: RowDirection.values[json['direction'] as int],
+      direction: direction,
       colorBlocks: (json['colorBlocks'] as List)
           .map((b) => ColorBlock.fromJson(b as Map<String, dynamic>))
           .toList(),
@@ -41,7 +44,7 @@ class PatternRow {
           runtimeType == other.runtimeType &&
           rowNumber == other.rowNumber &&
           direction == other.direction &&
-          colorBlocks == other.colorBlocks;
+          listEquals(colorBlocks, other.colorBlocks);
 
   @override
   int get hashCode => Object.hash(rowNumber, direction, colorBlocks);
