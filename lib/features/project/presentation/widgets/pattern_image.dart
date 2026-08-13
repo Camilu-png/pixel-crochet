@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/models/crochet_project.dart';
 import '../../../../core/theme/context_extensions.dart';
+import '../../../../generated/app_localizations.dart';
 import '../../../../shared/painters/pattern_painter.dart';
 
 class PatternImage extends StatefulWidget {
@@ -65,7 +66,7 @@ class _PatternImageState extends State<PatternImage> {
     if (widget.project.rows.isEmpty) {
       return Center(
         child: Text(
-          'No pattern data',
+          AppLocalizations.of(context)!.noPatternData,
           style: context.text.bodyLarge?.copyWith(
             color: context.colors.brandDark.withValues(alpha: 0.5),
           ),

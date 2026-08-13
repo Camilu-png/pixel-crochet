@@ -79,8 +79,8 @@ class PatternParser {
 
     final rowNumber = int.parse(match.group(1)!);
     final direction = match.group(2) == '<-'
-        ? RowDirection.leftToRight
-        : RowDirection.rightToLeft;
+        ? RowDirection.readLeftToRight
+        : RowDirection.readRightToLeft;
     final colorBlocksStr = match.group(3)!;
 
     final colorBlocks = _parseColorBlocks(colorBlocksStr);

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:image/image.dart' as img;
 
@@ -10,19 +11,35 @@ import '../../../core/models/pattern_row.dart';
 import '../../../core/models/row_direction.dart';
 
 class ImageProcessor {
+  const ImageProcessor();
+
   static const int maxStitches = 100000;
   static const int _quantizeStep = 16;
   static const double _colorMatchThreshold = 60.0;
+
+  /// Decodes and samples [path] off the UI thread.
+  Future<ImageData> loadImageAsync(String path) {
+    return compute(_loadImageIsolate, path);
+  }
+
+  /// Runs grid extraction and palette detection off the UI thread.
+  Future<GridProcessingResult> processGridAsync(
+    ImageData data,
+    int stitchesWide,
+    int stitchesHigh,
+  ) {
+    return compute(_processGridIsolate, (data, stitchesWide, stitchesHigh));
+  }
 
   ImageData loadImage(String path) {
     final file = File(path);
     final bytes = file.readAsBytesSync();
     final decoded = img.decodeImage(bytes);
     if (decoded == null) {
-      throw FormatException('corruptedImage');
+      throw const ImageProcessingException('corruptedImage');
     }
     if (decoded.width == 0 || decoded.height == 0) {
-      throw FormatException('invalidImageDimensions');
+      throw const ImageProcessingException('invalidImageDimensions');
     }
 
     final pixels = <Color>[];
@@ -77,29 +94,30 @@ class ImageProcessor {
       }
     }
 
-    final sorted = uniqueBuckets.toList()..sort();
-    return sorted.map((bucket) {
+    final palette = uniqueBuckets.map((bucket) {
       final color = _bucketToColor(bucket);
       return DetectedColor(
         id: colorIdentifier(color),
         color: color,
       );
     }).toList();
+
+    palette.sort((a, b) => _luminance(a.color).compareTo(_luminance(b.color)));
+    return palette;
   }
+
+  double _luminance(Color c) => 0.299 * c.r + 0.587 * c.g + 0.114 * c.b;
 
   List<List<Color>> replaceColorsInMatrix(
     List<List<Color>> matrix,
     Color oldColor,
     Color newColor,
   ) {
-    for (var r = 0; r < matrix.length; r++) {
-      for (var c = 0; c < matrix[r].length; c++) {
-        if (matrix[r][c].toARGB32() == oldColor.toARGB32()) {
-          matrix[r][c] = newColor;
-        }
-      }
-    }
-    return matrix;
+    return matrix.map((row) {
+      return row.map((color) {
+        return color.toARGB32() == oldColor.toARGB32() ? newColor : color;
+      }).toList();
+    }).toList();
   }
 
   CrochetProject generateProject(
@@ -112,10 +130,10 @@ class ImageProcessor {
       final rowColors = matrix[i];
       final crochetIndex = matrix.length - 1 - i;
       final direction = crochetIndex % 2 == 0
-          ? RowDirection.leftToRight
-          : RowDirection.rightToLeft;
+          ? RowDirection.readLeftToRight
+          : RowDirection.readRightToLeft;
 
-      final processedColors = direction == RowDirection.leftToRight
+      final processedColors = direction == RowDirection.readLeftToRight
           ? rowColors
           : rowColors.reversed.toList();
 
@@ -230,6 +248,13 @@ class ImageProcessor {
   }
 }
 
+class ImageProcessingException implements Exception {
+  const ImageProcessingException(this.code);
+
+  /// Machine-readable error code mapped to a localized message in the UI.
+  final String code;
+}
+
 class ImageData {
   ImageData({
     required this.width,
@@ -264,4 +289,32 @@ class DetectedColor {
 
   final String id;
   final Color color;
+}
+
+class GridProcessingResult {
+  GridProcessingResult({
+    required this.grid,
+    required this.matrix,
+    required this.palette,
+  });
+
+  final GridInfo grid;
+  final List<List<Color>> matrix;
+  final List<DetectedColor> palette;
+}
+
+ImageData _loadImageIsolate(String path) => ImageProcessor().loadImage(path);
+
+GridProcessingResult _processGridIsolate((ImageData, int, int) args) {
+  final (data, stitchesWide, stitchesHigh) = args;
+  final processor = ImageProcessor();
+  final grid = processor.computeGrid(
+    data.width,
+    data.height,
+    stitchesWide,
+    stitchesHigh,
+  );
+  final matrix = processor.extractMatrix(data, grid);
+  final palette = processor.detectPalette(matrix);
+  return GridProcessingResult(grid: grid, matrix: matrix, palette: palette);
 }

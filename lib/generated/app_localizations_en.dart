@@ -135,7 +135,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get corruptedImage => 'The image file appears to be corrupted.';
 
   @override
-  String get importError => 'Error importing pattern';
+  String importErrorDetail(Object error) {
+    return 'Error importing pattern: $error';
+  }
+
+  @override
+  String errorOccurred(Object error) {
+    return 'Something went wrong: $error';
+  }
+
+  @override
+  String get noPatternData => 'No pattern data';
+
+  @override
+  String get filePathError => 'Could not resolve the selected file.';
+
+  @override
+  String rowCount(Object current, Object total) {
+    return '$current/$total rows';
+  }
 
   @override
   String get changeColor => 'Change';

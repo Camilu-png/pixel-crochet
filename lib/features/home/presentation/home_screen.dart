@@ -76,7 +76,7 @@ class HomeScreen extends ConsumerWidget {
         },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(
-          child: Text('Error: $error'),
+          child: Text(l10n.errorOccurred('$error')),
         ),
       ),
       floatingActionButton: FloatingActionButton(

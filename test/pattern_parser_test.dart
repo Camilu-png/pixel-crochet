@@ -21,14 +21,14 @@ void main() {
       expect(project.height, 5);
       expect(project.rows.length, 5);
       expect(project.rows[0].rowNumber, 1);
-      expect(project.rows[0].direction, RowDirection.leftToRight);
+      expect(project.rows[0].direction, RowDirection.readLeftToRight);
       expect(project.rows[0].colorBlocks.length, 2);
       expect(project.rows[0].colorBlocks[0].colorName, 'black');
       expect(project.rows[0].colorBlocks[0].count, 5);
       expect(project.rows[0].colorBlocks[1].colorName, 'white');
       expect(project.rows[0].colorBlocks[1].count, 5);
-      expect(project.rows[1].direction, RowDirection.rightToLeft);
-      expect(project.rows[4].direction, RowDirection.leftToRight);
+      expect(project.rows[1].direction, RowDirection.readRightToLeft);
+      expect(project.rows[4].direction, RowDirection.readLeftToRight);
       expect(project.rows[4].rowNumber, 5);
     });
 

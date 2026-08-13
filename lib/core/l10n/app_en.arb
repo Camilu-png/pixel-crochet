@@ -39,7 +39,11 @@
   "invalidImageDimensions": "Invalid image dimensions.",
   "invalidStitchCount": "Invalid stitch count.",
   "corruptedImage": "The image file appears to be corrupted.",
-  "importError": "Error importing pattern",
+  "importErrorDetail": "Error importing pattern: {error}",
+  "errorOccurred": "Something went wrong: {error}",
+  "noPatternData": "No pattern data",
+  "filePathError": "Could not resolve the selected file.",
+  "rowCount": "{current}/{total} rows",
   "changeColor": "Change",
   "yarnColors": "Yarn colors"
 }

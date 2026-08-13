@@ -111,15 +111,6 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     final imgW = _imageData?.width ?? 0;
     final imgH = _imageData?.height ?? 0;
 
-    if (_widthController.text.isEmpty && imgW > 0) {
-      final suggested = (imgW / 30).round().clamp(1, ImageProcessor.maxStitches);
-      _widthController.text = suggested.toString();
-    }
-    if (_heightController.text.isEmpty && imgH > 0) {
-      final suggested = (imgH / 30).round().clamp(1, ImageProcessor.maxStitches);
-      _heightController.text = suggested.toString();
-    }
-
     final sw = int.tryParse(_widthController.text) ?? 0;
     final sh = int.tryParse(_heightController.text) ?? 0;
     final total = sw * sh;
@@ -371,14 +362,27 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     });
 
     try {
-      final data = _processor.loadImage(path);
-      setState(() => _imageData = data);
+      final data = await _processor.loadImageAsync(path);
+      if (!mounted) return;
+      setState(() {
+        _imageData = data;
+        _widthController.text = _suggestedStitches(data.width).toString();
+        _heightController.text = _suggestedStitches(data.height).toString();
+      });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _errorMessage = _localizedError(e, AppLocalizations.of(context)!);
         _imageData = null;
       });
     }
+  }
+
+  int _suggestedStitches(int pixels) {
+    return (pixels / 30)
+        .round()
+        .clamp(1, ImageProcessor.maxStitches)
+        .toInt();
   }
 
   Future<void> _previewPattern() async {
@@ -406,17 +410,17 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
 
     try {
       final data = _imageData!;
-      final grid = _processor.computeGrid(data.width, data.height, sw, sh);
-      final matrix = _processor.extractMatrix(data, grid);
-      final palette = _processor.detectPalette(matrix);
-
+      final result =
+          await _processor.processGridAsync(data, sw, sh);
+      if (!mounted) return;
       setState(() {
-        _matrix = matrix;
-        _palette = palette;
-        _gridInfo = grid;
+        _matrix = result.matrix;
+        _palette = result.palette;
+        _gridInfo = result.grid;
         _isProcessing = false;
       });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _errorMessage = _localizedError(e, l10n);
         _isProcessing = false;
@@ -510,7 +514,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     if (selected == null) return;
 
     setState(() {
-      _processor.replaceColorsInMatrix(
+      _matrix = _processor.replaceColorsInMatrix(
         _matrix!,
         oldColor.color,
         selected.color,
@@ -545,7 +549,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${l10n.importError}: $e'),
+            content: Text(l10n.importErrorDetail('$e')),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -558,16 +562,15 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   }
 
   String _localizedError(Object error, AppLocalizations l10n) {
-    final key = error is FormatException ? error.message : '';
-
-    switch (key) {
-      case 'corruptedImage':
-        return l10n.corruptedImage;
-      case 'invalidImageDimensions':
-        return l10n.invalidImageDimensions;
-      default:
-        return '$error';
+    if (error is ImageProcessingException) {
+      switch (error.code) {
+        case 'corruptedImage':
+          return l10n.corruptedImage;
+        case 'invalidImageDimensions':
+          return l10n.invalidImageDimensions;
+      }
     }
+    return '$error';
   }
 }
 

@@ -332,11 +332,35 @@ abstract class AppLocalizations {
   /// **'The image file appears to be corrupted.'**
   String get corruptedImage;
 
-  /// No description provided for @importError.
+  /// No description provided for @importErrorDetail.
   ///
   /// In en, this message translates to:
-  /// **'Error importing pattern'**
-  String get importError;
+  /// **'Error importing pattern: {error}'**
+  String importErrorDetail(Object error);
+
+  /// No description provided for @errorOccurred.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong: {error}'**
+  String errorOccurred(Object error);
+
+  /// No description provided for @noPatternData.
+  ///
+  /// In en, this message translates to:
+  /// **'No pattern data'**
+  String get noPatternData;
+
+  /// No description provided for @filePathError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not resolve the selected file.'**
+  String get filePathError;
+
+  /// No description provided for @rowCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{total} rows'**
+  String rowCount(Object current, Object total);
 
   /// No description provided for @changeColor.
   ///

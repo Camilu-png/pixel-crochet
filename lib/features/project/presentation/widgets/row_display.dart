@@ -41,7 +41,7 @@ class RowDisplay extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Icon(
-                row.direction == RowDirection.leftToRight
+                row.direction == RowDirection.readLeftToRight
                     ? Icons.arrow_back
                     : Icons.arrow_forward,
                 size: 16,
@@ -62,7 +62,7 @@ class RowDisplay extends StatelessWidget {
             runSpacing: 4,
             children: () {
               final n = row.colorBlocks.length;
-              final indices = row.direction == RowDirection.rightToLeft
+              final indices = row.direction == RowDirection.readRightToLeft
                   ? List.generate(n, (i) => n - 1 - i)
                   : List.generate(n, (i) => i);
               return indices.map((blockIndex) {

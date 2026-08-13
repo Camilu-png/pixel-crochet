@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/models/crochet_project.dart';
 import '../../../../core/theme/context_extensions.dart';
+import '../../../../generated/app_localizations.dart';
 import '../../../../shared/painters/pattern_painter.dart';
 
 class ProjectCard extends StatelessWidget {
@@ -45,7 +46,10 @@ class ProjectCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          '${project.currentRowNumber}/${project.totalRows} rows',
+                          AppLocalizations.of(context)!.rowCount(
+                            project.currentRowNumber,
+                            project.totalRows,
+                          ),
                           style: context.text.bodySmall?.copyWith(
                             color: context.colors.brandDark.withValues(alpha: 0.6),
                           ),

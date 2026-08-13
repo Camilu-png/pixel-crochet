@@ -62,7 +62,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-              const SizedBox(height: 32),
+            const SizedBox(height: 32),
             if (_isImporting)
               const CircularProgressIndicator()
             else ...[
@@ -143,20 +143,13 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     try {
       final path = result.files.first.path;
       if (path == null) {
-        throw FormatException('Could not resolve file path');
+        throw const FormatException('filePathError');
       }
       final file = File(path);
       final content = await file.readAsString();
       await _importPattern(content);
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error importing pattern: $e'),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
-        );
-      }
+      _showImportError(e);
     } finally {
       if (mounted) {
         setState(() => _isImporting = false);
@@ -173,19 +166,26 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     try {
       await _importPattern(text);
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error importing pattern: $e'),
-            backgroundColor: Theme.of(context).colorScheme.error,
-          ),
-        );
-      }
+      _showImportError(e);
     } finally {
       if (mounted) {
         setState(() => _isImporting = false);
       }
     }
+  }
+
+  void _showImportError(Object error) {
+    if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
+    final message = error is FormatException && error.message == 'filePathError'
+        ? l10n.filePathError
+        : l10n.importErrorDetail('$error');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      ),
+    );
   }
 
   Future<void> _importPattern(String content) async {

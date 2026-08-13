@@ -39,7 +39,11 @@
   "invalidImageDimensions": "Dimensiones de imagen inválidas.",
   "invalidStitchCount": "Cantidad de puntos inválida.",
   "corruptedImage": "El archivo de imagen parece estar corrupto.",
-  "importError": "Error al importar el patrón",
+  "importErrorDetail": "Error al importar el patrón: {error}",
+  "errorOccurred": "Algo salió mal: {error}",
+  "noPatternData": "Sin datos de patrón",
+  "filePathError": "No se pudo acceder al archivo seleccionado.",
+  "rowCount": "{current}/{total} filas",
   "changeColor": "Cambiar",
   "yarnColors": "Colores de estambre"
 }

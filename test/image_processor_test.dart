@@ -28,7 +28,7 @@ void main() {
 
       // rows[0] must be the bottom row of the image (matrix[2]), LTR.
       expect(project.rows[0].rowNumber, 1);
-      expect(project.rows[0].direction, RowDirection.leftToRight);
+      expect(project.rows[0].direction, RowDirection.readLeftToRight);
       expect(project.rows[0].totalStitches, 3);
       expect(project.rows[0].colorBlocks.map((b) => b.colorName), [
         'black',
@@ -53,10 +53,10 @@ void main() {
 
       final project = processor.generateProject('Test', matrix);
 
-      expect(project.rows[0].direction, RowDirection.leftToRight);
-      expect(project.rows[1].direction, RowDirection.rightToLeft);
-      expect(project.rows[2].direction, RowDirection.leftToRight);
-      expect(project.rows[3].direction, RowDirection.rightToLeft);
+      expect(project.rows[0].direction, RowDirection.readLeftToRight);
+      expect(project.rows[1].direction, RowDirection.readRightToLeft);
+      expect(project.rows[2].direction, RowDirection.readLeftToRight);
+      expect(project.rows[3].direction, RowDirection.readRightToLeft);
     });
 
     test('groups consecutive same-color cells into a single block', () {
@@ -82,7 +82,7 @@ void main() {
       final project = processor.generateProject('Test', matrix);
 
       final row = project.rows[0];
-      expect(row.direction, RowDirection.leftToRight);
+      expect(row.direction, RowDirection.readLeftToRight);
       expect(row.colorBlocks.map((b) => b.colorName).toList(), [
         'red',
         'green',

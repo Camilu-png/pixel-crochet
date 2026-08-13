@@ -30,8 +30,4 @@ class ProjectsNotifier extends AsyncNotifier<List<CrochetProject>> {
     await _storage.delete(id);
     ref.invalidateSelf();
   }
-
-  Future<void> refresh() async {
-    ref.invalidateSelf();
-  }
 }
