@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants/color_map.dart';
@@ -35,7 +36,7 @@ class PatternPainter extends CustomPainter {
       if (rowIndex >= project.rows.length) break;
 
       final row = project.rows[rowIndex];
-      var x = row.direction == RowDirection.leftToRight
+      var x = row.direction == RowDirection.readLeftToRight
           ? 0.0
           : size.width - pixelWidth;
 
@@ -51,7 +52,7 @@ class PatternPainter extends CustomPainter {
             paint,
           );
 
-          x += row.direction == RowDirection.leftToRight
+          x += row.direction == RowDirection.readLeftToRight
               ? pixelWidth
               : -pixelWidth;
         }
@@ -95,6 +96,21 @@ class PatternPainter extends CustomPainter {
         oldDelegate.highlightFillColor != highlightFillColor ||
         oldDelegate.startRow != startRow ||
         oldDelegate.endRow != endRow ||
-        oldDelegate.project != project;
+        oldDelegate.project.width != project.width ||
+        !listEquals(oldDelegate.project.rows, project.rows) ||
+        !_sameCompletedBlocks(
+            oldDelegate.project.completedBlocks, project.completedBlocks);
+  }
+
+  bool _sameCompletedBlocks(
+    Map<int, Set<int>> a,
+    Map<int, Set<int>> b,
+  ) {
+    if (a.length != b.length) return false;
+    for (final entry in a.entries) {
+      final other = b[entry.key];
+      if (other == null || !setEquals(entry.value, other)) return false;
+    }
+    return true;
   }
 }
