@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +24,8 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   final _widthController = TextEditingController();
   final _heightController = TextEditingController();
 
-  String? _imagePath;
+  String? _imageName;
+  Uint8List? _imageBytes;
   ImageData? _imageData;
   List<List<Color>>? _matrix;
   List<DetectedColor>? _palette;
@@ -50,15 +52,15 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (_imagePath != null) _buildImagePreview(),
-            if (_imagePath != null) const SizedBox(height: 24),
-            if (_imagePath != null) _buildForm(l10n),
-            if (_imagePath != null) const SizedBox(height: 24),
+            if (_imageBytes != null) _buildImagePreview(),
+            if (_imageBytes != null) const SizedBox(height: 24),
+            if (_imageBytes != null) _buildForm(l10n),
+            if (_imageBytes != null) const SizedBox(height: 24),
             if (_errorMessage != null) _buildError(l10n),
             if (_gridInfo != null) _buildPreview(l10n),
-            if (_imagePath != null) const SizedBox(height: 24),
-            if (_imagePath != null) _buildActions(l10n),
-            if (_imagePath == null) _buildInitialState(l10n),
+            if (_imageBytes != null) const SizedBox(height: 24),
+            if (_imageBytes != null) _buildActions(l10n),
+            if (_imageBytes == null) _buildInitialState(l10n),
           ],
         ),
       ),
@@ -98,8 +100,8 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
       borderRadius: BorderRadius.circular(12),
       child: Container(
         constraints: const BoxConstraints(maxHeight: 250),
-        child: Image.file(
-          File(_imagePath!),
+        child: Image.memory(
+          _imageBytes!,
           fit: BoxFit.contain,
           errorBuilder: (_, _, _) => const SizedBox.shrink(),
         ),
@@ -344,25 +346,33 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
 
     if (result == null || result.files.isEmpty) return;
 
-    final path = result.files.first.path;
-    if (path == null) return;
-
-    final ext = path.split('.').last.toLowerCase();
+    final file = result.files.first;
+    final ext = file.name.split('.').last.toLowerCase();
     if (!['png', 'jpg', 'jpeg'].contains(ext)) {
       setState(() => _errorMessage = AppLocalizations.of(context)!.imageFormatError);
       return;
     }
 
-    setState(() {
-      _imagePath = path;
-      _errorMessage = null;
-      _matrix = null;
-      _palette = null;
-      _gridInfo = null;
-    });
-
     try {
-      final data = await _processor.loadImageAsync(path);
+      final Uint8List bytes;
+      if (file.bytes != null) {
+        bytes = file.bytes!;
+      } else if (file.path != null) {
+        bytes = await File(file.path!).readAsBytes();
+      } else {
+        return;
+      }
+
+      setState(() {
+        _imageName = file.name;
+        _imageBytes = bytes;
+        _errorMessage = null;
+        _matrix = null;
+        _palette = null;
+        _gridInfo = null;
+      });
+
+      final data = await _processor.loadImageBytesAsync(bytes);
       if (!mounted) return;
       setState(() {
         _imageData = data;
@@ -374,6 +384,8 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
       setState(() {
         _errorMessage = _localizedError(e, AppLocalizations.of(context)!);
         _imageData = null;
+        _imageBytes = null;
+        _imageName = null;
       });
     }
   }
@@ -529,7 +541,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     setState(() => _isImporting = true);
 
     try {
-      final fileName = _imagePath!
+      final fileName = _imageName!
           .split('/')
           .last
           .split('.')

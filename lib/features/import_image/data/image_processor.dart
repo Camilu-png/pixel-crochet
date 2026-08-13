@@ -17,9 +17,14 @@ class ImageProcessor {
   static const int _quantizeStep = 16;
   static const double _colorMatchThreshold = 60.0;
 
-  /// Decodes and samples [path] off the UI thread.
+  /// Decodes and samples [path] off the UI thread. Not available on web.
   Future<ImageData> loadImageAsync(String path) {
     return compute(_loadImageIsolate, path);
+  }
+
+  /// Decodes and samples [bytes] off the UI thread. Works on all platforms.
+  Future<ImageData> loadImageBytesAsync(Uint8List bytes) {
+    return compute(_loadImageBytesIsolate, bytes);
   }
 
   /// Runs grid extraction and palette detection off the UI thread.
@@ -32,8 +37,10 @@ class ImageProcessor {
   }
 
   ImageData loadImage(String path) {
-    final file = File(path);
-    final bytes = file.readAsBytesSync();
+    return loadImageBytes(File(path).readAsBytesSync());
+  }
+
+  ImageData loadImageBytes(Uint8List bytes) {
     final decoded = img.decodeImage(bytes);
     if (decoded == null) {
       throw const ImageProcessingException('corruptedImage');
@@ -304,6 +311,9 @@ class GridProcessingResult {
 }
 
 ImageData _loadImageIsolate(String path) => ImageProcessor().loadImage(path);
+
+ImageData _loadImageBytesIsolate(Uint8List bytes) =>
+    ImageProcessor().loadImageBytes(bytes);
 
 GridProcessingResult _processGridIsolate((ImageData, int, int) args) {
   final (data, stitchesWide, stitchesHigh) = args;

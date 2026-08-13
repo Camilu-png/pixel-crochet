@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -141,12 +142,15 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     setState(() => _isImporting = true);
 
     try {
-      final path = result.files.first.path;
-      if (path == null) {
+      final file = result.files.first;
+      final String content;
+      if (file.bytes != null) {
+        content = utf8.decode(file.bytes!);
+      } else if (file.path != null) {
+        content = await File(file.path!).readAsString();
+      } else {
         throw const FormatException('filePathError');
       }
-      final file = File(path);
-      final content = await file.readAsString();
       await _importPattern(content);
     } catch (e) {
       _showImportError(e);
