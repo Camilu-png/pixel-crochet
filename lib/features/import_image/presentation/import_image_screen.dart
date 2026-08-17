@@ -21,6 +21,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   final _processor = ImageProcessor();
   final _widthController = TextEditingController();
   final _heightController = TextEditingController();
+  static const double _defaultPixelsPerStitch = 30;
 
   String? _imageName;
   Uint8List? _imageBytes;
@@ -390,7 +391,10 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   }
 
   int _suggestedStitches(int pixels) {
-    return (pixels / 30).round().clamp(1, ImageProcessor.maxStitches).toInt();
+    return (pixels / _defaultPixelsPerStitch)
+        .round()
+        .clamp(1, ImageProcessor.maxStitches)
+        .toInt();
   }
 
   Future<void> _previewPattern() async {
