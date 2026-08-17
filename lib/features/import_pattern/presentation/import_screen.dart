@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +33,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.importPattern),
-      ),
+      appBar: AppBar(title: Text(l10n.importPattern)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -146,8 +143,6 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
       final String content;
       if (file.bytes != null) {
         content = utf8.decode(file.bytes!);
-      } else if (file.path != null) {
-        content = await File(file.path!).readAsString();
       } else {
         throw const FormatException('filePathError');
       }

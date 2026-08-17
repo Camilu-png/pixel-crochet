@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -322,8 +320,9 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
         const SizedBox(width: 16),
         Expanded(
           child: FilledButton.icon(
-            onPressed:
-                (_gridInfo == null || _isImporting) ? null : _importPattern,
+            onPressed: (_gridInfo == null || _isImporting)
+                ? null
+                : _importPattern,
             icon: _isImporting
                 ? const SizedBox(
                     width: 18,
@@ -349,7 +348,9 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     final file = result.files.first;
     final ext = file.name.split('.').last.toLowerCase();
     if (!['png', 'jpg', 'jpeg'].contains(ext)) {
-      setState(() => _errorMessage = AppLocalizations.of(context)!.imageFormatError);
+      setState(
+        () => _errorMessage = AppLocalizations.of(context)!.imageFormatError,
+      );
       return;
     }
 
@@ -391,10 +392,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   }
 
   int _suggestedStitches(int pixels) {
-    return (pixels / 30)
-        .round()
-        .clamp(1, ImageProcessor.maxStitches)
-        .toInt();
+    return (pixels / 30).round().clamp(1, ImageProcessor.maxStitches).toInt();
   }
 
   Future<void> _previewPattern() async {
@@ -408,7 +406,11 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     }
 
     if (sw * sh > ImageProcessor.maxStitches) {
-      setState(() => _errorMessage = l10n.maxStitchesExceeded(ImageProcessor.maxStitches));
+      setState(
+        () => _errorMessage = l10n.maxStitchesExceeded(
+          ImageProcessor.maxStitches,
+        ),
+      );
       return;
     }
 
@@ -422,8 +424,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
 
     try {
       final data = _imageData!;
-      final result =
-          await _processor.processGridAsync(data, sw, sh);
+      final result = await _processor.processGridAsync(data, sw, sh);
       if (!mounted) return;
       setState(() {
         _matrix = result.matrix;
@@ -446,18 +447,12 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     final options = <_ColorOption>[];
 
     for (final entry in yarnColors.entries) {
-      options.add(_ColorOption(
-        id: entry.key,
-        color: entry.value,
-      ));
+      options.add(_ColorOption(id: entry.key, color: entry.value));
     }
 
     for (final dc in _palette!) {
       if (dc.color.toARGB32() != oldColor.color.toARGB32()) {
-        options.add(_ColorOption(
-          id: dc.id,
-          color: dc.color,
-        ));
+        options.add(_ColorOption(id: dc.id, color: dc.color));
       }
     }
 
@@ -479,37 +474,40 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                ...options.map((opt) => SizedBox(
-                      width: 64,
-                      child: InkWell(
-                        onTap: () => Navigator.of(ctx).pop(opt),
-                        borderRadius: BorderRadius.circular(8),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: opt.color,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: context.colors.brandDark
-                                      .withValues(alpha: 0.2),
+                ...options.map(
+                  (opt) => SizedBox(
+                    width: 64,
+                    child: InkWell(
+                      onTap: () => Navigator.of(ctx).pop(opt),
+                      borderRadius: BorderRadius.circular(8),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: opt.color,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: context.colors.brandDark.withValues(
+                                  alpha: 0.2,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              opt.id,
-                              style: const TextStyle(fontSize: 10),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            opt.id,
+                            style: const TextStyle(fontSize: 10),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ],
                       ),
-                    )),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -541,16 +539,9 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     setState(() => _isImporting = true);
 
     try {
-      final fileName = _imageName!
-          .split('/')
-          .last
-          .split('.')
-          .first;
+      final fileName = _imageName!.split('/').last.split('.').first;
 
-      final project = _processor.generateProject(
-        fileName,
-        _matrix!,
-      );
+      final project = _processor.generateProject(fileName, _matrix!);
 
       await ref.read(projectsProvider.notifier).addProject(project);
 
@@ -587,10 +578,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
 }
 
 class _ColorOption {
-  const _ColorOption({
-    required this.id,
-    required this.color,
-  });
+  const _ColorOption({required this.id, required this.color});
 
   final String id;
   final Color color;
