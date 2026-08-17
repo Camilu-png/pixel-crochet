@@ -52,7 +52,7 @@ class ProjectStorageService {
   Future<List<CrochetProject>> _loadAllFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     final encoded = prefs.getString(_prefsKey);
-    if (encoded == null) return const [];
+    if (encoded == null) return <CrochetProject>[];
 
     final projects = <CrochetProject>[];
     final list = jsonDecode(encoded) as List<dynamic>;
