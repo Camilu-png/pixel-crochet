@@ -358,8 +358,6 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
       final Uint8List bytes;
       if (file.bytes != null) {
         bytes = file.bytes!;
-      } else if (file.path != null) {
-        bytes = await File(file.path!).readAsBytes();
       } else {
         return;
       }
