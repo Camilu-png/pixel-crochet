@@ -1,5 +1,6 @@
-import 'dart:io';
-
+import 'image_processor_stub.dart'
+    if (dart.library.io) 'image_processor_io.dart'
+    if (dart.library.js_interop) 'image_processor_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:image/image.dart' as img;
@@ -18,9 +19,7 @@ class ImageProcessor {
   static const double _colorMatchThreshold = 60.0;
 
   /// Decodes and samples [path] off the UI thread. Not available on web.
-  Future<ImageData> loadImageAsync(String path) {
-    return compute(_loadImageIsolate, path);
-  }
+  Future<ImageData> loadImageAsync(String path) => loadImageFromPath(path);
 
   /// Decodes and samples [bytes] off the UI thread. Works on all platforms.
   Future<ImageData> loadImageBytesAsync(Uint8List bytes) {
@@ -36,29 +35,19 @@ class ImageProcessor {
     return compute(_processGridIsolate, (data, stitchesWide, stitchesHigh));
   }
 
-  ImageData loadImage(String path) {
-    return loadImageBytes(File(path).readAsBytesSync());
-  }
-
   ImageData loadImageBytes(Uint8List bytes) {
     final decoded = img.decodeImage(bytes);
     if (decoded == null) {
       throw const ImageProcessingException('corruptedImage');
-    }
-    if (decoded.width == 0 || decoded.height == 0) {
-      throw const ImageProcessingException('invalidImageDimensions');
     }
 
     final pixels = <Color>[];
     for (var y = 0; y < decoded.height; y++) {
       for (var x = 0; x < decoded.width; x++) {
         final p = decoded.getPixel(x, y);
-        pixels.add(Color.fromARGB(
-          p.a.toInt(),
-          p.r.toInt(),
-          p.g.toInt(),
-          p.b.toInt(),
-        ));
+        pixels.add(
+          Color.fromARGB(p.a.toInt(), p.r.toInt(), p.g.toInt(), p.b.toInt()),
+        );
       }
     }
 
@@ -69,7 +58,12 @@ class ImageProcessor {
     );
   }
 
-  GridInfo computeGrid(int imgWidth, int imgHeight, int stitchesWide, int stitchesHigh) {
+  GridInfo computeGrid(
+    int imgWidth,
+    int imgHeight,
+    int stitchesWide,
+    int stitchesHigh,
+  ) {
     return GridInfo(
       cellWidth: imgWidth / stitchesWide,
       cellHeight: imgHeight / stitchesHigh,
@@ -103,10 +97,7 @@ class ImageProcessor {
 
     final palette = uniqueBuckets.map((bucket) {
       final color = _bucketToColor(bucket);
-      return DetectedColor(
-        id: colorIdentifier(color),
-        color: color,
-      );
+      return DetectedColor(id: colorIdentifier(color), color: color);
     }).toList();
 
     palette.sort((a, b) => _luminance(a.color).compareTo(_luminance(b.color)));
@@ -127,10 +118,7 @@ class ImageProcessor {
     }).toList();
   }
 
-  CrochetProject generateProject(
-    String name,
-    List<List<Color>> matrix,
-  ) {
+  CrochetProject generateProject(String name, List<List<Color>> matrix) {
     final rows = <PatternRow>[];
 
     for (var i = matrix.length - 1; i >= 0; i--) {
@@ -160,11 +148,13 @@ class ImageProcessor {
       }
       blocks.add(ColorBlock(colorName: currentId, count: currentCount));
 
-      rows.add(PatternRow(
-        rowNumber: crochetIndex + 1,
-        direction: direction,
-        colorBlocks: blocks,
-      ));
+      rows.add(
+        PatternRow(
+          rowNumber: crochetIndex + 1,
+          direction: direction,
+          colorBlocks: blocks,
+        ),
+      );
     }
 
     return CrochetProject(
@@ -195,9 +185,9 @@ class ImageProcessor {
 
     if (freq.isEmpty) return const Color(0xFFFFFFFF);
 
-    final modeBucket = freq.entries.reduce(
-      (a, b) => a.value > b.value ? a : b,
-    ).key;
+    final modeBucket = freq.entries
+        .reduce((a, b) => a.value > b.value ? a : b)
+        .key;
 
     return _bucketToColor(modeBucket);
   }
@@ -233,7 +223,8 @@ class ImageProcessor {
       }
     }
 
-    if (bestName != null && bestDistance <= _colorMatchThreshold * _colorMatchThreshold) {
+    if (bestName != null &&
+        bestDistance <= _colorMatchThreshold * _colorMatchThreshold) {
       return bestName;
     }
 
@@ -263,11 +254,7 @@ class ImageProcessingException implements Exception {
 }
 
 class ImageData {
-  ImageData({
-    required this.width,
-    required this.height,
-    required this.pixels,
-  });
+  ImageData({required this.width, required this.height, required this.pixels});
 
   final int width;
   final int height;
@@ -289,10 +276,7 @@ class GridInfo {
 }
 
 class DetectedColor {
-  DetectedColor({
-    required this.id,
-    required this.color,
-  });
+  DetectedColor({required this.id, required this.color});
 
   final String id;
   final Color color;
@@ -309,8 +293,6 @@ class GridProcessingResult {
   final List<List<Color>> matrix;
   final List<DetectedColor> palette;
 }
-
-ImageData _loadImageIsolate(String path) => ImageProcessor().loadImage(path);
 
 ImageData _loadImageBytesIsolate(Uint8List bytes) =>
     ImageProcessor().loadImageBytes(bytes);
