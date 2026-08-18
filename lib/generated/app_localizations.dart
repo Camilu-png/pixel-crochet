@@ -373,6 +373,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yarn colors'**
   String get yarnColors;
+
+  /// No description provided for @projectName.
+  ///
+  /// In en, this message translates to:
+  /// **'Project name'**
+  String get projectName;
+
+  /// No description provided for @rows.
+  ///
+  /// In en, this message translates to:
+  /// **'rows'**
+  String get rows;
 }
 
 class _AppLocalizationsDelegate

@@ -45,5 +45,7 @@
   "filePathError": "Could not resolve the selected file.",
   "rowCount": "{current}/{total} rows",
   "changeColor": "Change",
-  "yarnColors": "Yarn colors"
+  "yarnColors": "Yarn colors",
+  "projectName": "Project name",
+  "rows": "rows"
 }

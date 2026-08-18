@@ -160,4 +160,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yarnColors => 'Yarn colors';
+
+  @override
+  String get projectName => 'Project name';
+
+  @override
+  String get rows => 'rows';
 }

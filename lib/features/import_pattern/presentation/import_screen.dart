@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/models/crochet_project.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
 import '../../home/providers/home_provider.dart';
@@ -20,11 +21,14 @@ class ImportScreen extends ConsumerStatefulWidget {
 class _ImportScreenState extends ConsumerState<ImportScreen> {
   final _parser = const PatternParser();
   final _textController = TextEditingController();
+  final _nameController = TextEditingController();
   bool _isImporting = false;
+  CrochetProject? _parsedProject;
 
   @override
   void dispose() {
     _textController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -33,7 +37,13 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.importPattern)),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
+        title: Text(l10n.importPattern),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -61,7 +71,9 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
-            if (_isImporting)
+            if (_parsedProject != null)
+              _buildNameEditor(l10n)
+            else if (_isImporting)
               const CircularProgressIndicator()
             else ...[
               // File picker option
@@ -128,6 +140,58 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     );
   }
 
+  Widget _buildNameEditor(AppLocalizations l10n) {
+    return Column(
+      children: [
+        Text(
+          l10n.importPattern,
+          style: context.text.titleMedium?.copyWith(
+            color: context.colors.brandDark,
+          ),
+        ),
+        const SizedBox(height: 12),
+        TextField(
+          controller: _nameController,
+          textCapitalization: TextCapitalization.words,
+          decoration: InputDecoration(
+            labelText: l10n.projectName,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            filled: true,
+            fillColor: context.colors.brandIvory,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          '${_parsedProject!.totalRows} ${l10n.rows}',
+          style: context.text.bodySmall?.copyWith(
+            color: context.colors.brandDark.withValues(alpha: 0.6),
+          ),
+        ),
+        const SizedBox(height: 24),
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () => setState(() => _parsedProject = null),
+                child: Text(l10n.cancel),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: FilledButton.icon(
+                onPressed: _confirmImport,
+                icon: const Icon(Icons.file_download),
+                label: Text(l10n.confirmImport),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Future<void> _pickFile() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -146,10 +210,14 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
       } else {
         throw const FormatException('filePathError');
       }
-      await _importPattern(content);
+      final project = _parser.parse(content);
+      _nameController.text = project.name;
+      setState(() {
+        _parsedProject = project;
+        _isImporting = false;
+      });
     } catch (e) {
       _showImportError(e);
-    } finally {
       if (mounted) {
         setState(() => _isImporting = false);
       }
@@ -163,10 +231,14 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     setState(() => _isImporting = true);
 
     try {
-      await _importPattern(text);
+      final project = _parser.parse(text);
+      _nameController.text = project.name;
+      setState(() {
+        _parsedProject = project;
+        _isImporting = false;
+      });
     } catch (e) {
       _showImportError(e);
-    } finally {
       if (mounted) {
         setState(() => _isImporting = false);
       }
@@ -187,12 +259,24 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     );
   }
 
-  Future<void> _importPattern(String content) async {
-    final project = _parser.parse(content);
-    await ref.read(projectsProvider.notifier).addProject(project);
+  Future<void> _confirmImport() async {
+    final name = _nameController.text.trim();
+    if (name.isEmpty) return;
 
-    if (mounted) {
-      context.goNamed('home');
+    setState(() => _isImporting = true);
+
+    try {
+      final project = _parsedProject!.copyWith(name: name);
+      await ref.read(projectsProvider.notifier).addProject(project);
+
+      if (mounted) {
+        context.goNamed('home');
+      }
+    } catch (e) {
+      _showImportError(e);
+      if (mounted) {
+        setState(() => _isImporting = false);
+      }
     }
   }
 }

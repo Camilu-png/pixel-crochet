@@ -21,9 +21,9 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   final _processor = ImageProcessor();
   final _widthController = TextEditingController();
   final _heightController = TextEditingController();
+  final _nameController = TextEditingController();
   static const double _defaultPixelsPerStitch = 30;
 
-  String? _imageName;
   Uint8List? _imageBytes;
   ImageData? _imageData;
   List<List<Color>>? _matrix;
@@ -37,6 +37,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   void dispose() {
     _widthController.dispose();
     _heightController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -45,7 +46,13 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.importImage)),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
+        title: Text(l10n.importImage),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -120,6 +127,19 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        TextField(
+          controller: _nameController,
+          textCapitalization: TextCapitalization.words,
+          decoration: InputDecoration(
+            labelText: l10n.projectName,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            filled: true,
+            fillColor: context.colors.brandIvory,
+          ),
+        ),
+        const SizedBox(height: 16),
         Text(
           '${l10n.dimensionsImage}:  $imgW × $imgH px',
           style: context.text.bodyMedium?.copyWith(
@@ -183,7 +203,9 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
         ],
         const SizedBox(height: 16),
         FilledButton.icon(
-          onPressed: (_isProcessing || exceedsLimit) ? null : _previewPattern,
+          onPressed: (_isProcessing || exceedsLimit || sw < 1 || sh < 1)
+              ? null
+              : _previewPattern,
           icon: _isProcessing
               ? const SizedBox(
                   width: 18,
@@ -364,7 +386,6 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
       }
 
       setState(() {
-        _imageName = file.name;
         _imageBytes = bytes;
         _errorMessage = null;
         _matrix = null;
@@ -376,6 +397,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
       if (!mounted) return;
       setState(() {
         _imageData = data;
+        _nameController.text = file.name.split('.').first;
         _widthController.text = _suggestedStitches(data.width).toString();
         _heightController.text = _suggestedStitches(data.height).toString();
       });
@@ -385,7 +407,6 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
         _errorMessage = _localizedError(e, AppLocalizations.of(context)!);
         _imageData = null;
         _imageBytes = null;
-        _imageName = null;
       });
     }
   }
@@ -541,9 +562,13 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     setState(() => _isImporting = true);
 
     try {
-      final fileName = _imageName!.split('/').last.split('.').first;
+      final name = _nameController.text.trim();
+      if (name.isEmpty) {
+        setState(() => _isImporting = false);
+        return;
+      }
 
-      final project = _processor.generateProject(fileName, _matrix!);
+      final project = _processor.generateProject(name, _matrix!);
 
       await ref.read(projectsProvider.notifier).addProject(project);
 

@@ -45,5 +45,7 @@
   "filePathError": "No se pudo acceder al archivo seleccionado.",
   "rowCount": "{current}/{total} filas",
   "changeColor": "Cambiar",
-  "yarnColors": "Colores de estambre"
+  "yarnColors": "Colores de estambre",
+  "projectName": "Nombre del proyecto",
+  "rows": "filas"
 }
