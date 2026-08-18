@@ -132,9 +132,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
           textCapitalization: TextCapitalization.words,
           decoration: InputDecoration(
             labelText: l10n.projectName,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             filled: true,
             fillColor: context.colors.brandIvory,
           ),
@@ -573,7 +571,10 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
       await ref.read(projectsProvider.notifier).addProject(project);
 
       if (mounted) {
-        context.goNamed('project', pathParameters: {'id': project.id});
+        context.pushReplacementNamed(
+          'project',
+          pathParameters: {'id': project.id},
+        );
       }
     } catch (e) {
       if (mounted) {

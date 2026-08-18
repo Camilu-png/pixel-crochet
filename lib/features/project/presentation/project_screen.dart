@@ -57,6 +57,10 @@ class _ProjectContent extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.goNamed('home'),
+        ),
         title: Text(project.name),
         actions: [
           IconButton(
@@ -103,7 +107,7 @@ class _ProjectContent extends ConsumerWidget {
                     row: currentRow,
                     completedBlocks:
                         project.completedBlocks[project.currentRowIndex] ??
-                            const {},
+                        const {},
                     onToggleBlock: notifier.toggleBlock,
                   ),
 
@@ -117,8 +121,8 @@ class _ProjectContent extends ConsumerWidget {
                     OutlinedButton.icon(
                       onPressed: project.currentRowIndex > 0
                           ? () => notifier.setCurrentRow(
-                                project.currentRowIndex - 1,
-                              )
+                              project.currentRowIndex - 1,
+                            )
                           : null,
                       icon: const Icon(Icons.arrow_back, size: 16),
                       label: Text(l10n.previousRow),
@@ -129,12 +133,11 @@ class _ProjectContent extends ConsumerWidget {
                       label: Text('${l10n.goToRow}…'),
                     ),
                     OutlinedButton.icon(
-                      onPressed:
-                          project.currentRowIndex < project.totalRows - 1
-                              ? () => notifier.setCurrentRow(
-                                    project.currentRowIndex + 1,
-                                  )
-                              : null,
+                      onPressed: project.currentRowIndex < project.totalRows - 1
+                          ? () => notifier.setCurrentRow(
+                              project.currentRowIndex + 1,
+                            )
+                          : null,
                       icon: const Icon(Icons.arrow_forward, size: 16),
                       label: Text(l10n.nextRow),
                       iconAlignment: IconAlignment.end,
