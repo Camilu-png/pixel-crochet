@@ -166,4 +166,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get rows => 'filas';
+
+  @override
+  String get editProject => 'Editar Proyecto';
+
+  @override
+  String get save => 'Guardar';
+
+  @override
+  String get usedColors => 'Colores del Patrón';
 }

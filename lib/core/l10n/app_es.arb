@@ -47,5 +47,8 @@
   "changeColor": "Cambiar",
   "yarnColors": "Colores de estambre",
   "projectName": "Nombre del proyecto",
-  "rows": "filas"
+  "rows": "filas",
+  "editProject": "Editar Proyecto",
+  "save": "Guardar",
+  "usedColors": "Colores del Patrón"
 }

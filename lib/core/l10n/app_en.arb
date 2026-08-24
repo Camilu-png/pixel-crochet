@@ -47,5 +47,8 @@
   "changeColor": "Change",
   "yarnColors": "Yarn colors",
   "projectName": "Project name",
-  "rows": "rows"
+  "rows": "rows",
+  "editProject": "Edit Project",
+  "save": "Save",
+  "usedColors": "Pattern Colors"
 }

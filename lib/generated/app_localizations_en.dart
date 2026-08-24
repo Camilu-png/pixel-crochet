@@ -166,4 +166,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rows => 'rows';
+
+  @override
+  String get editProject => 'Edit Project';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get usedColors => 'Pattern Colors';
 }
