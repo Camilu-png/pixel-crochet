@@ -4,11 +4,8 @@ import '../../../core/models/crochet_project.dart';
 import '../../../core/storage/project_storage_service.dart';
 import '../../home/providers/home_provider.dart';
 
-final projectProvider =
-    AsyncNotifierProvider.autoDispose.family<ProjectNotifier,
-        CrochetProject, String>(
-  ProjectNotifier.new,
-);
+final projectProvider = AsyncNotifierProvider.autoDispose
+    .family<ProjectNotifier, CrochetProject, String>(ProjectNotifier.new);
 
 class ProjectNotFoundException implements Exception {
   const ProjectNotFoundException();
@@ -41,6 +38,10 @@ class ProjectNotifier
 
     final updated = project.toggleBlock(project.currentRowIndex, blockIndex);
     await _persist(updated);
+  }
+
+  Future<void> updateProject(CrochetProject update) async {
+    await _persist(update);
   }
 
   Future<void> delete() async {

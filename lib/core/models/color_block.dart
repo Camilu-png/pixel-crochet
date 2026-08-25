@@ -2,18 +2,12 @@ import 'package:flutter/material.dart';
 
 @immutable
 class ColorBlock {
-  const ColorBlock({
-    required this.colorName,
-    required this.count,
-  });
+  const ColorBlock({required this.colorName, required this.count});
 
   final String colorName;
   final int count;
 
-  Map<String, dynamic> toJson() => {
-        'colorName': colorName,
-        'count': count,
-      };
+  Map<String, dynamic> toJson() => {'colorName': colorName, 'count': count};
 
   factory ColorBlock.fromJson(Map<String, dynamic> json) {
     return ColorBlock(
