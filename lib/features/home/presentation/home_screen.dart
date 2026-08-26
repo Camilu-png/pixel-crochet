@@ -29,12 +29,10 @@ class HomeScreen extends ConsumerWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.pattern,
-                            size: 80,
-                            color: context.colors.brandLavender.withValues(
-                              alpha: 0.5,
-                            ),
+                          Image.asset(
+                            'assets/favicon/favicon-96x96.png',
+                            width: 80,
+                            height: 80,
                           ),
                           const SizedBox(height: 16),
                           Text(

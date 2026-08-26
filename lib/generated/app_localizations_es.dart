@@ -15,13 +15,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeWelcome => 'Bienvenido a Pixel Crochet';
 
   @override
-  String get homeDescription => 'Ganchillo hecho a mano con amor';
+  String get homeDescription => 'Un lugar para tejer con calma punto a punto';
 
   @override
   String get importPattern => 'Importar Patrón';
 
   @override
-  String get importPatternDescription => 'Importar un patrón de ganchillo';
+  String get importPatternDescription => 'Importar un patrón';
 
   @override
   String get importPatternHint =>

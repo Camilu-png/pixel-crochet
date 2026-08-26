@@ -17,12 +17,12 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(color: context.colors.brandLavender),
+            decoration: BoxDecoration(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Image.asset('assets/favicon.png', height: 48),
+                Image.asset('assets/favicon/favicon-48x48.png', height: 48),
                 const SizedBox(height: 8),
                 Text(
                   'Pixel Crochet',
@@ -35,8 +35,6 @@ class AppDrawer extends StatelessWidget {
               ],
             ),
           ),
-          Divider(color: context.colors.brandTan, thickness: 1.5),
-
           ListTile(
             leading: const Icon(Icons.folder),
             title: Text(l10n.menuMyPatterns),
