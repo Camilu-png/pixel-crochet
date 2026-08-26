@@ -175,4 +175,67 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get usedColors => 'Colores del Patrón';
+
+  @override
+  String get menuMyPatterns => 'Mis Patrones';
+
+  @override
+  String get menuMorePatterns => '+ Patrones';
+
+  @override
+  String get menuSupport => 'Apoyar';
+
+  @override
+  String get menuSuggest => 'Sugerir';
+
+  @override
+  String get morePatternsTitle => '+ Patrones';
+
+  @override
+  String get morePatternsDescription =>
+      'Puedes importar tus propios patrones de pixel art o comprar listos para usar.';
+
+  @override
+  String get morePatternsHowToUpload =>
+      'Para importar un patrón, toca el botón + en la pantalla principal y selecciona una imagen o archivo de texto.';
+
+  @override
+  String get morePatternsVisitKofi => 'Visitar Ko-fi';
+
+  @override
+  String get supportTitle => 'Sobre Pixel Crochet';
+
+  @override
+  String get supportDescription =>
+      'Pixel Crochet es un proyecto personal hecho con amor y dedicación. Cada patrón está diseñado para alegrar tus proyectos de ganchillo.';
+
+  @override
+  String get supportDonate => 'Apoyar en Ko-fi';
+
+  @override
+  String get suggestTitle => 'Sugerir';
+
+  @override
+  String get suggestNameLabel => 'Tu Nombre';
+
+  @override
+  String get suggestNameHint => 'Ingresa tu nombre';
+
+  @override
+  String get suggestMessageLabel => 'Tu Sugerencia';
+
+  @override
+  String get suggestMessageHint => 'Cuéntanos qué te gustaría ver...';
+
+  @override
+  String get suggestSend => 'Enviar';
+
+  @override
+  String get suggestSucces => '¡Gracias! Tu sugerencia ha sido enviada.';
+
+  @override
+  String get suggestValidationName => 'Por favor, ingresa tu nombre';
+
+  @override
+  String get suggestValidationMessage => 'Por favor, ingresa tu sugerencia';
 }

@@ -403,6 +403,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pattern Colors'**
   String get usedColors;
+
+  /// No description provided for @menuMyPatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'My Patterns'**
+  String get menuMyPatterns;
+
+  /// No description provided for @menuMorePatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'More Patterns'**
+  String get menuMorePatterns;
+
+  /// No description provided for @menuSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get menuSupport;
+
+  /// No description provided for @menuSuggest.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest'**
+  String get menuSuggest;
+
+  /// No description provided for @morePatternsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'More Patterns'**
+  String get morePatternsTitle;
+
+  /// No description provided for @morePatternsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'You can import your own pixel art patterns or purchase ready-made ones.'**
+  String get morePatternsDescription;
+
+  /// No description provided for @morePatternsHowToUpload.
+  ///
+  /// In en, this message translates to:
+  /// **'To import a pattern, tap the + button on the home screen and select an image or text file.'**
+  String get morePatternsHowToUpload;
+
+  /// No description provided for @morePatternsVisitKofi.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Ko-fi Shop'**
+  String get morePatternsVisitKofi;
+
+  /// No description provided for @supportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About Pixel Crochet'**
+  String get supportTitle;
+
+  /// No description provided for @supportDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Pixel Crochet is a personal project made with love and dedication. Every pattern is designed to bring joy to your crochet projects.'**
+  String get supportDescription;
+
+  /// No description provided for @supportDonate.
+  ///
+  /// In en, this message translates to:
+  /// **'Support on Ko-fi'**
+  String get supportDonate;
+
+  /// No description provided for @suggestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest'**
+  String get suggestTitle;
+
+  /// No description provided for @suggestNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Name'**
+  String get suggestNameLabel;
+
+  /// No description provided for @suggestNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name'**
+  String get suggestNameHint;
+
+  /// No description provided for @suggestMessageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Suggestion'**
+  String get suggestMessageLabel;
+
+  /// No description provided for @suggestMessageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what you\'d like to see...'**
+  String get suggestMessageHint;
+
+  /// No description provided for @suggestSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get suggestSend;
+
+  /// No description provided for @suggestSucces.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you! Your suggestion has been sent.'**
+  String get suggestSucces;
+
+  /// No description provided for @suggestValidationName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get suggestValidationName;
+
+  /// No description provided for @suggestValidationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your suggestion'**
+  String get suggestValidationMessage;
 }
 
 class _AppLocalizationsDelegate
