@@ -203,6 +203,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get morePatternsVisitKofi => 'Visit Ko-fi Shop';
 
   @override
+  String get morePatternsKofiUrl => 'https://ko-fi.com/pixel_crochet/shop';
+
+  @override
   String get supportTitle => 'About Pixel Crochet';
 
   @override
@@ -211,6 +214,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supportDonate => 'Support on Ko-fi';
+
+  @override
+  String get supportKofiUrl => 'https://ko-fi.com/pixel_crochet';
 
   @override
   String get suggestTitle => 'Suggest';
@@ -238,9 +244,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get suggestValidationMessage => 'Please enter your suggestion';
-
-  @override
-  String get morePatternsKofiUrl => 'https://ko-fi.com/pixel_crochet/shop';
 
   @override
   String get openUrlMessage => 'Could not open the link';

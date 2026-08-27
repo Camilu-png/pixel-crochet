@@ -203,14 +203,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get morePatternsVisitKofi => 'Visitar Ko-fi';
 
   @override
+  String get morePatternsKofiUrl => 'https://ko-fi.com/pixel_crochet/shop';
+
+  @override
   String get supportTitle => 'Sobre Pixel Crochet';
 
   @override
   String get supportDescription =>
-      'Pixel Crochet es un proyecto personal hecho con amor y dedicación. Cada patrón está diseñado para alegrar tus proyectos de ganchillo.';
+      'Pixel Crochet es un proyecto independiente y gratuito. Si te resulta útil y quieres ayudarme a seguir desarrollándolo, puedes apoyar el proyecto en Ko-fi.\n\nTu apoyo me ayuda a mantener la aplicación y dedicar tiempo a crear nuevas funcionalidades y patrones.\n\nTambién puedes ayudar simplemente compartiendo Pixel Crochet con alguien que haga crochet. 💜';
 
   @override
   String get supportDonate => 'Apoyar en Ko-fi';
+
+  @override
+  String get supportKofiUrl => 'https://ko-fi.com/pixel_crochet';
 
   @override
   String get suggestTitle => 'Sugerir';
@@ -238,9 +244,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get suggestValidationMessage => 'Por favor, ingresa tu sugerencia';
-
-  @override
-  String get morePatternsKofiUrl => 'https://ko-fi.com/pixel_crochet/shop';
 
   @override
   String get openUrlMessage => 'No pudimos abrir el link';

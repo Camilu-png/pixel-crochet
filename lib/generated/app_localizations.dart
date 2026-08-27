@@ -452,6 +452,12 @@ abstract class AppLocalizations {
   /// **'Visit Ko-fi Shop'**
   String get morePatternsVisitKofi;
 
+  /// No description provided for @morePatternsKofiUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'https://ko-fi.com/pixel_crochet/shop'**
+  String get morePatternsKofiUrl;
+
   /// No description provided for @supportTitle.
   ///
   /// In en, this message translates to:
@@ -469,6 +475,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Support on Ko-fi'**
   String get supportDonate;
+
+  /// No description provided for @supportKofiUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'https://ko-fi.com/pixel_crochet'**
+  String get supportKofiUrl;
 
   /// No description provided for @suggestTitle.
   ///
@@ -523,12 +535,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter your suggestion'**
   String get suggestValidationMessage;
-
-  /// No description provided for @morePatternsKofiUrl.
-  ///
-  /// In en, this message translates to:
-  /// **'https://ko-fi.com/pixel_crochet/shop'**
-  String get morePatternsKofiUrl;
 
   /// No description provided for @openUrlMessage.
   ///

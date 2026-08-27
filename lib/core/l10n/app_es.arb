@@ -59,8 +59,10 @@
   "morePatternsDescription": "Puedes importar tus propios patrones de pixel art o comprar listos para usar.",
   "morePatternsHowToUpload": "Para importar un patrón, toca el botón + en la pantalla principal y selecciona una imagen o archivo de texto.",
   "morePatternsVisitKofi":"Visitar Ko-fi",
+  "morePatternsKofiUrl": "https://ko-fi.com/pixel_crochet/shop",
   "supportTitle": "Sobre Pixel Crochet",
-  "supportDescription": "Pixel Crochet es un proyecto personal hecho con amor y dedicación. Cada patrón está diseñado para alegrar tus proyectos de ganchillo.",
+  "supportDescription": "Pixel Crochet es un proyecto independiente y gratuito. Si te resulta útil y quieres ayudarme a seguir desarrollándolo, puedes apoyar el proyecto en Ko-fi.\n\nTu apoyo me ayuda a mantener la aplicación y dedicar tiempo a crear nuevas funcionalidades y patrones.\n\nTambién puedes ayudar simplemente compartiendo Pixel Crochet con alguien que haga crochet. 💜",
+  "supportKofiUrl": "https://ko-fi.com/pixel_crochet",
   "supportDonate": "Apoyar en Ko-fi",
   "suggestTitle": "Sugerir",
   "suggestNameLabel": "Tu Nombre",
@@ -71,6 +73,5 @@
   "suggestSuccess": "¡Gracias! Tu sugerencia ha sido enviada.",
   "suggestValidationName": "Por favor, ingresa tu nombre",
   "suggestValidationMessage": "Por favor, ingresa tu sugerencia",
-  "morePatternsKofiUrl": "https://ko-fi.com/pixel_crochet/shop",
   "openUrlMessage": "No pudimos abrir el link"
 }
