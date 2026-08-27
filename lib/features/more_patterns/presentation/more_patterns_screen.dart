@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pixel_crochet/core/constants/products.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../generated/app_localizations.dart';
 import '../../../../core/theme/context_extensions.dart';
+import '../../../../shared/utils/open_url.dart';
 
 class MorePatternsScreen extends ConsumerWidget {
   const MorePatternsScreen({super.key});
@@ -52,7 +52,7 @@ class MorePatternsScreen extends ConsumerWidget {
         ),
         SliverToBoxAdapter(
           child: FilledButton(
-            onPressed: () => _openUrl(context, l10n.morePatternsKofiUrl),
+            onPressed: () => openUrl(context, l10n.morePatternsKofiUrl),
             child: Text(l10n.morePatternsVisitKofi),
           ),
         ),
@@ -77,7 +77,7 @@ class _ProductCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => _openUrl(context, product.kofiUrl),
+        onTap: () => openUrl(context, product.kofiUrl),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -105,17 +105,5 @@ class _ProductCard extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-Future<void> _openUrl(BuildContext context, String url) async {
-  final l10n = AppLocalizations.of(context)!;
-  try {
-    await launchUrl(Uri.parse(url));
-  } catch (_) {
-    if (!context.mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(l10n.openUrlMessage)));
   }
 }
