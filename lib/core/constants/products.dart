@@ -20,4 +20,10 @@ const List<Product> sampleProducts = [
         'Conviértete en una bella mariposa del bosque con este hermoso cardigan.',
     kofiUrl: 'https://ko-fi.com/s/b121095f37',
   ),
+  Product(
+    imagePath: 'assets/products/salchipleto.png',
+    title: 'Salchipleto',
+    description: 'Un delicioso amigo que te acompaña siempre.',
+    kofiUrl: 'https://ko-fi.com/s/93a6e28a6c',
+  ),
 ];
