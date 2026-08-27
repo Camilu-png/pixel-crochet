@@ -36,7 +36,7 @@ class SupportScreen extends ConsumerWidget {
             SizedBox(height: 32),
             FilledButton(
               onPressed: () => openUrl(context, l10n.supportKofiUrl),
-              child: Text(l10n.morePatternsVisitKofi),
+              child: Text(l10n.supportDonate),
             ),
           ],
         ),
