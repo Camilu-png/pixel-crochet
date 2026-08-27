@@ -231,11 +231,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suggestSend => 'Send';
 
   @override
-  String get suggestSucces => 'Thank you! Your suggestion has been sent.';
+  String get suggestSuccess => 'Thank you! Your suggestion has been sent.';
 
   @override
   String get suggestValidationName => 'Please enter your name';
 
   @override
   String get suggestValidationMessage => 'Please enter your suggestion';
+
+  @override
+  String get morePatternsKofiUrl => 'https://ko-fi.com/pixel_crochet/shop';
+
+  @override
+  String get openUrlMessage => 'Could not open the link';
 }

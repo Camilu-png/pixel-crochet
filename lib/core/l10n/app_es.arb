@@ -68,7 +68,9 @@
   "suggestMessageLabel": "Tu Sugerencia",
   "suggestMessageHint": "Cuéntanos qué te gustaría ver...",
   "suggestSend": "Enviar",
-  "suggestSucces": "¡Gracias! Tu sugerencia ha sido enviada.",
+  "suggestSuccess": "¡Gracias! Tu sugerencia ha sido enviada.",
   "suggestValidationName": "Por favor, ingresa tu nombre",
-  "suggestValidationMessage": "Por favor, ingresa tu sugerencia"
+  "suggestValidationMessage": "Por favor, ingresa tu sugerencia",
+  "morePatternsKofiUrl": "https://ko-fi.com/pixel_crochet/shop",
+  "openUrlMessage": "No pudimos abrir el link"
 }

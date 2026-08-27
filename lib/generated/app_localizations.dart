@@ -506,11 +506,11 @@ abstract class AppLocalizations {
   /// **'Send'**
   String get suggestSend;
 
-  /// No description provided for @suggestSucces.
+  /// No description provided for @suggestSuccess.
   ///
   /// In en, this message translates to:
   /// **'Thank you! Your suggestion has been sent.'**
-  String get suggestSucces;
+  String get suggestSuccess;
 
   /// No description provided for @suggestValidationName.
   ///
@@ -523,6 +523,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter your suggestion'**
   String get suggestValidationMessage;
+
+  /// No description provided for @morePatternsKofiUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'https://ko-fi.com/pixel_crochet/shop'**
+  String get morePatternsKofiUrl;
+
+  /// No description provided for @openUrlMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the link'**
+  String get openUrlMessage;
 }
 
 class _AppLocalizationsDelegate
