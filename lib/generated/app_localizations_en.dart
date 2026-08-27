@@ -210,7 +210,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supportDescription =>
-      'Pixel Crochet is a personal project made with love and dedication. Every pattern is designed to bring joy to your crochet projects.';
+      'Pixel Crochet is an independent, free project. If you find it useful and want to help me continue developing it, you can support the project on Ko-fi.\n\nYour support helps me maintain the app and devote time to creating new features and patterns.\n\nYou can also help simply by sharing Pixel Crochet with someone who crochets. 💜';
 
   @override
   String get supportDonate => 'Support on Ko-fi';

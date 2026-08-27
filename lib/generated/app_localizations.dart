@@ -467,7 +467,7 @@ abstract class AppLocalizations {
   /// No description provided for @supportDescription.
   ///
   /// In en, this message translates to:
-  /// **'Pixel Crochet is a personal project made with love and dedication. Every pattern is designed to bring joy to your crochet projects.'**
+  /// **'Pixel Crochet is an independent, free project. If you find it useful and want to help me continue developing it, you can support the project on Ko-fi.\n\nYour support helps me maintain the app and devote time to creating new features and patterns.\n\nYou can also help simply by sharing Pixel Crochet with someone who crochets. 💜'**
   String get supportDescription;
 
   /// No description provided for @supportDonate.
