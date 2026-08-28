@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pixel_crochet/core/theme/context_extensions.dart';
 import 'package:pixel_crochet/shared/utils/open_url.dart';
+import 'package:pixel_crochet/shared/widgets/kofi_button.dart';
 
 import '../../../../generated/app_localizations.dart';
 
@@ -34,9 +35,9 @@ class SupportScreen extends ConsumerWidget {
               ),
             ),
             SizedBox(height: 32),
-            FilledButton(
+            KofiButton(
+              label: l10n.supportDonate,
               onPressed: () => openUrl(context, l10n.supportKofiUrl),
-              child: Text(l10n.supportDonate),
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pixel_crochet/core/constants/products.dart';
+import 'package:pixel_crochet/shared/widgets/kofi_button.dart';
 
 import '../../../../generated/app_localizations.dart';
 import '../../../../core/theme/context_extensions.dart';
@@ -51,9 +52,9 @@ class MorePatternsScreen extends ConsumerWidget {
           ),
         ),
         SliverToBoxAdapter(
-          child: FilledButton(
+          child: KofiButton(
+            label: l10n.morePatternsVisitKofi,
             onPressed: () => openUrl(context, l10n.morePatternsKofiUrl),
-            child: Text(l10n.morePatternsVisitKofi),
           ),
         ),
       ],
