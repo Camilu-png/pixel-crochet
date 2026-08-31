@@ -256,4 +256,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get suggestSubjectDefault => 'Pixel Crochet - Suggestion';
+
+  @override
+  String get appTitleTagline => 'Made stitch by stitch';
+
+  @override
+  String get welcomeTitle => 'Welcome to Pixel Crochet';
+
+  @override
+  String get welcomeSubtitle =>
+      'Turn your favorite images into tapestry crochet patterns and follow them row by row.';
+
+  @override
+  String get importFirstPattern => 'Import my first pattern';
+
+  @override
+  String get browsePatterns => 'Browse Ko-fi patterns';
+
+  @override
+  String get hintPng => 'PNG image';
+
+  @override
+  String get hintTxt => '.txt file';
+
+  @override
+  String get hintKofi => 'Ko-fi patterns';
+
+  @override
+  String rowCounter(Object current, Object percent, Object total) {
+    return 'Row $current/$total · $percent%';
+  }
+
+  @override
+  String get optionsLabel => 'Options';
+
+  @override
+  String get deletePatternTitle => 'Delete pattern?';
+
+  @override
+  String deletePatternBody(Object name) {
+    return 'Are you sure you want to delete \'$name\'? This cannot be undone.';
+  }
+
+  @override
+  String get yourName => 'Your name';
+
+  @override
+  String get yourSuggestion => 'Your suggestion';
+
+  @override
+  String get suggestSubtitle =>
+      'Tell us what you\'d love to see next — every idea is read and appreciated.';
+
+  @override
+  String get requiredField => 'This field is required';
+
+  @override
+  String get tooShort => 'Please write a little more (at least 10 characters)';
+
+  @override
+  String get supportKeepApp => 'Keep the app alive';
+
+  @override
+  String get supportNewPatterns => 'New patterns';
+
+  @override
+  String get supportShare => 'Share the app';
+
+  @override
+  String get morePatternsPriceBadge => 'Ready-made';
 }
