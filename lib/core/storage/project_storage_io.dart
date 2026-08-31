@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../models/crochet_project.dart';
@@ -20,7 +21,8 @@ class PlatformStorage {
         final json = jsonDecode(content) as Map<String, dynamic>;
         projects.add(CrochetProject.fromJson(json));
       } catch (e) {
-        // Skip corrupted files
+        debugPrint('Skipping corrupted project file ${file.path}: $e');
+        await _restoreBackup(file.path);
       }
     }
 
@@ -39,8 +41,35 @@ class PlatformStorage {
 
   static Future<void> save(CrochetProject project) async {
     final dir = await _projectsDir();
-    final file = File('${dir.path}/${project.id}.json');
-    await file.writeAsString(jsonEncode(project.toJson()));
+    final path = '${dir.path}/${project.id}.json';
+    final tmpPath = '$path.tmp';
+
+    // Write to a temp file first, then atomically rename into place. This
+    // guarantees an interrupted/failed write never leaves a truncated JSON.
+    await File(tmpPath).writeAsString(jsonEncode(project.toJson()));
+
+    final target = File(path);
+    if (await target.exists()) {
+      await File('$path.bak')
+          .writeAsString(await target.readAsString(), flush: true);
+    }
+    await File(tmpPath).rename(path);
+  }
+
+  static Future<void> _restoreBackup(String path) async {
+    final backup = File('$path.bak');
+    if (!await backup.exists()) return;
+    try {
+      final content = await backup.readAsString();
+      final json = jsonDecode(content) as Map<String, dynamic>;
+      // Only restore if the backup itself is valid, otherwise leave the
+      // original file untouched so the user can recover it manually.
+      CrochetProject.fromJson(json);
+      await backup.rename(path);
+      debugPrint('Restored project from backup for $path');
+    } catch (e) {
+      debugPrint('Backup for $path is also corrupted ($e)');
+    }
   }
 
   static Future<void> delete(String id) async {

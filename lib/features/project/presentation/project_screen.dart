@@ -57,6 +57,18 @@ class _ProjectContent extends ConsumerWidget {
         : null;
     final notifier = ref.read(projectProvider(projectId).notifier);
 
+    ref.listen<Object?>(projectSaveErrorProvider(projectId), (prev, next) {
+      if (next == null) return;
+      ScaffoldMessenger.of(context)
+        ..clearSnackBars()
+        ..showSnackBar(
+          SnackBar(
+            content: Text(l10n.saveError('$next')),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+    });
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

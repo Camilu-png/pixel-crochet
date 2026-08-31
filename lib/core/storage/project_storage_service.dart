@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -13,40 +14,58 @@ final storageServiceProvider = Provider<ProjectStorageService>((ref) {
   return ProjectStorageService();
 });
 
+/// Persists projects to disk (native) or SharedPreferences (web).
+///
+/// All storage operations are serialized through a single queue, so the
+/// read-modify-write sequences (`loadAll` -> mutate -> `save`) that back the
+/// web backend never interleave. This prevents silent data loss from
+/// concurrent writes.
 class ProjectStorageService {
   static const _prefsKey = 'projects';
 
+  /// SharedPreferences (localStorage) browsers commonly cap near 5 MB.
+  static const int _maxPrefsBytes = 5 * 1024 * 1024;
+
   bool get _isWeb => kIsWeb;
 
-  Future<List<CrochetProject>> loadAll() async {
-    if (_isWeb) {
-      return _loadAllFromPrefs();
-    }
-    return PlatformStorage.loadAll();
+  Future<void> _chain = Future.value();
+
+  Future<T> _synchronized<T>(Future<T> Function() action) {
+    final previous = _chain;
+    final completer = Completer<void>();
+    _chain = completer.future;
+    return previous.then((_) => action()).whenComplete(completer.complete);
   }
 
-  Future<CrochetProject?> load(String id) async {
-    if (_isWeb) {
-      return _loadFromPrefs(id);
-    }
-    return PlatformStorage.load(id);
-  }
+  Future<List<CrochetProject>> loadAll() => _synchronized(() async {
+        if (_isWeb) {
+          return _loadAllFromPrefs();
+        }
+        return PlatformStorage.loadAll();
+      });
 
-  Future<void> save(CrochetProject project) async {
-    if (_isWeb) {
-      await _saveToPrefs(project);
-      return;
-    }
-    await PlatformStorage.save(project);
-  }
+  Future<CrochetProject?> load(String id) => _synchronized(() async {
+        if (_isWeb) {
+          return _loadFromPrefs(id);
+        }
+        return PlatformStorage.load(id);
+      });
 
-  Future<void> delete(String id) async {
-    if (_isWeb) {
-      await _deleteFromPrefs(id);
-      return;
-    }
-    await PlatformStorage.delete(id);
-  }
+  Future<void> save(CrochetProject project) => _synchronized(() async {
+        if (_isWeb) {
+          await _saveToPrefs(project);
+          return;
+        }
+        await PlatformStorage.save(project);
+      });
+
+  Future<void> delete(String id) => _synchronized(() async {
+        if (_isWeb) {
+          await _deleteFromPrefs(id);
+          return;
+        }
+        await PlatformStorage.delete(id);
+      });
 
   // Web helpers (SharedPreferences)
   Future<List<CrochetProject>> _loadAllFromPrefs() async {
@@ -95,9 +114,12 @@ class ProjectStorageService {
 
   Future<void> _writePrefs(List<CrochetProject> projects) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(
-      _prefsKey,
-      jsonEncode(projects.map((p) => p.toJson()).toList()),
-    );
+    final encoded = jsonEncode(projects.map((p) => p.toJson()).toList());
+    if (encoded.length > _maxPrefsBytes) {
+      throw StateError(
+        'Storage quota exceeded: cannot persist ${encoded.length} bytes',
+      );
+    }
+    await prefs.setString(_prefsKey, encoded);
   }
 }
