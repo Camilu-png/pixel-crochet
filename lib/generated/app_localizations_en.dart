@@ -175,4 +175,85 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get usedColors => 'Pattern Colors';
+
+  @override
+  String get menuMyPatterns => 'My Patterns';
+
+  @override
+  String get menuMorePatterns => 'More Patterns';
+
+  @override
+  String get menuSupport => 'Support';
+
+  @override
+  String get menuSuggest => 'Suggest';
+
+  @override
+  String get morePatternsTitle => 'More Patterns';
+
+  @override
+  String get morePatternsDescription =>
+      'You can import your own pixel art patterns or purchase ready-made ones.';
+
+  @override
+  String get morePatternsHowToUpload =>
+      'To import a pattern, tap the + button on the home screen and select an image or text file.';
+
+  @override
+  String get morePatternsVisitKofi => 'Visit Ko-fi Shop';
+
+  @override
+  String get morePatternsKofiUrl => 'https://ko-fi.com/pixel_crochet/shop';
+
+  @override
+  String get supportTitle => 'About Pixel Crochet';
+
+  @override
+  String get supportDescription =>
+      'Pixel Crochet is an independent, free project. If you find it useful and want to help me continue developing it, you can support the project on Ko-fi.\n\nYour support helps me maintain the app and devote time to creating new features and patterns.\n\nYou can also help simply by sharing Pixel Crochet with someone who crochets. 💜';
+
+  @override
+  String get supportDonate => 'Support on Ko-fi';
+
+  @override
+  String get supportKofiUrl => 'https://ko-fi.com/pixel_crochet';
+
+  @override
+  String get suggestTitle => 'Suggest';
+
+  @override
+  String get suggestNameLabel => 'Your Name';
+
+  @override
+  String get suggestNameHint => 'Enter your name';
+
+  @override
+  String get suggestMessageLabel => 'Your Suggestion';
+
+  @override
+  String get suggestMessageHint => 'Tell us what you\'d like to see...';
+
+  @override
+  String get suggestSend => 'Send';
+
+  @override
+  String get suggestSuccess => 'Thank you! Your suggestion has been sent.';
+
+  @override
+  String get suggestValidationName => 'Please enter your name';
+
+  @override
+  String get suggestValidationMessage => 'Please enter your suggestion';
+
+  @override
+  String get openUrlMessage => 'Could not open the link';
+
+  @override
+  String get suggestEmail => 'camila.arancibia@proton.me';
+
+  @override
+  String get suggestSubjectLabel => 'Subject';
+
+  @override
+  String get suggestSubjectDefault => 'Pixel Crochet - Suggestion';
 }

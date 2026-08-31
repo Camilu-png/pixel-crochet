@@ -15,13 +15,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeWelcome => 'Bienvenido a Pixel Crochet';
 
   @override
-  String get homeDescription => 'Ganchillo hecho a mano con amor';
+  String get homeDescription => 'Un lugar para tejer con calma punto a punto';
 
   @override
   String get importPattern => 'Importar Patrón';
 
   @override
-  String get importPatternDescription => 'Importar un patrón de ganchillo';
+  String get importPatternDescription => 'Importar un patrón';
 
   @override
   String get importPatternHint =>
@@ -175,4 +175,85 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get usedColors => 'Colores del Patrón';
+
+  @override
+  String get menuMyPatterns => 'Mis Patrones';
+
+  @override
+  String get menuMorePatterns => '+ Patrones';
+
+  @override
+  String get menuSupport => 'Apoyar';
+
+  @override
+  String get menuSuggest => 'Sugerir';
+
+  @override
+  String get morePatternsTitle => '+ Patrones';
+
+  @override
+  String get morePatternsDescription =>
+      'Puedes importar tus propios patrones de pixel art o comprar listos para usar.';
+
+  @override
+  String get morePatternsHowToUpload =>
+      'Para importar un patrón, toca el botón + en la pantalla principal y selecciona una imagen o archivo de texto.';
+
+  @override
+  String get morePatternsVisitKofi => 'Visitar Ko-fi';
+
+  @override
+  String get morePatternsKofiUrl => 'https://ko-fi.com/pixel_crochet/shop';
+
+  @override
+  String get supportTitle => 'Sobre Pixel Crochet';
+
+  @override
+  String get supportDescription =>
+      'Pixel Crochet es un proyecto independiente y gratuito. Si te resulta útil y quieres ayudarme a seguir desarrollándolo, puedes apoyar el proyecto en Ko-fi.\n\nTu apoyo me ayuda a mantener la aplicación y dedicar tiempo a crear nuevas funcionalidades y patrones.\n\nTambién puedes ayudar simplemente compartiendo Pixel Crochet con alguien que haga crochet. 💜';
+
+  @override
+  String get supportDonate => 'Apoyar en Ko-fi';
+
+  @override
+  String get supportKofiUrl => 'https://ko-fi.com/pixel_crochet';
+
+  @override
+  String get suggestTitle => 'Sugerir';
+
+  @override
+  String get suggestNameLabel => 'Tu Nombre';
+
+  @override
+  String get suggestNameHint => 'Ingresa tu nombre';
+
+  @override
+  String get suggestMessageLabel => 'Tu Sugerencia';
+
+  @override
+  String get suggestMessageHint => 'Cuéntanos qué te gustaría ver...';
+
+  @override
+  String get suggestSend => 'Enviar';
+
+  @override
+  String get suggestSuccess => '¡Gracias! Tu sugerencia ha sido enviada.';
+
+  @override
+  String get suggestValidationName => 'Por favor, ingresa tu nombre';
+
+  @override
+  String get suggestValidationMessage => 'Por favor, ingresa tu sugerencia';
+
+  @override
+  String get openUrlMessage => 'No pudimos abrir el link';
+
+  @override
+  String get suggestEmail => 'camila.arancibia@proton.me';
+
+  @override
+  String get suggestSubjectLabel => 'Asunto';
+
+  @override
+  String get suggestSubjectDefault => 'Pixel Crochet - Sugerencia';
 }

@@ -100223,9 +100223,9 @@ ga0u(){return"Yarn colors"}}
 A.Kt.prototype={
 gVM(){return"Pixel Crochet"},
 gYv(){return"Bienvenido a Pixel Crochet"},
-gYu(){return"Ganchillo hecho a mano con amor"},
+gYu(){return"Un lugar para tejer con calma punto a punto"},
 gYB(){return"Importar Patr\xf3n"},
-gYC(){return"Importar un patr\xf3n de ganchillo"},
+gYC(){return"Importar un patr\xf3n"},
 gYD(){return"Selecciona un archivo .txt o pega el texto del patr\xf3n"},
 gMh(){return"Seleccionar Archivo"},
 gZL(){return"o"},
