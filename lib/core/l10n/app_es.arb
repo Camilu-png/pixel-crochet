@@ -73,5 +73,8 @@
   "suggestSuccess": "¡Gracias! Tu sugerencia ha sido enviada.",
   "suggestValidationName": "Por favor, ingresa tu nombre",
   "suggestValidationMessage": "Por favor, ingresa tu sugerencia",
-  "openUrlMessage": "No pudimos abrir el link"
+  "openUrlMessage": "No pudimos abrir el link",
+  "suggestEmail": "camila.arancibia@proton.me",
+  "suggestSubjectLabel": "Asunto",
+  "suggestSubjectDefault": "Pixel Crochet - Sugerencia"
 }

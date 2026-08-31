@@ -541,6 +541,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not open the link'**
   String get openUrlMessage;
+
+  /// No description provided for @suggestEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'camila.arancibia@proton.me'**
+  String get suggestEmail;
+
+  /// No description provided for @suggestSubjectLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get suggestSubjectLabel;
+
+  /// No description provided for @suggestSubjectDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Pixel Crochet - Suggestion'**
+  String get suggestSubjectDefault;
 }
 
 class _AppLocalizationsDelegate
