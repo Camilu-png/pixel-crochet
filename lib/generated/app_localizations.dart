@@ -332,6 +332,12 @@ abstract class AppLocalizations {
   /// **'The image file appears to be corrupted.'**
   String get corruptedImage;
 
+  /// No description provided for @imageTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The image is too large. Please use a smaller image.'**
+  String get imageTooLarge;
+
   /// No description provided for @importErrorDetail.
   ///
   /// In en, this message translates to:
@@ -343,6 +349,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong: {error}'**
   String errorOccurred(Object error);
+
+  /// No description provided for @saveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save changes: {error}'**
+  String saveError(Object error);
 
   /// No description provided for @noPatternData.
   ///
@@ -457,6 +469,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'https://ko-fi.com/pixel_crochet/shop'**
   String get morePatternsKofiUrl;
+
+  /// No description provided for @productMariposaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mariposa Cardigan — Size L'**
+  String get productMariposaTitle;
+
+  /// No description provided for @productMariposaDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Become a beautiful forest butterfly with this lovely cardigan.'**
+  String get productMariposaDesc;
+
+  /// No description provided for @productSalchipletoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Salchipleto'**
+  String get productSalchipletoTitle;
+
+  /// No description provided for @productSalchipletoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'A delicious friend that is always by your side.'**
+  String get productSalchipletoDesc;
 
   /// No description provided for @supportTitle.
   ///

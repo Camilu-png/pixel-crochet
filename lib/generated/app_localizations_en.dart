@@ -135,6 +135,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get corruptedImage => 'The image file appears to be corrupted.';
 
   @override
+  String get imageTooLarge =>
+      'The image is too large. Please use a smaller image.';
+
+  @override
   String importErrorDetail(Object error) {
     return 'Error importing pattern: $error';
   }
@@ -142,6 +146,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String errorOccurred(Object error) {
     return 'Something went wrong: $error';
+  }
+
+  @override
+  String saveError(Object error) {
+    return 'Could not save changes: $error';
   }
 
   @override
@@ -204,6 +213,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get morePatternsKofiUrl => 'https://ko-fi.com/pixel_crochet/shop';
+
+  @override
+  String get productMariposaTitle => 'Mariposa Cardigan — Size L';
+
+  @override
+  String get productMariposaDesc =>
+      'Become a beautiful forest butterfly with this lovely cardigan.';
+
+  @override
+  String get productSalchipletoTitle => 'Salchipleto';
+
+  @override
+  String get productSalchipletoDesc =>
+      'A delicious friend that is always by your side.';
 
   @override
   String get supportTitle => 'About Pixel Crochet';
