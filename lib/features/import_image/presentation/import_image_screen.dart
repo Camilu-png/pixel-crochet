@@ -597,6 +597,8 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
       switch (error.code) {
         case 'corruptedImage':
           return l10n.corruptedImage;
+        case 'imageTooLarge':
+          return l10n.imageTooLarge;
         case 'invalidImageDimensions':
           return l10n.invalidImageDimensions;
       }
