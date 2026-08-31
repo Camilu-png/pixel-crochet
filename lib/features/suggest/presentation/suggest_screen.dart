@@ -19,9 +19,11 @@ class _SuggestScreenState extends ConsumerState<SuggestScreen> {
   String _subject = '';
 
   @override
-  void initState() {
-    super.initState();
-    _subject = AppLocalizations.of(context)!.suggestSubjectDefault;
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_subject.isEmpty) {
+      _subject = AppLocalizations.of(context)!.suggestSubjectDefault;
+    }
   }
 
   @override
@@ -49,15 +51,9 @@ class _SuggestScreenState extends ConsumerState<SuggestScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      l10n.suggestTitle,
-                      style: texts.headlineMedium,
-                    ),
+                    Text(l10n.suggestTitle, style: texts.headlineMedium),
                     const SizedBox(height: 8),
-                    Text(
-                      l10n.suggestSubtitle,
-                      style: texts.bodyMedium,
-                    ),
+                    Text(l10n.suggestSubtitle, style: texts.bodyMedium),
                     const SizedBox(height: 24),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -74,10 +70,9 @@ class _SuggestScreenState extends ConsumerState<SuggestScreen> {
                         labelText: l10n.yourName,
                         hintText: l10n.suggestNameHint,
                       ),
-                      validator: (v) =>
-                          (v == null || v.trim().isEmpty)
-                              ? l10n.requiredField
-                              : null,
+                      validator: (v) => (v == null || v.trim().isEmpty)
+                          ? l10n.requiredField
+                          : null,
                     ),
                     const SizedBox(height: 16),
                     TextFormField(
@@ -90,10 +85,9 @@ class _SuggestScreenState extends ConsumerState<SuggestScreen> {
                         hintText: l10n.suggestMessageHint,
                         alignLabelWithHint: true,
                       ),
-                      validator: (v) =>
-                          (v == null || v.trim().length < 10)
-                              ? l10n.tooShort
-                              : null,
+                      validator: (v) => (v == null || v.trim().length < 10)
+                          ? l10n.tooShort
+                          : null,
                     ),
                     const SizedBox(height: 8),
                     FilledButton.icon(
