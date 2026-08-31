@@ -66,7 +66,7 @@ class SupportScreen extends ConsumerWidget {
                     children: [
                       Expanded(
                         child: _MicroCard(
-                          icon: Icons.favorite, // placeholder, uses brand.tan
+                          icon: Icons.favorite,
                           label: l10n.supportKeepApp,
                           brand: brand,
                         ),

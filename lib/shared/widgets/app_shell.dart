@@ -10,9 +10,9 @@ class AppShell extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext contex) {
-    final l10n = AppLocalizations.of(contex)!;
-    final currentPath = GoRouterState.of(contex).uri.path;
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final currentPath = GoRouterState.of(context).uri.path;
 
     return Scaffold(
       appBar: AppBar(title: Text(_getTitle(currentPath, l10n))),

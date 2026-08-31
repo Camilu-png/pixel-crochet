@@ -5,7 +5,10 @@ import '../../../../generated/app_localizations.dart';
 Future<bool> openUrl(BuildContext context, String url) async {
   final l10n = AppLocalizations.of(context)!;
   try {
-    final result = await launchUrl(Uri.parse(url));
+    final result = await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    );
     return result;
   } catch (_) {
     if (!context.mounted) return false;

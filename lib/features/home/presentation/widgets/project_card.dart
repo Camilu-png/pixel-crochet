@@ -31,7 +31,10 @@ class _ProjectCardState extends State<ProjectCard> {
     final texts = context.texts;
     final l10n = AppLocalizations.of(context)!;
     final p = widget.project;
-    final progress = p.totalRows == 0 ? 0.0 : p.currentRowNumber / p.totalRows;
+    // Use block-based progress (matches the project screen) rather than the
+    // 1-based currentRowNumber, which would show 100% on the last row even
+    // before all stitches are completed.
+    final progress = p.totalBlocks == 0 ? 0.0 : p.progress.clamp(0.0, 1.0);
 
     return AnimatedScale(
       scale: _pressed ? 0.97 : 1,
@@ -86,7 +89,7 @@ class _ProjectCardState extends State<ProjectCard> {
                           children: [
                             Container(height: 6, color: brand.lavenderSoft),
                             FractionallySizedBox(
-                              widthFactor: progress.clamp(0, 1),
+                              widthFactor: progress,
                               child: Container(
                                 height: 6,
                                 decoration: BoxDecoration(
@@ -159,7 +162,7 @@ class _GlassIconButton extends StatelessWidget {
       tooltip: tooltip,
       onPressed: onPressed,
       iconSize: 20,
-      constraints: const BoxConstraints.tightFor(width: 40, height: 40),
+      constraints: const BoxConstraints.tightFor(width: 48, height: 48),
       style: IconButton.styleFrom(
         backgroundColor: context.scheme.surface.withValues(alpha: .82),
         foregroundColor: context.brand.ink,

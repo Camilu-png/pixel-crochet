@@ -55,7 +55,7 @@ class AppColors extends ThemeExtension<AppColors> {
     ivory: Color(0xFFFFF9F2),
     surface: Color(0xFFFFFFFF),
     surfaceAlt: Color(0xFFF7EFE6),
-    lavender: Color(0xFF7B6BB0),
+    lavender: Color(0xFF6E5CA6),
     lavenderSoft: Color(0xFFC8BFE7),
     tan: Color(0xFFC08A4E),
     tanSoft: Color(0xFFF3E3D0),
@@ -72,11 +72,11 @@ class AppColors extends ThemeExtension<AppColors> {
       end: Alignment.bottomRight,
     ),
     progressGradient: LinearGradient(
-      colors: [Color(0xFF7B6BB0), Color(0xFFE3798E)],
+      colors: [Color(0xFF6E5CA6), Color(0xFFE3798E)],
     ),
     softShadow: [
       BoxShadow(
-        color: Color(0x147B6BB0),
+        color: Color(0x146E5CA6),
         blurRadius: 24,
         offset: Offset(0, 8),
       ),

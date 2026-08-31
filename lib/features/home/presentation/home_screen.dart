@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/models/crochet_project.dart';
+import '../../../shared/layout/grid_columns.dart';
 import '../../../generated/app_localizations.dart';
 import '../../../core/theme/app_colors.dart';
 import '../providers/home_provider.dart';
@@ -59,7 +60,7 @@ class _PatternsGrid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final columns = columnsFor(MediaQuery.sizeOf(context).width);
+    final columns = gridColumns(MediaQuery.sizeOf(context).width);
 
     return GridView.builder(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 96),
@@ -97,13 +98,6 @@ class _PatternsGrid extends ConsumerWidget {
       },
     );
   }
-}
-
-int columnsFor(double width) {
-  if (width >= 1200) return 4;
-  if (width >= 900) return 3;
-  if (width >= 600) return 3;
-  return 2;
 }
 
 class _EmptyPatternsView extends StatelessWidget {

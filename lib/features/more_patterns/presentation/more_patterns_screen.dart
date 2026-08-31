@@ -4,6 +4,7 @@ import 'package:pixel_crochet/core/constants/products.dart';
 import 'package:pixel_crochet/core/theme/app_colors.dart';
 import 'package:pixel_crochet/core/theme/app_theme.dart';
 import 'package:pixel_crochet/shared/widgets/kofi_button.dart';
+import 'package:pixel_crochet/shared/layout/grid_columns.dart';
 
 import '../../../../generated/app_localizations.dart';
 import '../../../../shared/utils/open_url.dart';
@@ -18,6 +19,7 @@ class MorePatternsScreen extends ConsumerWidget {
     final texts = context.texts;
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = width < 600;
+    final products = sampleProducts(l10n);
 
     return Scaffold(
       body: CustomScrollView(
@@ -62,15 +64,14 @@ class MorePatternsScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(20),
             sliver: SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: _columnsFor(width),
+                crossAxisCount: gridColumns(width),
                 childAspectRatio: 0.72,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
               ),
               delegate: SliverChildBuilderDelegate(
-                (context, index) =>
-                    _ProductCard(product: sampleProducts[index]),
-                childCount: sampleProducts.length,
+                (context, index) => _ProductCard(product: products[index]),
+                childCount: products.length,
               ),
             ),
           ),
@@ -89,13 +90,6 @@ class MorePatternsScreen extends ConsumerWidget {
       ),
     );
   }
-}
-
-int _columnsFor(double width) {
-  if (width >= 1200) return 4;
-  if (width >= 900) return 3;
-  if (width >= 600) return 3;
-  return 2;
 }
 
 class _ProductCard extends StatelessWidget {

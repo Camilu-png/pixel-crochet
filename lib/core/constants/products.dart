@@ -1,3 +1,5 @@
+import '../../generated/app_localizations.dart';
+
 class Product {
   const Product({
     required this.imagePath,
@@ -12,18 +14,19 @@ class Product {
   final String kofiUrl;
 }
 
-const List<Product> sampleProducts = [
-  Product(
-    imagePath: 'assets/products/cardigan_mariposa.png',
-    title: 'Cardigan de Mariposa Talla L',
-    description:
-        'Conviértete en una bella mariposa del bosque con este hermoso cardigan.',
-    kofiUrl: 'https://ko-fi.com/s/b121095f37',
-  ),
-  Product(
-    imagePath: 'assets/products/salchipleto.png',
-    title: 'Salchipleto',
-    description: 'Un delicioso amigo que te acompaña siempre.',
-    kofiUrl: 'https://ko-fi.com/s/93a6e28a6c',
-  ),
-];
+/// Returns the promotional sample products with locale-aware copy.
+List<Product> sampleProducts(AppLocalizations l10n) => [
+      Product(
+        imagePath: 'assets/products/cardigan_mariposa.png',
+        title: l10n.productMariposaTitle,
+        description: l10n.productMariposaDesc,
+        kofiUrl: 'https://ko-fi.com/s/b121095f37',
+      ),
+      Product(
+        imagePath: 'assets/products/salchipleto.png',
+        title: l10n.productSalchipletoTitle,
+        description: l10n.productSalchipletoDesc,
+        kofiUrl: 'https://ko-fi.com/s/93a6e28a6c',
+      ),
+    ];
+
