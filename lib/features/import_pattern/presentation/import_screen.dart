@@ -210,7 +210,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
       } else {
         throw const FormatException('filePathError');
       }
-      final project = _parser.parse(content);
+      final project = await _parser.parseAsync(content);
       _nameController.text = project.name;
       setState(() {
         _parsedProject = project;
@@ -231,7 +231,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     setState(() => _isImporting = true);
 
     try {
-      final project = _parser.parse(text);
+      final project = await _parser.parseAsync(text);
       _nameController.text = project.name;
       setState(() {
         _parsedProject = project;
