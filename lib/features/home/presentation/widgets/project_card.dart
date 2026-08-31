@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/models/crochet_project.dart';
-import '../../../../core/theme/context_extensions.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_theme.dart';
 import '../../../../generated/app_localizations.dart';
 import '../../../../shared/painters/pattern_painter.dart';
 
-class ProjectCard extends StatelessWidget {
+class ProjectCard extends StatefulWidget {
   const ProjectCard({
     super.key,
     required this.project,
@@ -18,56 +19,155 @@ class ProjectCard extends StatelessWidget {
   final VoidCallback onDelete;
 
   @override
+  State<ProjectCard> createState() => _ProjectCardState();
+}
+
+class _ProjectCardState extends State<ProjectCard> {
+  bool _pressed = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: _PatternPreview(project: project),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          project.name,
-                          style: context.text.titleSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+    final brand = context.brand;
+    final texts = context.texts;
+    final l10n = AppLocalizations.of(context)!;
+    final p = widget.project;
+    // Use block-based progress (matches the project screen) rather than the
+    // 1-based currentRowNumber, which would show 100% on the last row even
+    // before all stitches are completed.
+    final progress = p.totalBlocks == 0 ? 0.0 : p.progress.clamp(0.0, 1.0);
+
+    return AnimatedScale(
+      scale: _pressed ? 0.97 : 1,
+      duration: const Duration(milliseconds: 120),
+      curve: Curves.easeOut,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppRadii.lg),
+          boxShadow: brand.softShadow,
+        ),
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: widget.onTap,
+            onLongPress: () => _confirmDelete(context),
+            onHighlightChanged: (v) => setState(() => _pressed = v),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      _PatternPreview(project: p),
+                      Positioned(
+                        top: 6,
+                        right: 6,
+                        child: _GlassIconButton(
+                          icon: Icons.more_vert_rounded,
+                          tooltip: l10n.optionsLabel,
+                          onPressed: () => _confirmDelete(context),
                         ),
-                        Text(
-                          AppLocalizations.of(context)!.rowCount(
-                            project.currentRowNumber,
-                            project.totalRows,
-                          ),
-                          style: context.text.bodySmall?.copyWith(
-                            color: context.colors.brandDark.withValues(alpha: 0.6),
-                          ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        p.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: texts.titleMedium,
+                      ),
+                      const SizedBox(height: 10),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: Stack(
+                          children: [
+                            Container(height: 6, color: brand.lavenderSoft),
+                            FractionallySizedBox(
+                              widthFactor: progress,
+                              child: Container(
+                                height: 6,
+                                decoration: BoxDecoration(
+                                  gradient: brand.progressGradient,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        l10n.rowCounter(
+                          p.currentRowNumber,
+                          p.totalRows,
+                          (progress * 100).round(),
+                        ),
+                        style: texts.labelSmall,
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.delete_outline, size: 20),
-                    onPressed: onDelete,
-                    color: context.colors.brandDark.withValues(alpha: 0.5),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
+    );
+  }
+
+  Future<void> _confirmDelete(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        icon: Icon(Icons.delete_outline_rounded, color: ctx.brand.danger),
+        title: Text(l10n.deletePatternTitle),
+        content: Text(l10n.deletePatternBody(widget.project.name)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: ctx.brand.danger),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(l10n.delete),
+          ),
+        ],
+      ),
+    );
+    if (ok ?? false) widget.onDelete();
+  }
+}
+
+class _GlassIconButton extends StatelessWidget {
+  const _GlassIconButton({
+    required this.icon,
+    required this.onPressed,
+    this.tooltip,
+  });
+
+  final IconData icon;
+  final VoidCallback onPressed;
+  final String? tooltip;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton.filledTonal(
+      tooltip: tooltip,
+      onPressed: onPressed,
+      iconSize: 20,
+      constraints: const BoxConstraints.tightFor(width: 48, height: 48),
+      style: IconButton.styleFrom(
+        backgroundColor: context.scheme.surface.withValues(alpha: .82),
+        foregroundColor: context.brand.ink,
+      ),
+      icon: Icon(icon),
     );
   }
 }
@@ -81,10 +181,10 @@ class _PatternPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     if (project.rows.isEmpty) {
       return Container(
-        color: context.colors.brandTanLight,
+        color: context.brand.tanSoft,
         child: Icon(
           Icons.pattern,
-          color: context.colors.brandDark.withValues(alpha: 0.2),
+          color: context.brand.ink.withValues(alpha: 0.2),
         ),
       );
     }

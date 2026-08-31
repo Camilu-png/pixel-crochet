@@ -332,6 +332,12 @@ abstract class AppLocalizations {
   /// **'The image file appears to be corrupted.'**
   String get corruptedImage;
 
+  /// No description provided for @imageTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The image is too large. Please use a smaller image.'**
+  String get imageTooLarge;
+
   /// No description provided for @importErrorDetail.
   ///
   /// In en, this message translates to:
@@ -343,6 +349,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong: {error}'**
   String errorOccurred(Object error);
+
+  /// No description provided for @saveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save changes: {error}'**
+  String saveError(Object error);
 
   /// No description provided for @noPatternData.
   ///
@@ -373,6 +385,342 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yarn colors'**
   String get yarnColors;
+
+  /// No description provided for @projectName.
+  ///
+  /// In en, this message translates to:
+  /// **'Project name'**
+  String get projectName;
+
+  /// No description provided for @rows.
+  ///
+  /// In en, this message translates to:
+  /// **'rows'**
+  String get rows;
+
+  /// No description provided for @editProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Project'**
+  String get editProject;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @usedColors.
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern Colors'**
+  String get usedColors;
+
+  /// No description provided for @menuMyPatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'My Patterns'**
+  String get menuMyPatterns;
+
+  /// No description provided for @menuMorePatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'More Patterns'**
+  String get menuMorePatterns;
+
+  /// No description provided for @menuSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get menuSupport;
+
+  /// No description provided for @menuSuggest.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest'**
+  String get menuSuggest;
+
+  /// No description provided for @morePatternsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'More Patterns'**
+  String get morePatternsTitle;
+
+  /// No description provided for @morePatternsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'You can import your own pixel art patterns or purchase ready-made ones.'**
+  String get morePatternsDescription;
+
+  /// No description provided for @morePatternsHowToUpload.
+  ///
+  /// In en, this message translates to:
+  /// **'To import a pattern, tap the + button on the home screen and select an image or text file.'**
+  String get morePatternsHowToUpload;
+
+  /// No description provided for @morePatternsVisitKofi.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Ko-fi Shop'**
+  String get morePatternsVisitKofi;
+
+  /// No description provided for @morePatternsKofiUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'https://ko-fi.com/pixel_crochet/shop'**
+  String get morePatternsKofiUrl;
+
+  /// No description provided for @productMariposaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mariposa Cardigan — Size L'**
+  String get productMariposaTitle;
+
+  /// No description provided for @productMariposaDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Become a beautiful forest butterfly with this lovely cardigan.'**
+  String get productMariposaDesc;
+
+  /// No description provided for @productSalchipletoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Salchipleto'**
+  String get productSalchipletoTitle;
+
+  /// No description provided for @productSalchipletoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'A delicious friend that is always by your side.'**
+  String get productSalchipletoDesc;
+
+  /// No description provided for @supportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About Pixel Crochet'**
+  String get supportTitle;
+
+  /// No description provided for @supportDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Pixel Crochet is an independent, free project. If you find it useful and want to help me continue developing it, you can support the project on Ko-fi.\n\nYour support helps me maintain the app and devote time to creating new features and patterns.\n\nYou can also help simply by sharing Pixel Crochet with someone who crochets. 💜'**
+  String get supportDescription;
+
+  /// No description provided for @supportDonate.
+  ///
+  /// In en, this message translates to:
+  /// **'Support on Ko-fi'**
+  String get supportDonate;
+
+  /// No description provided for @supportKofiUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'https://ko-fi.com/pixel_crochet'**
+  String get supportKofiUrl;
+
+  /// No description provided for @suggestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggest'**
+  String get suggestTitle;
+
+  /// No description provided for @suggestNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Name'**
+  String get suggestNameLabel;
+
+  /// No description provided for @suggestNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name'**
+  String get suggestNameHint;
+
+  /// No description provided for @suggestMessageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Suggestion'**
+  String get suggestMessageLabel;
+
+  /// No description provided for @suggestMessageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what you\'d like to see...'**
+  String get suggestMessageHint;
+
+  /// No description provided for @suggestSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get suggestSend;
+
+  /// No description provided for @suggestSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you! Your suggestion has been sent.'**
+  String get suggestSuccess;
+
+  /// No description provided for @suggestValidationName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get suggestValidationName;
+
+  /// No description provided for @suggestValidationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your suggestion'**
+  String get suggestValidationMessage;
+
+  /// No description provided for @openUrlMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the link'**
+  String get openUrlMessage;
+
+  /// No description provided for @suggestEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'camila.arancibia@proton.me'**
+  String get suggestEmail;
+
+  /// No description provided for @suggestSubjectLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get suggestSubjectLabel;
+
+  /// No description provided for @suggestSubjectDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Pixel Crochet - Suggestion'**
+  String get suggestSubjectDefault;
+
+  /// No description provided for @appTitleTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Made stitch by stitch'**
+  String get appTitleTagline;
+
+  /// No description provided for @welcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Pixel Crochet'**
+  String get welcomeTitle;
+
+  /// No description provided for @welcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn your favorite images into tapestry crochet patterns and follow them row by row.'**
+  String get welcomeSubtitle;
+
+  /// No description provided for @importFirstPattern.
+  ///
+  /// In en, this message translates to:
+  /// **'Import my first pattern'**
+  String get importFirstPattern;
+
+  /// No description provided for @browsePatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse Ko-fi patterns'**
+  String get browsePatterns;
+
+  /// No description provided for @hintPng.
+  ///
+  /// In en, this message translates to:
+  /// **'PNG image'**
+  String get hintPng;
+
+  /// No description provided for @hintTxt.
+  ///
+  /// In en, this message translates to:
+  /// **'.txt file'**
+  String get hintTxt;
+
+  /// No description provided for @hintKofi.
+  ///
+  /// In en, this message translates to:
+  /// **'Ko-fi patterns'**
+  String get hintKofi;
+
+  /// No description provided for @rowCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'Row {current}/{total} · {percent}%'**
+  String rowCounter(Object current, Object percent, Object total);
+
+  /// No description provided for @optionsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get optionsLabel;
+
+  /// No description provided for @deletePatternTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete pattern?'**
+  String get deletePatternTitle;
+
+  /// No description provided for @deletePatternBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \'{name}\'? This cannot be undone.'**
+  String deletePatternBody(Object name);
+
+  /// No description provided for @yourName.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get yourName;
+
+  /// No description provided for @yourSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Your suggestion'**
+  String get yourSuggestion;
+
+  /// No description provided for @suggestSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what you\'d love to see next — every idea is read and appreciated.'**
+  String get suggestSubtitle;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get requiredField;
+
+  /// No description provided for @tooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Please write a little more (at least 10 characters)'**
+  String get tooShort;
+
+  /// No description provided for @supportKeepApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the app alive'**
+  String get supportKeepApp;
+
+  /// No description provided for @supportNewPatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'New patterns'**
+  String get supportNewPatterns;
+
+  /// No description provided for @supportShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share the app'**
+  String get supportShare;
+
+  /// No description provided for @morePatternsPriceBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready-made'**
+  String get morePatternsPriceBadge;
 }
 
 class _AppLocalizationsDelegate

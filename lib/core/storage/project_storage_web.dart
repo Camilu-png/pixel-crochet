@@ -7,6 +7,8 @@ import '../models/crochet_project.dart';
 class PlatformStorage {
   static const _prefsKey = 'projects';
 
+  static const int _maxPrefsBytes = 5 * 1024 * 1024;
+
   static Future<List<CrochetProject>> loadAll() async {
     final prefs = await SharedPreferences.getInstance();
     final encoded = prefs.getString(_prefsKey);
@@ -53,9 +55,12 @@ class PlatformStorage {
 
   static Future<void> _writePrefs(List<CrochetProject> projects) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(
-      _prefsKey,
-      jsonEncode(projects.map((p) => p.toJson()).toList()),
-    );
+    final encoded = jsonEncode(projects.map((p) => p.toJson()).toList());
+    if (encoded.length > _maxPrefsBytes) {
+      throw StateError(
+        'Storage quota exceeded: cannot persist ${encoded.length} bytes',
+      );
+    }
+    await prefs.setString(_prefsKey, encoded);
   }
 }

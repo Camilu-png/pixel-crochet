@@ -39,8 +39,19 @@ class CrochetProject {
 
   double get rowProgress => totalRows > 0 ? currentRowIndex / totalRows : 0.0;
 
-  int get totalCompletedBlocks =>
-      completedBlocks.values.fold(0, (sum, blocks) => sum + blocks.length);
+  int get totalCompletedBlocks {
+    var count = 0;
+    completedBlocks.forEach((rowIndex, blocks) {
+      if (rowIndex < 0 || rowIndex >= rows.length) return;
+      for (final blockIndex in blocks) {
+        if (blockIndex >= 0 &&
+            blockIndex < rows[rowIndex].colorBlocks.length) {
+          count++;
+        }
+      }
+    });
+    return count;
+  }
 
   int get totalBlocks =>
       rows.fold(0, (sum, row) => sum + row.colorBlocks.length);
@@ -108,27 +119,26 @@ class CrochetProject {
   };
 
   factory CrochetProject.fromJson(Map<String, dynamic> json) {
-    final rawCompleted = json['completedBlocks'] as Map<String, dynamic>?;
-    final completedBlocks = <int, Set<int>>{};
-    if (rawCompleted != null) {
-      for (final entry in rawCompleted.entries) {
-        final rowIndex = int.tryParse(entry.key) ?? -1;
-        final blockIndices = (entry.value as List? ?? const [])
-            .cast<int>()
-            .toSet();
-        if (rowIndex >= 0) {
-          completedBlocks[rowIndex] = blockIndices;
-        }
-      }
+    // Reject data written by a newer schema we cannot safely parse.
+    final version = _readInt(json['version']);
+    if (version != null && version > schemaVersion) {
+      throw FormatException(
+        'Unsupported project schema v$version (expected <= $schemaVersion)',
+      );
     }
 
-    final rows = (json['rows'] as List)
-        .map((r) => PatternRow.fromJson(r as Map<String, dynamic>))
-        .toList();
+    final rows = json['rows'] is List
+        ? (json['rows'] as List)
+            .whereType<Map<String, dynamic>>()
+            .map(PatternRow.fromJson)
+            .toList()
+        : const <PatternRow>[];
+
+    final completedBlocks = _parseCompletedBlocks(json['completedBlocks'], rows);
 
     // Clamp the persisted index so corrupted or legacy data can never produce
     // a RangeError when reading the current row.
-    final rawRowIndex = json['currentRowIndex'] as int? ?? 0;
+    final rawRowIndex = _readInt(json['currentRowIndex']) ?? 0;
     final currentRowIndex = rows.isEmpty
         ? 0
         : rawRowIndex.clamp(0, rows.length - 1).toInt();
@@ -139,16 +149,57 @@ class CrochetProject {
         : DateTime.now();
 
     return CrochetProject(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      width: json['width'] as int,
-      height: json['height'] as int,
+      id: _readString(json['id']) ?? '',
+      name: _readString(json['name']) ?? '',
+      width: _readInt(json['width']) ?? 0,
+      height: _readInt(json['height']) ?? 0,
       rows: rows,
       currentRowIndex: currentRowIndex,
       completedBlocks: completedBlocks,
       createdAt: createdAt,
     );
   }
+
+  /// Parses completed-block markers, dropping any entry whose row or block
+  /// index is out of range for the loaded rows. This guarantees `progress` can
+  /// never exceed 1.0 even if the persisted data was corrupted or edited by a
+  /// newer/older schema.
+  static Map<int, Set<int>> _parseCompletedBlocks(
+    Object? rawCompleted,
+    List<PatternRow> rows,
+  ) {
+    final clamped = <int, Set<int>>{};
+    if (rawCompleted is! Map) return clamped;
+
+    for (final entry in rawCompleted.entries) {
+      final rowIndex = int.tryParse('${entry.key}');
+      if (rowIndex == null ||
+          rowIndex < 0 ||
+          rowIndex >= rows.length) {
+        continue;
+      }
+      final blockIndices = <int>{};
+      final rawIndices = entry.value;
+      if (rawIndices is List) {
+        for (final rawIndex in rawIndices) {
+          final blockIndex = _readInt(rawIndex);
+          if (blockIndex != null &&
+              blockIndex >= 0 &&
+              blockIndex < rows[rowIndex].colorBlocks.length) {
+            blockIndices.add(blockIndex);
+          }
+        }
+      }
+      if (blockIndices.isNotEmpty) {
+        clamped[rowIndex] = blockIndices;
+      }
+    }
+    return clamped;
+  }
+
+  static int? _readInt(Object? value) => value is int ? value : null;
+
+  static String? _readString(Object? value) => value is String ? value : null;
 
   @override
   bool operator ==(Object other) =>

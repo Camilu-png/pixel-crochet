@@ -15,8 +15,8 @@ class ImageProcessor {
   const ImageProcessor();
 
   static const int maxStitches = 100000;
+  static const int maxPixels = 5000000;
   static const int _quantizeStep = 16;
-  static const double _colorMatchThreshold = 60.0;
 
   /// Decodes and samples [path] off the UI thread. Not available on web.
   Future<ImageData> loadImageAsync(String path) => loadImageFromPath(path);
@@ -39,6 +39,11 @@ class ImageProcessor {
     final decoded = img.decodeImage(bytes);
     if (decoded == null) {
       throw const ImageProcessingException('corruptedImage');
+    }
+
+    final pixelCount = decoded.width * decoded.height;
+    if (pixelCount > maxPixels) {
+      throw const ImageProcessingException('imageTooLarge');
     }
 
     final pixels = <Color>[];
@@ -223,12 +228,7 @@ class ImageProcessor {
       }
     }
 
-    if (bestName != null &&
-        bestDistance <= _colorMatchThreshold * _colorMatchThreshold) {
-      return bestName;
-    }
-
-    return colorToHex(color);
+    return bestName ?? colorToHex(color);
   }
 
   double _colorDistanceSquared(Color a, Color b) {

@@ -4,11 +4,14 @@ import '../../../core/models/crochet_project.dart';
 import '../../../core/storage/project_storage_service.dart';
 import '../../home/providers/home_provider.dart';
 
-final projectProvider =
-    AsyncNotifierProvider.autoDispose.family<ProjectNotifier,
-        CrochetProject, String>(
-  ProjectNotifier.new,
-);
+final projectProvider = AsyncNotifierProvider.autoDispose
+    .family<ProjectNotifier, CrochetProject, String>(ProjectNotifier.new);
+
+/// Holds the last failed-save error for a project (null when none). Cleared on
+/// the next successful save. Lets the UI surface transient persistence
+/// failures (e.g. quota exceeded) without crashing.
+final projectSaveErrorProvider =
+    StateProvider.autoDispose.family<Object?, String>((ref, id) => null);
 
 class ProjectNotFoundException implements Exception {
   const ProjectNotFoundException();
@@ -43,6 +46,10 @@ class ProjectNotifier
     await _persist(updated);
   }
 
+  Future<void> updateProject(CrochetProject update) async {
+    await _persist(update);
+  }
+
   Future<void> delete() async {
     final project = state.valueOrNull;
     if (project != null) {
@@ -51,9 +58,22 @@ class ProjectNotifier
     ref.invalidate(projectsProvider);
   }
 
+  /// Persists [updated], optimistically reflecting the change but rolling back
+  /// to the previous value if the write fails so unsaved work is never shown
+  /// as saved. Failures are exposed through [projectSaveErrorProvider] so
+  /// fire-and-forget callers cannot crash the app.
   Future<void> _persist(CrochetProject updated) async {
+    final projectId = arg;
+    final previous = state.valueOrNull;
+    final saveError = ref.read(projectSaveErrorProvider(projectId).notifier);
     state = AsyncData(updated);
-    await _storage.save(updated);
-    ref.invalidate(projectsProvider);
+    try {
+      await _storage.save(updated);
+      saveError.state = null;
+      ref.invalidate(projectsProvider);
+    } catch (e, st) {
+      saveError.state = e;
+      state = previous != null ? AsyncData(previous) : AsyncError(e, st);
+    }
   }
 }

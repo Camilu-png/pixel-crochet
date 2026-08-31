@@ -103,5 +103,23 @@ void main() {
       expect(project.width, 1);
       expect(project.height, 1);
     });
+
+    test('rejects zero-width pattern', () {
+      final input = 'Zero\n0 x 3\nRow 1 <-: 1 red\nRow 2 <-: 1 red\nRow 3 <-: 1 red\n';
+
+      expect(
+        () => parser.parse(input),
+        throwsA(isA<FormatException>()),
+      );
+    });
+
+    test('rejects zero-height pattern', () {
+      final input = 'Zero\n5 x 0\nRow 1 <-: 1 red\n';
+
+      expect(
+        () => parser.parse(input),
+        throwsA(isA<FormatException>()),
+      );
+    });
   });
 }

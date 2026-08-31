@@ -59,7 +59,7 @@ void main() {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [Locale('en'), Locale('es')],
-        theme: AppTheme.light,
+        theme: AppTheme.light(),
         home: ProviderScope(
           overrides: [
             storageServiceProvider

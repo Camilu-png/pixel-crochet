@@ -32,7 +32,7 @@ class _PatternImageState extends State<PatternImage> {
   void didUpdateWidget(PatternImage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.highlightRowIndex != widget.highlightRowIndex) {
-      _scrollToCurrentRow();
+      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToCurrentRow());
     }
   }
 
@@ -63,7 +63,7 @@ class _PatternImageState extends State<PatternImage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.project.rows.isEmpty) {
+    if (widget.project.rows.isEmpty || widget.project.width <= 0) {
       return Center(
         child: Text(
           AppLocalizations.of(context)!.noPatternData,
@@ -76,7 +76,11 @@ class _PatternImageState extends State<PatternImage> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        if (constraints.maxWidth <= 0 || widget.project.width <= 0) {
+          return const SizedBox.shrink();
+        }
         final pixelSize = constraints.maxWidth / widget.project.width;
+        // Vertical stitches are square, so height derives from width.
         final imageHeight = widget.project.rows.length * pixelSize;
         final brightness = Theme.of(context).brightness;
         final highlightColor = brightness == Brightness.dark
@@ -85,12 +89,14 @@ class _PatternImageState extends State<PatternImage> {
 
         return SingleChildScrollView(
           controller: _scrollController,
-          child: CustomPaint(
-            size: Size(constraints.maxWidth, imageHeight),
-            painter: PatternPainter(
-              project: widget.project,
-              highlightRowIndex: widget.highlightRowIndex,
-              highlightColor: highlightColor,
+          child: RepaintBoundary(
+            child: CustomPaint(
+              size: Size(constraints.maxWidth, imageHeight),
+              painter: PatternPainter(
+                project: widget.project,
+                highlightRowIndex: widget.highlightRowIndex,
+                highlightColor: highlightColor,
+              ),
             ),
           ),
         );

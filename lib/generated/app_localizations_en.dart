@@ -135,6 +135,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get corruptedImage => 'The image file appears to be corrupted.';
 
   @override
+  String get imageTooLarge =>
+      'The image is too large. Please use a smaller image.';
+
+  @override
   String importErrorDetail(Object error) {
     return 'Error importing pattern: $error';
   }
@@ -142,6 +146,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String errorOccurred(Object error) {
     return 'Something went wrong: $error';
+  }
+
+  @override
+  String saveError(Object error) {
+    return 'Could not save changes: $error';
   }
 
   @override
@@ -160,4 +169,183 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yarnColors => 'Yarn colors';
+
+  @override
+  String get projectName => 'Project name';
+
+  @override
+  String get rows => 'rows';
+
+  @override
+  String get editProject => 'Edit Project';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get usedColors => 'Pattern Colors';
+
+  @override
+  String get menuMyPatterns => 'My Patterns';
+
+  @override
+  String get menuMorePatterns => 'More Patterns';
+
+  @override
+  String get menuSupport => 'Support';
+
+  @override
+  String get menuSuggest => 'Suggest';
+
+  @override
+  String get morePatternsTitle => 'More Patterns';
+
+  @override
+  String get morePatternsDescription =>
+      'You can import your own pixel art patterns or purchase ready-made ones.';
+
+  @override
+  String get morePatternsHowToUpload =>
+      'To import a pattern, tap the + button on the home screen and select an image or text file.';
+
+  @override
+  String get morePatternsVisitKofi => 'Visit Ko-fi Shop';
+
+  @override
+  String get morePatternsKofiUrl => 'https://ko-fi.com/pixel_crochet/shop';
+
+  @override
+  String get productMariposaTitle => 'Mariposa Cardigan — Size L';
+
+  @override
+  String get productMariposaDesc =>
+      'Become a beautiful forest butterfly with this lovely cardigan.';
+
+  @override
+  String get productSalchipletoTitle => 'Salchipleto';
+
+  @override
+  String get productSalchipletoDesc =>
+      'A delicious friend that is always by your side.';
+
+  @override
+  String get supportTitle => 'About Pixel Crochet';
+
+  @override
+  String get supportDescription =>
+      'Pixel Crochet is an independent, free project. If you find it useful and want to help me continue developing it, you can support the project on Ko-fi.\n\nYour support helps me maintain the app and devote time to creating new features and patterns.\n\nYou can also help simply by sharing Pixel Crochet with someone who crochets. 💜';
+
+  @override
+  String get supportDonate => 'Support on Ko-fi';
+
+  @override
+  String get supportKofiUrl => 'https://ko-fi.com/pixel_crochet';
+
+  @override
+  String get suggestTitle => 'Suggest';
+
+  @override
+  String get suggestNameLabel => 'Your Name';
+
+  @override
+  String get suggestNameHint => 'Enter your name';
+
+  @override
+  String get suggestMessageLabel => 'Your Suggestion';
+
+  @override
+  String get suggestMessageHint => 'Tell us what you\'d like to see...';
+
+  @override
+  String get suggestSend => 'Send';
+
+  @override
+  String get suggestSuccess => 'Thank you! Your suggestion has been sent.';
+
+  @override
+  String get suggestValidationName => 'Please enter your name';
+
+  @override
+  String get suggestValidationMessage => 'Please enter your suggestion';
+
+  @override
+  String get openUrlMessage => 'Could not open the link';
+
+  @override
+  String get suggestEmail => 'camila.arancibia@proton.me';
+
+  @override
+  String get suggestSubjectLabel => 'Subject';
+
+  @override
+  String get suggestSubjectDefault => 'Pixel Crochet - Suggestion';
+
+  @override
+  String get appTitleTagline => 'Made stitch by stitch';
+
+  @override
+  String get welcomeTitle => 'Welcome to Pixel Crochet';
+
+  @override
+  String get welcomeSubtitle =>
+      'Turn your favorite images into tapestry crochet patterns and follow them row by row.';
+
+  @override
+  String get importFirstPattern => 'Import my first pattern';
+
+  @override
+  String get browsePatterns => 'Browse Ko-fi patterns';
+
+  @override
+  String get hintPng => 'PNG image';
+
+  @override
+  String get hintTxt => '.txt file';
+
+  @override
+  String get hintKofi => 'Ko-fi patterns';
+
+  @override
+  String rowCounter(Object current, Object percent, Object total) {
+    return 'Row $current/$total · $percent%';
+  }
+
+  @override
+  String get optionsLabel => 'Options';
+
+  @override
+  String get deletePatternTitle => 'Delete pattern?';
+
+  @override
+  String deletePatternBody(Object name) {
+    return 'Are you sure you want to delete \'$name\'? This cannot be undone.';
+  }
+
+  @override
+  String get yourName => 'Your name';
+
+  @override
+  String get yourSuggestion => 'Your suggestion';
+
+  @override
+  String get suggestSubtitle =>
+      'Tell us what you\'d love to see next — every idea is read and appreciated.';
+
+  @override
+  String get requiredField => 'This field is required';
+
+  @override
+  String get tooShort => 'Please write a little more (at least 10 characters)';
+
+  @override
+  String get supportKeepApp => 'Keep the app alive';
+
+  @override
+  String get supportNewPatterns => 'New patterns';
+
+  @override
+  String get supportShare => 'Share the app';
+
+  @override
+  String get morePatternsPriceBadge => 'Ready-made';
 }

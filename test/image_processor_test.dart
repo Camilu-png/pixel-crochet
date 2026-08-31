@@ -1,5 +1,6 @@
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image/image.dart' as img;
 import 'package:pixel_crochet/core/models/row_direction.dart';
 import 'package:pixel_crochet/features/import_image/data/image_processor.dart';
 
@@ -88,6 +89,43 @@ void main() {
         'green',
         'blue',
       ]);
+    });
+  });
+
+  group('ImageProcessor.colorIdentifier', () {
+    test('maps an exact yarn color to its name', () {
+      expect(processor.colorIdentifier(_black), 'black');
+      expect(processor.colorIdentifier(_white), 'white');
+      expect(processor.colorIdentifier(_red), 'red');
+      expect(processor.colorIdentifier(_blue), 'blue');
+      expect(processor.colorIdentifier(_green), 'green');
+    });
+
+    test('always maps to a yarn name, never falling back to hex', () {
+      // A distant color with no close yarn match must still resolve to the
+      // nearest yarn name (and never to a '#rrggbb' string). This guards the
+      // "always color to yarn" behavior.
+      const distant = Color(0xFF01FE02);
+      final id = processor.colorIdentifier(distant);
+      expect(id.startsWith('#'), isFalse,
+          reason: 'expected a yarn name, got: $id');
+      expect(id.isNotEmpty, isTrue);
+    });
+  });
+
+  group('ImageProcessor.loadImageBytes', () {
+    test('rejects images that exceed the pixel limit', () {
+      // 5000 x 1001 = 5,005,000 pixels, just over the 5,000,000 cap.
+      final image = img.Image(width: 5000, height: 1001);
+      final bytes = img.encodePng(image);
+
+      expect(
+        () => processor.loadImageBytes(bytes),
+        throwsA(
+          isA<ImageProcessingException>()
+              .having((e) => e.code, 'code', 'imageTooLarge'),
+        ),
+      );
     });
   });
 }

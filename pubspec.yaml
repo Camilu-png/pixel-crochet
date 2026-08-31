@@ -21,6 +21,8 @@ dependencies:
   uuid: ^4.0.0
   image: ^4.5.3
   shared_preferences: ^2.5.3
+  url_launcher: ^6.3.2
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -33,3 +35,5 @@ flutter:
 
   assets:
     - assets/
+    - assets/favicon/
+    - assets/products/

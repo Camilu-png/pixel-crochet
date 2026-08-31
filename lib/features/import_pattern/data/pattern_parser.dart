@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../../core/models/color_block.dart';
 import '../../../core/models/crochet_project.dart';
 import '../../../core/models/pattern_row.dart';
@@ -15,6 +17,11 @@ class PatternParser {
 
     final name = _parseName(lines[0]);
     final dimensions = _parseDimensions(lines[1]);
+    if (dimensions.$1 < 1 || dimensions.$2 < 1) {
+      throw FormatException(
+        'Invalid pattern format: dimensions must be positive (${dimensions.$1}x${dimensions.$2})',
+      );
+    }
     var rows = <PatternRow>[];
 
     for (var i = 2; i < lines.length; i++) {
@@ -100,6 +107,7 @@ class PatternParser {
       final match = RegExp(r'(\d+)\s+(\w+)').firstMatch(part.trim());
       if (match != null) {
         final count = int.parse(match.group(1)!);
+        if (count < 1) continue;
         final colorName = match.group(2)!;
         blocks.add(ColorBlock(colorName: colorName, count: count));
       }
@@ -107,4 +115,18 @@ class PatternParser {
 
     return blocks;
   }
+
+  /// Parses [content] off the UI thread so large patterns never jank the
+  /// interface. Not available on all platforms; falls back to synchronous
+  /// parsing when isolates are unsupported.
+  Future<CrochetProject> parseAsync(String content) async {
+    try {
+      return await compute(_parseIsolate, content);
+    } on UnsupportedError {
+      return parse(content);
+    }
+  }
 }
+
+CrochetProject _parseIsolate(String content) =>
+    const PatternParser().parse(content);

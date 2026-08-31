@@ -26,7 +26,7 @@ class PatternPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final effectiveEnd = endRow ?? project.rows.length;
     final visibleRows = effectiveEnd - startRow;
-    if (visibleRows <= 0) return;
+    if (visibleRows <= 0 || project.width <= 0) return;
 
     final pixelWidth = size.width / project.width;
     final pixelHeight = size.height / visibleRows;
