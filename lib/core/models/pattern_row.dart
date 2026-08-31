@@ -25,15 +25,19 @@ class PatternRow {
       };
 
   factory PatternRow.fromJson(Map<String, dynamic> json) {
-    final rawDirection = json['direction'] as int? ?? 0;
-    final direction = RowDirection.values[
-        rawDirection.clamp(0, RowDirection.values.length - 1).toInt()];
+    final rawDirection = json['direction'] is int ? json['direction'] as int : 0;
+    final direction = RowDirection.values[rawDirection
+        .clamp(0, RowDirection.values.length - 1)];
+    final colorBlocks = json['colorBlocks'];
     return PatternRow(
-      rowNumber: json['rowNumber'] as int,
+      rowNumber: json['rowNumber'] is int ? json['rowNumber'] as int : 0,
       direction: direction,
-      colorBlocks: (json['colorBlocks'] as List)
-          .map((b) => ColorBlock.fromJson(b as Map<String, dynamic>))
-          .toList(),
+      colorBlocks: colorBlocks is List
+          ? colorBlocks
+              .whereType<Map<String, dynamic>>()
+              .map(ColorBlock.fromJson)
+              .toList()
+          : const [],
     );
   }
 

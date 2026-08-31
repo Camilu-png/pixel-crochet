@@ -10,9 +10,11 @@ class ColorBlock {
   Map<String, dynamic> toJson() => {'colorName': colorName, 'count': count};
 
   factory ColorBlock.fromJson(Map<String, dynamic> json) {
+    final colorName = json['colorName'];
+    final count = json['count'];
     return ColorBlock(
-      colorName: json['colorName'] as String,
-      count: json['count'] as int,
+      colorName: colorName is String ? colorName : '',
+      count: count is int ? count : 0,
     );
   }
 

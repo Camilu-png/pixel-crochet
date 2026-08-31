@@ -91,6 +91,45 @@ void main() {
       });
     });
 
+    group('fromJson robustness', () {
+      test('rejects a newer schema version', () {
+        final project = createProject();
+        final json = project.toJson();
+        json['version'] = CrochetProject.schemaVersion + 1;
+
+        expect(
+          () => CrochetProject.fromJson(json),
+          throwsA(isA<FormatException>()),
+        );
+      });
+
+      test('drops completed blocks whose row or block index is out of range', () {
+        final json = createProject().toJson();
+        json['completedBlocks'] = {
+          '0': [0, 99],
+          '99': [0],
+        };
+
+        final restored = CrochetProject.fromJson(json);
+
+        // Row 0 has a single block, so index 99 and row 99 are both dropped.
+        expect(restored.completedBlocks, {0: {0}});
+      });
+
+      test('survives malformed field types without crashing', () {
+        final json = createProject().toJson();
+        json['name'] = 123;
+        json['width'] = 'wide';
+        json['rows'] = 'not-a-list';
+
+        final restored = CrochetProject.fromJson(json);
+
+        expect(restored.name, isEmpty);
+        expect(restored.width, 0);
+        expect(restored.rows, isEmpty);
+      });
+    });
+
     group('toggleBlock', () {
       test('marks a block as completed', () {
         final project = createProject();
@@ -305,7 +344,16 @@ void main() {
         final project = createProject(
           completedBlocks: {0: {0, 1}, 1: {0}},
         );
-        expect(project.totalCompletedBlocks, 3);
+        // Row 0 has a single block, so index 1 is out of range and is not
+        // counted. Only valid block indices contribute to the progress.
+        expect(project.totalCompletedBlocks, 2);
+      });
+
+      test('ignores out-of-range completed blocks', () {
+        final project = createProject(
+          completedBlocks: {-1: {0}, 0: {5}, 2: {0}},
+        );
+        expect(project.totalCompletedBlocks, 1);
       });
     });
   });
