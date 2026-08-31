@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pixel_crochet/core/theme/context_extensions.dart';
+import 'package:pixel_crochet/core/theme/app_colors.dart';
 
 class KofiButton extends StatelessWidget {
   const KofiButton({super.key, required this.label, required this.onPressed});
@@ -11,13 +11,12 @@ class KofiButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilledButton.icon(
       onPressed: onPressed,
-      icon: const Icon(Icons.bolt),
+      icon: const Icon(Icons.local_cafe_rounded),
       label: Text(label),
       style: FilledButton.styleFrom(
-        backgroundColor: context.colors.brandLavender,
-        foregroundColor: Colors.white,
-        shape: const StadiumBorder(),
-        textStyle: context.text.titleMedium,
+        backgroundColor: context.brand.pink,
+        foregroundColor: context.brand.ink,
+        minimumSize: const Size.fromHeight(56),
       ),
     );
   }

@@ -15,8 +15,8 @@ class PixelApp extends ConsumerWidget {
 
     return MaterialApp.router(
       title: 'Pixel Crochet',
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
+      theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
       themeMode: ThemeMode.system,
       routerConfig: router,
       localizationsDelegates: [

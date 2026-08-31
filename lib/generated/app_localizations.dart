@@ -559,6 +559,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pixel Crochet - Suggestion'**
   String get suggestSubjectDefault;
+
+  /// No description provided for @appTitleTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Made stitch by stitch'**
+  String get appTitleTagline;
+
+  /// No description provided for @welcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Pixel Crochet'**
+  String get welcomeTitle;
+
+  /// No description provided for @welcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn your favorite images into tapestry crochet patterns and follow them row by row.'**
+  String get welcomeSubtitle;
+
+  /// No description provided for @importFirstPattern.
+  ///
+  /// In en, this message translates to:
+  /// **'Import my first pattern'**
+  String get importFirstPattern;
+
+  /// No description provided for @browsePatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse Ko-fi patterns'**
+  String get browsePatterns;
+
+  /// No description provided for @hintPng.
+  ///
+  /// In en, this message translates to:
+  /// **'PNG image'**
+  String get hintPng;
+
+  /// No description provided for @hintTxt.
+  ///
+  /// In en, this message translates to:
+  /// **'.txt file'**
+  String get hintTxt;
+
+  /// No description provided for @hintKofi.
+  ///
+  /// In en, this message translates to:
+  /// **'Ko-fi patterns'**
+  String get hintKofi;
+
+  /// No description provided for @rowCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'Row {current}/{total} · {percent}%'**
+  String rowCounter(Object current, Object percent, Object total);
+
+  /// No description provided for @optionsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get optionsLabel;
+
+  /// No description provided for @deletePatternTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete pattern?'**
+  String get deletePatternTitle;
+
+  /// No description provided for @deletePatternBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \'{name}\'? This cannot be undone.'**
+  String deletePatternBody(Object name);
+
+  /// No description provided for @yourName.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get yourName;
+
+  /// No description provided for @yourSuggestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Your suggestion'**
+  String get yourSuggestion;
+
+  /// No description provided for @suggestSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us what you\'d love to see next — every idea is read and appreciated.'**
+  String get suggestSubtitle;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get requiredField;
+
+  /// No description provided for @tooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Please write a little more (at least 10 characters)'**
+  String get tooShort;
+
+  /// No description provided for @supportKeepApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the app alive'**
+  String get supportKeepApp;
+
+  /// No description provided for @supportNewPatterns.
+  ///
+  /// In en, this message translates to:
+  /// **'New patterns'**
+  String get supportNewPatterns;
+
+  /// No description provided for @supportShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share the app'**
+  String get supportShare;
+
+  /// No description provided for @morePatternsPriceBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready-made'**
+  String get morePatternsPriceBadge;
 }
 
 class _AppLocalizationsDelegate
