@@ -7,7 +7,7 @@ Future<bool> openUrl(BuildContext context, String url) async {
   try {
     final result = await launchUrl(
       Uri.parse(url),
-      mode: LaunchMode.externalApplication,
+      mode: LaunchMode.platformDefault,
     );
     return result;
   } catch (_) {
