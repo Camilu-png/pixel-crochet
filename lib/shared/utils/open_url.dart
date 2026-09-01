@@ -1,20 +1,7 @@
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
-import '../../../../generated/app_localizations.dart';
+import 'open_url_native.dart'
+    if (dart.library.js_interop) 'open_url_web.dart';
 
-Future<bool> openUrl(BuildContext context, String url) async {
-  final l10n = AppLocalizations.of(context)!;
-  try {
-    final result = await launchUrl(
-      Uri.parse(url),
-      mode: LaunchMode.platformDefault,
-    );
-    return result;
-  } catch (_) {
-    if (!context.mounted) return false;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(l10n.openUrlMessage)));
-    return false;
-  }
+Future<bool> openUrl(BuildContext context, String url) {
+  return openUrlImpl(context, url);
 }
