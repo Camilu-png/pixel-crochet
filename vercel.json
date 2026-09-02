@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/((?!assets/|icons/|favicon.png|manifest.json|flutter_bootstrap.js|main.dart.js|flutter.js|flutter_service_worker.js|canvaskit/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
