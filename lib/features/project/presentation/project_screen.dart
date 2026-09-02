@@ -5,9 +5,11 @@ import '../../../core/constants/color_map.dart';
 import '../../../core/models/crochet_project.dart';
 import '../../../core/models/pattern_row.dart';
 import '../../../core/models/color_block.dart';
+import '../../../core/onboarding/onboarding_provider.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
 import '../../../shared/widgets/confirm_dialog.dart';
+import '../../../shared/widgets/onboarding_overlay.dart';
 import '../providers/project_provider.dart';
 import 'widgets/pattern_image.dart';
 import 'widgets/row_display.dart';
@@ -43,14 +45,60 @@ class ProjectScreen extends ConsumerWidget {
   }
 }
 
-class _ProjectContent extends ConsumerWidget {
+class _ProjectContent extends ConsumerStatefulWidget {
   const _ProjectContent({required this.projectId, required this.project});
 
   final String projectId;
   final CrochetProject project;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_ProjectContent> createState() => _ProjectContentState();
+}
+
+class _ProjectContentState extends ConsumerState<_ProjectContent> {
+  @override
+  void initState() {
+    super.initState();
+    _maybeShowOnboarding();
+  }
+
+  Future<void> _maybeShowOnboarding() async {
+    final storage = ref.read(onboardingStorageProvider);
+    if (await storage.hasSeen(OnboardingTip.projectDirection)) return;
+    await storage.markAsSeen(OnboardingTip.projectDirection);
+    await storage.markAsSeen(OnboardingTip.projectBlocks);
+
+    if (!mounted) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => OnboardingOverlay(
+          steps: [
+            OnboardingStep(
+              icon: Icons.swap_horiz,
+              title: l10n.onboardingProjectDirectionTitle,
+              description: l10n.onboardingProjectDirectionDesc,
+            ),
+            OnboardingStep(
+              icon: Icons.check_circle_outline,
+              title: l10n.onboardingProjectBlocksTitle,
+              description: l10n.onboardingProjectBlocksDesc,
+            ),
+          ],
+          nextLabel: l10n.onboardingNext,
+          doneLabel: l10n.onboardingGotIt,
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final project = widget.project;
+    final projectId = widget.projectId;
     final l10n = AppLocalizations.of(context)!;
     final currentRow = project.rows.isNotEmpty
         ? project.rows[project.currentRowIndex]
@@ -173,7 +221,7 @@ class _ProjectContent extends ConsumerWidget {
   Future<void> _goToRow(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
     final controller = TextEditingController(
-      text: '${project.currentRowNumber}',
+      text: '${widget.project.currentRowNumber}',
     );
 
     await showDialog<void>(
@@ -185,7 +233,7 @@ class _ProjectContent extends ConsumerWidget {
           keyboardType: TextInputType.number,
           autofocus: true,
           decoration: InputDecoration(
-            hintText: '1 – ${project.totalRows}',
+            hintText: '1 – ${widget.project.totalRows}',
             border: const OutlineInputBorder(),
           ),
         ),
@@ -200,11 +248,11 @@ class _ProjectContent extends ConsumerWidget {
               final rowNumber = int.tryParse(text);
               if (rowNumber == null ||
                   rowNumber < 1 ||
-                  rowNumber > project.totalRows) {
+                  rowNumber > widget.project.totalRows) {
                 return;
               }
               ref
-                  .read(projectProvider(projectId).notifier)
+                  .read(projectProvider(widget.projectId).notifier)
                   .setCurrentRow(rowNumber - 1);
               Navigator.of(dialogContext).pop();
             },
@@ -223,10 +271,10 @@ class _ProjectContent extends ConsumerWidget {
       context: context,
       builder: (dialogContext) => ConfirmDialog(
         title: l10n.deleteProject,
-        message: l10n.deleteProjectConfirm(project.name),
+        message: l10n.deleteProjectConfirm(widget.project.name),
         confirmLabel: l10n.delete,
         onConfirm: () {
-          ref.read(projectProvider(projectId).notifier).delete();
+          ref.read(projectProvider(widget.projectId).notifier).delete();
           Navigator.of(dialogContext).pop();
           dialogContext.goNamed('home');
         },
@@ -258,7 +306,7 @@ class _ProjectContent extends ConsumerWidget {
         usedColors: usedColors,
         onSave: (updatedProject) {
           ref
-              .read(projectProvider(projectId).notifier)
+              .read(projectProvider(widget.projectId).notifier)
               .updateProject(updatedProject);
           Navigator.of(ctx).pop();
         },

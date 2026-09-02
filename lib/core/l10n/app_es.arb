@@ -103,5 +103,15 @@
   "supportKeepApp": "Mantener la app",
   "supportNewPatterns": "Nuevos patrones",
   "supportShare": "Compartir la app",
-  "morePatternsPriceBadge": "Listo para usar"
+  "morePatternsPriceBadge": "Listo para usar",
+  "onboardingGotIt": "Entendido",
+  "onboardingNext": "Siguiente",
+  "onboardingImportTitle": "Importa un patrón",
+  "onboardingImportDesc": "Sube un patrón .txt de crochet o pega su texto. Cada fila se ve así: \"R1: 10 rojo, 5 blanco\" — un número de fila seguido de los colores y cantidades de puntos.",
+  "onboardingImportImageTitle": "Convierte tu imagen en puntos",
+  "onboardingImportImageDesc": "Cada píxel de tu imagen se convierte en un punto. \"Puntos ancho\" y \"Puntos alto\" controlan cuántos puntos tendrá tu patrón de ancho y de alto.",
+  "onboardingProjectDirectionTitle": "En qué dirección leer",
+  "onboardingProjectDirectionDesc": "La flecha indica la dirección en la que leer cada fila, de izquierda a derecha o de derecha a izquierda. Esto es importante en tapestry crochet.",
+  "onboardingProjectBlocksTitle": "Marca tu progreso",
+  "onboardingProjectBlocksDesc": "Toca un bloque de color para marcarlo como terminado — se tachará. Tócalo de nuevo para desmarcarlo."
 }

@@ -6,8 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/models/crochet_project.dart';
+import '../../../core/onboarding/onboarding_provider.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
+import '../../../shared/widgets/onboarding_overlay.dart';
 import '../../home/providers/home_provider.dart';
 import '../data/pattern_parser.dart';
 
@@ -24,6 +26,38 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
   final _nameController = TextEditingController();
   bool _isImporting = false;
   CrochetProject? _parsedProject;
+
+  @override
+  void initState() {
+    super.initState();
+    _maybeShowOnboarding();
+  }
+
+  Future<void> _maybeShowOnboarding() async {
+    final storage = ref.read(onboardingStorageProvider);
+    if (await storage.hasSeen(OnboardingTip.import)) return;
+    await storage.markAsSeen(OnboardingTip.import);
+    if (!mounted) return;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => OnboardingOverlay(
+          steps: [
+            OnboardingStep(
+              icon: Icons.description_outlined,
+              title: l10n.onboardingImportTitle,
+              description: l10n.onboardingImportDesc,
+            ),
+          ],
+          doneLabel: l10n.onboardingGotIt,
+        ),
+      );
+    });
+  }
 
   @override
   void dispose() {
@@ -155,9 +189,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
           textCapitalization: TextCapitalization.words,
           decoration: InputDecoration(
             labelText: l10n.projectName,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             filled: true,
             fillColor: context.colors.brandIvory,
           ),

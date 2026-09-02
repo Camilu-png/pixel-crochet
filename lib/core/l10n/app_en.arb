@@ -103,5 +103,15 @@
   "supportKeepApp": "Keep the app alive",
   "supportNewPatterns": "New patterns",
   "supportShare": "Share the app",
-  "morePatternsPriceBadge": "Ready-made"
+  "morePatternsPriceBadge": "Ready-made",
+  "onboardingGotIt": "Got it",
+  "onboardingNext": "Next",
+  "onboardingImportTitle": "Import a pattern",
+  "onboardingImportDesc": "Upload a .txt crochet pattern or paste its text. Each row looks like this: \"R1: 10 red, 5 white\" — a row number followed by the colours and stitch counts.",
+  "onboardingImportImageTitle": "Turn an image into stitches",
+  "onboardingImportImageDesc": "Each pixel of your image becomes a stitch. \"Stitches wide\" and \"Stitches high\" control how many stitches your finished pattern is across and down.",
+  "onboardingProjectDirectionTitle": "Which way to read",
+  "onboardingProjectDirectionDesc": "The arrow shows the direction to read each row, left-to-right or right-to-left. This matters for tapestry crochet.",
+  "onboardingProjectBlocksTitle": "Mark your progress",
+  "onboardingProjectBlocksDesc": "Tap a colour block to mark it as finished — it gets crossed out. Tap again to unmark it."
 }

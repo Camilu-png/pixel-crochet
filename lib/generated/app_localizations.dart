@@ -721,6 +721,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ready-made'**
   String get morePatternsPriceBadge;
+
+  /// No description provided for @onboardingGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get onboardingGotIt;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingImportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import a pattern'**
+  String get onboardingImportTitle;
+
+  /// No description provided for @onboardingImportDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a .txt crochet pattern or paste its text. Each row looks like this: \"R1: 10 red, 5 white\" — a row number followed by the colours and stitch counts.'**
+  String get onboardingImportDesc;
+
+  /// No description provided for @onboardingImportImageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn an image into stitches'**
+  String get onboardingImportImageTitle;
+
+  /// No description provided for @onboardingImportImageDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Each pixel of your image becomes a stitch. \"Stitches wide\" and \"Stitches high\" control how many stitches your finished pattern is across and down.'**
+  String get onboardingImportImageDesc;
+
+  /// No description provided for @onboardingProjectDirectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Which way to read'**
+  String get onboardingProjectDirectionTitle;
+
+  /// No description provided for @onboardingProjectDirectionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The arrow shows the direction to read each row, left-to-right or right-to-left. This matters for tapestry crochet.'**
+  String get onboardingProjectDirectionDesc;
+
+  /// No description provided for @onboardingProjectBlocksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark your progress'**
+  String get onboardingProjectBlocksTitle;
+
+  /// No description provided for @onboardingProjectBlocksDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a colour block to mark it as finished — it gets crossed out. Tap again to unmark it.'**
+  String get onboardingProjectBlocksDesc;
 }
 
 class _AppLocalizationsDelegate

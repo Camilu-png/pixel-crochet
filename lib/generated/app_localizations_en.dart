@@ -348,4 +348,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get morePatternsPriceBadge => 'Ready-made';
+
+  @override
+  String get onboardingGotIt => 'Got it';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingImportTitle => 'Import a pattern';
+
+  @override
+  String get onboardingImportDesc =>
+      'Upload a .txt crochet pattern or paste its text. Each row looks like this: \"R1: 10 red, 5 white\" — a row number followed by the colours and stitch counts.';
+
+  @override
+  String get onboardingImportImageTitle => 'Turn an image into stitches';
+
+  @override
+  String get onboardingImportImageDesc =>
+      'Each pixel of your image becomes a stitch. \"Stitches wide\" and \"Stitches high\" control how many stitches your finished pattern is across and down.';
+
+  @override
+  String get onboardingProjectDirectionTitle => 'Which way to read';
+
+  @override
+  String get onboardingProjectDirectionDesc =>
+      'The arrow shows the direction to read each row, left-to-right or right-to-left. This matters for tapestry crochet.';
+
+  @override
+  String get onboardingProjectBlocksTitle => 'Mark your progress';
+
+  @override
+  String get onboardingProjectBlocksDesc =>
+      'Tap a colour block to mark it as finished — it gets crossed out. Tap again to unmark it.';
 }

@@ -5,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/color_map.dart';
+import '../../../core/onboarding/onboarding_provider.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
+import '../../../shared/widgets/onboarding_overlay.dart';
 import '../../home/providers/home_provider.dart';
 import '../data/image_processor.dart';
 
@@ -32,6 +34,38 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   bool _isProcessing = false;
   bool _isImporting = false;
   String? _errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    _maybeShowOnboarding();
+  }
+
+  Future<void> _maybeShowOnboarding() async {
+    final storage = ref.read(onboardingStorageProvider);
+    if (await storage.hasSeen(OnboardingTip.importImage)) return;
+    await storage.markAsSeen(OnboardingTip.importImage);
+    if (!mounted) return;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => OnboardingOverlay(
+          steps: [
+            OnboardingStep(
+              icon: Icons.image_outlined,
+              title: l10n.onboardingImportImageTitle,
+              description: l10n.onboardingImportImageDesc,
+            ),
+          ],
+          doneLabel: l10n.onboardingGotIt,
+        ),
+      );
+    });
+  }
 
   @override
   void dispose() {

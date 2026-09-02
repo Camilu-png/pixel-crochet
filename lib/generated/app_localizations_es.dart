@@ -348,4 +348,38 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get morePatternsPriceBadge => 'Listo para usar';
+
+  @override
+  String get onboardingGotIt => 'Entendido';
+
+  @override
+  String get onboardingNext => 'Siguiente';
+
+  @override
+  String get onboardingImportTitle => 'Importa un patrón';
+
+  @override
+  String get onboardingImportDesc =>
+      'Sube un patrón .txt de crochet o pega su texto. Cada fila se ve así: \"R1: 10 rojo, 5 blanco\" — un número de fila seguido de los colores y cantidades de puntos.';
+
+  @override
+  String get onboardingImportImageTitle => 'Convierte tu imagen en puntos';
+
+  @override
+  String get onboardingImportImageDesc =>
+      'Cada píxel de tu imagen se convierte en un punto. \"Puntos ancho\" y \"Puntos alto\" controlan cuántos puntos tendrá tu patrón de ancho y de alto.';
+
+  @override
+  String get onboardingProjectDirectionTitle => 'En qué dirección leer';
+
+  @override
+  String get onboardingProjectDirectionDesc =>
+      'La flecha indica la dirección en la que leer cada fila, de izquierda a derecha o de derecha a izquierda. Esto es importante en tapestry crochet.';
+
+  @override
+  String get onboardingProjectBlocksTitle => 'Marca tu progreso';
+
+  @override
+  String get onboardingProjectBlocksDesc =>
+      'Toca un bloque de color para marcarlo como terminado — se tachará. Tócalo de nuevo para desmarcarlo.';
 }
