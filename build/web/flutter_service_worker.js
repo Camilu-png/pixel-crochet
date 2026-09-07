@@ -3,11 +3,11 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"flutter_bootstrap.js": "d1e47f6f0c15fa498de031cdd379903e",
+const RESOURCES = {"flutter_bootstrap.js": "7028df6d779b31e3150286d9c5e61deb",
 "version.json": "cfc1c2fef35fed6c66f800d13b0911ea",
 "index.html": "ffe9f1000a4e37450172644125ebf93d",
 "/": "ffe9f1000a4e37450172644125ebf93d",
-"main.dart.js": "09c89cdf1f7050fce5b762771b9462a2",
+"main.dart.js": "6841663f63d462e618e06702dd1b7931",
 "flutter.js": "83d881c1dbb6d6bcd6b42e274605b69c",
 "favicon.png": "c6ed7fc9d74adbb5d08bc89a0f3e2543",
 "icons/Icon-192.png": "a8329da69b88d9eac70615422c624202",
@@ -22,7 +22,7 @@ const RESOURCES = {"flutter_bootstrap.js": "d1e47f6f0c15fa498de031cdd379903e",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "33b7d9392238c04c131b6ce224e13711",
 "assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
 "assets/AssetManifest.bin": "c96753ff89aa3692df49387aad1002eb",
-"assets/fonts/MaterialIcons-Regular.otf": "71fc19a2503e1b7832264b1ccc9711a0",
+"assets/fonts/MaterialIcons-Regular.otf": "593b06d6b8ad21adfe3f027768bc9d30",
 "assets/assets/products/salchipleto.png": "749857bb0601ea80db0c772a164e1146",
 "assets/assets/products/cardigan_mariposa.png": "f985633a1771f47f2c5bc51744d75f18",
 "assets/assets/mariposa_amarilla.png": "6f7f9459e6d5828a25df24b533821369",
