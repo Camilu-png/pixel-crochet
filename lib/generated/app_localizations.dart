@@ -758,11 +758,17 @@ abstract class AppLocalizations {
   /// **'Turn an image into stitches'**
   String get onboardingImportImageTitle;
 
-  /// No description provided for @onboardingImportImageDesc.
+  /// No description provided for @onboardingImportImageSelectDesc.
   ///
   /// In en, this message translates to:
-  /// **'Turn a PNG or JPG image into a pattern. After importing, fine-tune it here: edit the name, set \"Stitches wide\" and \"Stitches high\" to size your project, and pick your yarn colors.'**
-  String get onboardingImportImageDesc;
+  /// **'Choose a PNG or JPG image with a design you like. It should be simple and use few colors. Make sure it is good quality before importing.'**
+  String get onboardingImportImageSelectDesc;
+
+  /// No description provided for @onboardingImportImageEditDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'You can adjust the pattern name and the number of stitches it will have. Selecting preview shows the colors that are detected. You can change them freely.'**
+  String get onboardingImportImageEditDesc;
 
   /// No description provided for @onboardingImportImageButtonTitle.
   ///

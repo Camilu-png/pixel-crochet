@@ -369,8 +369,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingImportImageTitle => 'Turn an image into stitches';
 
   @override
-  String get onboardingImportImageDesc =>
-      'Turn a PNG or JPG image into a pattern. After importing, fine-tune it here: edit the name, set \"Stitches wide\" and \"Stitches high\" to size your project, and pick your yarn colors.';
+  String get onboardingImportImageSelectDesc =>
+      'Choose a PNG or JPG image with a design you like. It should be simple and use few colors. Make sure it is good quality before importing.';
+
+  @override
+  String get onboardingImportImageEditDesc =>
+      'You can adjust the pattern name and the number of stitches it will have. Selecting preview shows the colors that are detected. You can change them freely.';
 
   @override
   String get onboardingImportImageButtonTitle => 'Import from an image';

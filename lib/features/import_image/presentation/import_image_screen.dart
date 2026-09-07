@@ -82,7 +82,9 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
         OnboardingStep(
           icon: Icons.image_outlined,
           title: l10n.onboardingImportImageTitle,
-          description: l10n.onboardingImportImageDesc,
+          description: _imageBytes == null
+              ? l10n.onboardingImportImageSelectDesc
+              : l10n.onboardingImportImageEditDesc,
           targetKey: _imageBytes == null ? _selectImageKey : _formKey,
         ),
       ],
