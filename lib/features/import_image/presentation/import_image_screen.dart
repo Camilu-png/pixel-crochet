@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,14 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     final storage = ref.read(onboardingStorageProvider);
     if (await storage.hasSeen(OnboardingTip.importImage)) return;
     await storage.markAsSeen(OnboardingTip.importImage);
+    if (!mounted) return;
+    _launchTutorial();
+  }
+
+  Future<void> _maybeShowEditTutorial() async {
+    final storage = ref.read(onboardingStorageProvider);
+    if (await storage.hasSeen(OnboardingTip.importImageEdit)) return;
+    await storage.markAsSeen(OnboardingTip.importImageEdit);
     if (!mounted) return;
     _launchTutorial();
   }
@@ -455,6 +464,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
         _widthController.text = _suggestedStitches(data.width).toString();
         _heightController.text = _suggestedStitches(data.height).toString();
       });
+      unawaited(_maybeShowEditTutorial());
     } catch (e) {
       if (!mounted) return;
       setState(() {

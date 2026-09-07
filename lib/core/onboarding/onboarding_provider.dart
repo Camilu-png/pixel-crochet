@@ -2,7 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Identifiers for each onboarding tip shown across the app.
-enum OnboardingTip { import, importImage, projectDirection, projectBlocks }
+enum OnboardingTip {
+  import,
+  importImage,
+  importImageEdit,
+  projectDirection,
+  projectBlocks,
+}
 
 /// Tracks which onboarding tips a user has already seen, so each tip shows
 /// only once per device.
