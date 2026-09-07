@@ -56,6 +56,11 @@ class _ProjectContent extends ConsumerStatefulWidget {
 }
 
 class _ProjectContentState extends ConsumerState<_ProjectContent> {
+  final _progressKey = GlobalKey();
+  final _rowDisplayKey = GlobalKey();
+  final _blocksKey = GlobalKey();
+  bool _showTutorial = false;
+
   @override
   void initState() {
     super.initState();
@@ -67,31 +72,15 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
     if (await storage.hasSeen(OnboardingTip.projectDirection)) return;
     await storage.markAsSeen(OnboardingTip.projectDirection);
     await storage.markAsSeen(OnboardingTip.projectBlocks);
+    if (!mounted) return;
+    _launchTutorial();
+  }
 
+  void _launchTutorial() {
     if (!mounted) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final l10n = AppLocalizations.of(context)!;
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) => OnboardingOverlay(
-          steps: [
-            OnboardingStep(
-              icon: Icons.swap_horiz,
-              title: l10n.onboardingProjectDirectionTitle,
-              description: l10n.onboardingProjectDirectionDesc,
-            ),
-            OnboardingStep(
-              icon: Icons.check_circle_outline,
-              title: l10n.onboardingProjectBlocksTitle,
-              description: l10n.onboardingProjectBlocksDesc,
-            ),
-          ],
-          nextLabel: l10n.onboardingNext,
-          doneLabel: l10n.onboardingGotIt,
-        ),
-      );
+      setState(() => _showTutorial = true);
     });
   }
 
@@ -117,7 +106,32 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
         );
     });
 
-    return Scaffold(
+    return OnboardingOverlay(
+      active: _showTutorial,
+      doneLabel: l10n.onboardingGotIt,
+      nextLabel: l10n.onboardingNext,
+      onDismiss: () => setState(() => _showTutorial = false),
+      steps: [
+        OnboardingStep(
+          icon: Icons.swap_horiz,
+          title: l10n.onboardingProjectDirectionTitle,
+          description: l10n.onboardingProjectDirectionDesc,
+          targetKey: _rowDisplayKey,
+        ),
+        OnboardingStep(
+          icon: Icons.check_circle_outline,
+          title: l10n.onboardingProjectBlocksTitle,
+          description: l10n.onboardingProjectBlocksDesc,
+          targetKey: _blocksKey,
+        ),
+        OnboardingStep(
+          icon: Icons.percent,
+          title: l10n.onboardingProjectProgressTitle,
+          description: l10n.onboardingProjectProgressDesc,
+          targetKey: _progressKey,
+        ),
+      ],
+      child: Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -125,6 +139,11 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
         ),
         title: Text(project.name),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: l10n.tutorial,
+            onPressed: _launchTutorial,
+          ),
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () => _showEditSheet(context, ref, project),
@@ -153,23 +172,31 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
 
                 const SizedBox(height: 16),
 
-                LinearProgressIndicator(
-                  value: project.progress,
-                  backgroundColor: context.colors.brandLavenderLight,
-                  color: context.colors.brandLavender,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${l10n.rowLabel} ${project.currentRowNumber}/${project.totalRows} · ${(project.progress * 100).toStringAsFixed(0)}%',
-                  style: context.text.bodyMedium?.copyWith(
-                    color: context.colors.brandDark,
-                  ),
+                Column(
+                  key: _progressKey,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    LinearProgressIndicator(
+                      value: project.progress,
+                      backgroundColor: context.colors.brandLavenderLight,
+                      color: context.colors.brandLavender,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${l10n.rowLabel} ${project.currentRowNumber}/${project.totalRows} · ${(project.progress * 100).toStringAsFixed(0)}%',
+                      style: context.text.bodyMedium?.copyWith(
+                        color: context.colors.brandDark,
+                      ),
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: 16),
 
                 if (currentRow != null)
                   RowDisplay(
+                    key: _rowDisplayKey,
+                    blocksKey: _blocksKey,
                     row: currentRow,
                     completedBlocks:
                         project.completedBlocks[project.currentRowIndex] ??
@@ -214,6 +241,7 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
             ),
           );
         },
+      ),
       ),
     );
   }

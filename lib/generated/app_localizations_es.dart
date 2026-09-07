@@ -350,6 +350,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get morePatternsPriceBadge => 'Listo para usar';
 
   @override
+  String get tutorial => 'Tutorial';
+
+  @override
   String get onboardingGotIt => 'Entendido';
 
   @override
@@ -367,14 +370,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardingImportImageDesc =>
-      'Cada píxel de tu imagen se convierte en un punto. \"Puntos ancho\" y \"Puntos alto\" controlan cuántos puntos tendrá tu patrón de ancho y de alto.';
+      'Toca \"Seleccionar imagen\" y elige una imagen PNG o JPG. Cada píxel de tu imagen se convierte en un punto, y \"Puntos ancho\" y \"Puntos alto\" controlan cuántos puntos tendrá tu patrón de ancho y de alto.';
+
+  @override
+  String get onboardingImportImageButtonTitle => 'Importar desde una imagen';
+
+  @override
+  String get onboardingImportImageButtonDesc =>
+      'Toca \"Importar imagen\" para convertir una foto en puntos. Sube una imagen PNG o JPG de tu pixel art o patrón de punto de cruz.';
+
+  @override
+  String get onboardingImportPasteTitle => 'Pega un patrón';
+
+  @override
+  String get onboardingImportPasteDesc =>
+      'Pega el texto de tu patrón en la caja de abajo y toca \"Importar Patrón\". Cada fila se ve así: \"R1: 10 rojo, 5 blanco\" — un número de fila seguido de los colores y cantidades de puntos.';
 
   @override
   String get onboardingProjectDirectionTitle => 'En qué dirección leer';
 
   @override
   String get onboardingProjectDirectionDesc =>
-      'La flecha indica la dirección en la que leer cada fila, de izquierda a derecha o de derecha a izquierda. Esto es importante en tapestry crochet.';
+      'La flecha indica la dirección en la que leer cada fila, de izquierda a derecha o de derecha a izquierda. Leer de izquierda a derecha significa que ahora tejes por el revés (la parte de atrás) del tejido. Esto es importante en tapestry crochet.';
 
   @override
   String get onboardingProjectBlocksTitle => 'Marca tu progreso';
@@ -382,4 +399,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get onboardingProjectBlocksDesc =>
       'Toca un bloque de color para marcarlo como terminado — se tachará. Tócalo de nuevo para desmarcarlo.';
+
+  @override
+  String get onboardingProjectProgressTitle => 'Sigue tu progreso';
+
+  @override
+  String get onboardingProjectProgressDesc =>
+      'La barra y el porcentaje muestran cuánto del patrón has terminado hasta ahora.';
 }

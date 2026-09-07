@@ -33,7 +33,10 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   GridInfo? _gridInfo;
   bool _isProcessing = false;
   bool _isImporting = false;
+  bool _showTutorial = false;
   String? _errorMessage;
+
+  final _selectImageKey = GlobalKey();
 
   @override
   void initState() {
@@ -46,24 +49,14 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
     if (await storage.hasSeen(OnboardingTip.importImage)) return;
     await storage.markAsSeen(OnboardingTip.importImage);
     if (!mounted) return;
+    _launchTutorial();
+  }
 
+  void _launchTutorial() {
+    if (!mounted) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final l10n = AppLocalizations.of(context)!;
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) => OnboardingOverlay(
-          steps: [
-            OnboardingStep(
-              icon: Icons.image_outlined,
-              title: l10n.onboardingImportImageTitle,
-              description: l10n.onboardingImportImageDesc,
-            ),
-          ],
-          doneLabel: l10n.onboardingGotIt,
-        ),
-      );
+      setState(() => _showTutorial = true);
     });
   }
 
@@ -79,13 +72,33 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
+    return OnboardingOverlay(
+      active: _showTutorial,
+      doneLabel: l10n.onboardingGotIt,
+      nextLabel: l10n.onboardingNext,
+      onDismiss: () => setState(() => _showTutorial = false),
+      steps: [
+        OnboardingStep(
+          icon: Icons.image_outlined,
+          title: l10n.onboardingImportImageTitle,
+          description: l10n.onboardingImportImageDesc,
+          targetKey: _selectImageKey,
+        ),
+      ],
+      child: Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
         title: Text(l10n.importImage),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: l10n.tutorial,
+            onPressed: _launchTutorial,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -103,6 +116,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
             if (_imageBytes == null) _buildInitialState(l10n),
           ],
         ),
+      ),
       ),
     );
   }
@@ -127,6 +141,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
         ),
         const SizedBox(height: 32),
         FilledButton.icon(
+          key: _selectImageKey,
           onPressed: _pickImage,
           icon: const Icon(Icons.image),
           label: Text(l10n.selectImage),

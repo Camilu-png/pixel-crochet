@@ -722,6 +722,12 @@ abstract class AppLocalizations {
   /// **'Ready-made'**
   String get morePatternsPriceBadge;
 
+  /// No description provided for @tutorial.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutorial'**
+  String get tutorial;
+
   /// No description provided for @onboardingGotIt.
   ///
   /// In en, this message translates to:
@@ -755,8 +761,32 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingImportImageDesc.
   ///
   /// In en, this message translates to:
-  /// **'Each pixel of your image becomes a stitch. \"Stitches wide\" and \"Stitches high\" control how many stitches your finished pattern is across and down.'**
+  /// **'Tap \"Select Image\" and pick a PNG or JPG image. Each pixel of your image becomes a stitch, and \"Stitches wide\" and \"Stitches high\" control how many stitches your finished pattern is across and down.'**
   String get onboardingImportImageDesc;
+
+  /// No description provided for @onboardingImportImageButtonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import from an image'**
+  String get onboardingImportImageButtonTitle;
+
+  /// No description provided for @onboardingImportImageButtonDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \"Import Image\" to turn a picture into stitches. Upload a PNG or JPG image of your pixel art or cross-stitch pattern.'**
+  String get onboardingImportImageButtonDesc;
+
+  /// No description provided for @onboardingImportPasteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a pattern'**
+  String get onboardingImportPasteTitle;
+
+  /// No description provided for @onboardingImportPasteDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste your pattern text into the box below and tap \"Import Pattern\". Each row looks like: \"R1: 10 red, 5 white\" — a row number followed by the colours and stitch counts.'**
+  String get onboardingImportPasteDesc;
 
   /// No description provided for @onboardingProjectDirectionTitle.
   ///
@@ -767,7 +797,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingProjectDirectionDesc.
   ///
   /// In en, this message translates to:
-  /// **'The arrow shows the direction to read each row, left-to-right or right-to-left. This matters for tapestry crochet.'**
+  /// **'The arrow shows the direction to read each row, left-to-right or right-to-left. Reading left-to-right means you are now crocheting on the wrong (reverse) side of the fabric. This matters for tapestry crochet.'**
   String get onboardingProjectDirectionDesc;
 
   /// No description provided for @onboardingProjectBlocksTitle.
@@ -781,6 +811,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap a colour block to mark it as finished — it gets crossed out. Tap again to unmark it.'**
   String get onboardingProjectBlocksDesc;
+
+  /// No description provided for @onboardingProjectProgressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your progress'**
+  String get onboardingProjectProgressTitle;
+
+  /// No description provided for @onboardingProjectProgressDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The bar and the percentage show how much of the pattern you have finished so far.'**
+  String get onboardingProjectProgressDesc;
 }
 
 class _AppLocalizationsDelegate

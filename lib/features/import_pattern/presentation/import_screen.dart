@@ -24,7 +24,11 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
   final _parser = const PatternParser();
   final _textController = TextEditingController();
   final _nameController = TextEditingController();
+  final _fileImportKey = GlobalKey();
+  final _imageImportKey = GlobalKey();
+  final _pastePatternKey = GlobalKey();
   bool _isImporting = false;
+  bool _showTutorial = false;
   CrochetProject? _parsedProject;
 
   @override
@@ -38,24 +42,14 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     if (await storage.hasSeen(OnboardingTip.import)) return;
     await storage.markAsSeen(OnboardingTip.import);
     if (!mounted) return;
+    _launchTutorial();
+  }
 
+  void _launchTutorial() {
+    if (!mounted) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final l10n = AppLocalizations.of(context)!;
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) => OnboardingOverlay(
-          steps: [
-            OnboardingStep(
-              icon: Icons.description_outlined,
-              title: l10n.onboardingImportTitle,
-              description: l10n.onboardingImportDesc,
-            ),
-          ],
-          doneLabel: l10n.onboardingGotIt,
-        ),
-      );
+      setState(() => _showTutorial = true);
     });
   }
 
@@ -70,13 +64,45 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
+    return OnboardingOverlay(
+      active: _showTutorial,
+      doneLabel: l10n.onboardingGotIt,
+      nextLabel: l10n.onboardingNext,
+      onDismiss: () => setState(() => _showTutorial = false),
+      steps: [
+        OnboardingStep(
+          icon: Icons.description_outlined,
+          title: l10n.onboardingImportTitle,
+          description: l10n.onboardingImportDesc,
+          targetKey: _fileImportKey,
+        ),
+        OnboardingStep(
+          icon: Icons.image_outlined,
+          title: l10n.onboardingImportImageButtonTitle,
+          description: l10n.onboardingImportImageButtonDesc,
+          targetKey: _imageImportKey,
+        ),
+        OnboardingStep(
+          icon: Icons.content_paste,
+          title: l10n.onboardingImportPasteTitle,
+          description: l10n.onboardingImportPasteDesc,
+          targetKey: _pastePatternKey,
+        ),
+      ],
+      child: Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
         title: Text(l10n.importPattern),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: l10n.tutorial,
+            onPressed: _launchTutorial,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -112,6 +138,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
             else ...[
               // File picker option
               FilledButton.icon(
+                key: _fileImportKey,
                 onPressed: _pickFile,
                 icon: const Icon(Icons.file_open),
                 label: Text(l10n.selectFile),
@@ -119,6 +146,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
               const SizedBox(height: 16),
               // Image import option
               OutlinedButton.icon(
+                key: _imageImportKey,
                 onPressed: () => context.pushNamed('import-image'),
                 icon: const Icon(Icons.image),
                 label: Text(l10n.importImage),
@@ -142,34 +170,41 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
               ),
               const SizedBox(height: 16),
               // Paste text option
-              Text(
-                l10n.pastePattern,
-                style: context.text.titleMedium?.copyWith(
-                  color: context.colors.brandDark,
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _textController,
-                maxLines: 10,
-                decoration: InputDecoration(
-                  hintText: l10n.pastePatternHint,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+              Column(
+                key: _pastePatternKey,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    l10n.pastePattern,
+                    style: context.text.titleMedium?.copyWith(
+                      color: context.colors.brandDark,
+                    ),
                   ),
-                  filled: true,
-                  fillColor: context.colors.brandIvory,
-                ),
-              ),
-              const SizedBox(height: 16),
-              FilledButton.icon(
-                onPressed: _importFromText,
-                icon: const Icon(Icons.content_paste),
-                label: Text(l10n.importText),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _textController,
+                    maxLines: 10,
+                    decoration: InputDecoration(
+                      hintText: l10n.pastePatternHint,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      filled: true,
+                      fillColor: context.colors.brandIvory,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  FilledButton.icon(
+                    onPressed: _importFromText,
+                    icon: const Icon(Icons.content_paste),
+                    label: Text(l10n.importText),
+                  ),
+                ],
               ),
             ],
           ],
         ),
+      ),
       ),
     );
   }

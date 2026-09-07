@@ -350,6 +350,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get morePatternsPriceBadge => 'Ready-made';
 
   @override
+  String get tutorial => 'Tutorial';
+
+  @override
   String get onboardingGotIt => 'Got it';
 
   @override
@@ -367,14 +370,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingImportImageDesc =>
-      'Each pixel of your image becomes a stitch. \"Stitches wide\" and \"Stitches high\" control how many stitches your finished pattern is across and down.';
+      'Tap \"Select Image\" and pick a PNG or JPG image. Each pixel of your image becomes a stitch, and \"Stitches wide\" and \"Stitches high\" control how many stitches your finished pattern is across and down.';
+
+  @override
+  String get onboardingImportImageButtonTitle => 'Import from an image';
+
+  @override
+  String get onboardingImportImageButtonDesc =>
+      'Tap \"Import Image\" to turn a picture into stitches. Upload a PNG or JPG image of your pixel art or cross-stitch pattern.';
+
+  @override
+  String get onboardingImportPasteTitle => 'Paste a pattern';
+
+  @override
+  String get onboardingImportPasteDesc =>
+      'Paste your pattern text into the box below and tap \"Import Pattern\". Each row looks like: \"R1: 10 red, 5 white\" — a row number followed by the colours and stitch counts.';
 
   @override
   String get onboardingProjectDirectionTitle => 'Which way to read';
 
   @override
   String get onboardingProjectDirectionDesc =>
-      'The arrow shows the direction to read each row, left-to-right or right-to-left. This matters for tapestry crochet.';
+      'The arrow shows the direction to read each row, left-to-right or right-to-left. Reading left-to-right means you are now crocheting on the wrong (reverse) side of the fabric. This matters for tapestry crochet.';
 
   @override
   String get onboardingProjectBlocksTitle => 'Mark your progress';
@@ -382,4 +399,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingProjectBlocksDesc =>
       'Tap a colour block to mark it as finished — it gets crossed out. Tap again to unmark it.';
+
+  @override
+  String get onboardingProjectProgressTitle => 'Track your progress';
+
+  @override
+  String get onboardingProjectProgressDesc =>
+      'The bar and the percentage show how much of the pattern you have finished so far.';
 }

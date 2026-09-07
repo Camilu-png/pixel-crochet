@@ -1,56 +1,86 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../core/theme/context_extensions.dart';
 
 /// A single step shown inside an [OnboardingOverlay].
+///
+/// Set [targetKey] to the [GlobalKey] of the widget this step should visually
+/// spotlight (darken everything around it). When it is `null` the step is
+/// shown as a plain centered card with no spotlight.
 class OnboardingStep {
   const OnboardingStep({
     required this.icon,
     required this.title,
     required this.description,
+    this.targetKey,
   });
 
   final IconData icon;
   final String title;
   final String description;
+  final GlobalKey? targetKey;
 }
 
-/// A lightweight full-screen overlay that walks a first-time user through a
-/// screen one step at a time.
+/// A screen-level spotlight that walks a user through a screen one step at a
+/// time.
 ///
-/// Pass multiple steps to chain them with a "Next" button; the last step's
-/// button reads as the `doneLabel`. Swiping/tapping outside is disabled so the
-/// user reads each tip before continuing.
+/// Unlike a full-screen dialog, this widget wraps the screen's [child] in a
+/// [Stack] and overlays a dark veil with a transparent "hole" cut over the
+/// widget referenced by the current step's [OnboardingStep.targetKey]. The
+/// explanation is drawn in a floating card near the highlighted element, while
+/// [IgnorePointer] keeps scroll and interaction working so the user can look
+/// around.
+///
+/// When [active] becomes `true` each step's target is scrolled into view
+/// automatically. Each tip must be advanced with the "Next" / "Done" button.
 class OnboardingOverlay extends StatefulWidget {
   const OnboardingOverlay({
     super.key,
+    required this.active,
     required this.steps,
     required this.doneLabel,
     this.nextLabel,
+    required this.child,
+    this.onDismiss,
   });
+
+  /// Whether the spotlight is currently shown. Keep it `true` while the user
+  /// navigates the steps; set it to `false` (and call [onDismiss]) when done.
+  final bool active;
 
   final List<OnboardingStep> steps;
   final String doneLabel;
   final String? nextLabel;
+
+  /// The screen content to wrap.
+  final Widget child;
+
+  /// Called when the user reaches the last step and taps the done button.
+  final VoidCallback? onDismiss;
 
   @override
   State<OnboardingOverlay> createState() => _OnboardingOverlayState();
 }
 
 class _OnboardingOverlayState extends State<OnboardingOverlay> {
-  late int _index;
-
-  @override
-  void initState() {
-    super.initState();
-    _index = 0;
-  }
+  int _index = 0;
 
   bool get _isLast => _index == widget.steps.length - 1;
 
+  @override
+  void didUpdateWidget(OnboardingOverlay oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // When (re)activated, restart from the first step.
+    if (widget.active && !oldWidget.active) {
+      _index = 0;
+    }
+  }
+
   void _advance() {
     if (_isLast) {
-      Navigator.of(context).pop();
+      widget.onDismiss?.call();
       return;
     }
     setState(() => _index++);
@@ -58,96 +88,234 @@ class _OnboardingOverlayState extends State<OnboardingOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    final step = widget.steps[_index];
+    if (!widget.active) return widget.child;
 
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        backgroundColor: Colors.black.withValues(alpha: 0.6),
-        body: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 420),
-              child: Material(
-                color: context.colors.brandIvory,
-                borderRadius: BorderRadius.circular(20),
-                clipBehavior: Clip.antiAlias,
-                child: Padding(
-                  padding: const EdgeInsets.all(28),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        step.icon,
-                        size: 56,
-                        color: context.colors.brandLavender,
+    return Stack(
+      children: [
+        widget.child,
+        Positioned.fill(
+          child: _SpotlightLayer(
+            step: widget.steps[_index],
+            isLast: _isLast,
+            doneLabel: widget.doneLabel,
+            nextLabel: widget.nextLabel,
+            onAdvance: _advance,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Paints the dark veil (with a transparent hole over the target) and renders
+/// the floating tip card. Repaints every frame so the hole follows scrolling.
+class _SpotlightLayer extends StatefulWidget {
+  const _SpotlightLayer({
+    required this.step,
+    required this.isLast,
+    required this.doneLabel,
+    required this.nextLabel,
+    required this.onAdvance,
+  });
+
+  final OnboardingStep step;
+  final bool isLast;
+  final String doneLabel;
+  final String? nextLabel;
+  final VoidCallback onAdvance;
+
+  @override
+  State<_SpotlightLayer> createState() => _SpotlightLayerState();
+}
+
+class _SpotlightLayerState extends State<_SpotlightLayer> {
+  Rect? _targetRect;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _ensureVisible();
+      _syncTarget();
+    });
+  }
+
+  @override
+  void didUpdateWidget(_SpotlightLayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.step.targetKey != widget.step.targetKey) {
+      _ensureVisible();
+    }
+  }
+
+  void _ensureVisible() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final ctx = widget.step.targetKey?.currentContext;
+      if (ctx != null) {
+        Scrollable.ensureVisible(
+          ctx,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOutCubic,
+          alignment: 0.5,
+          // Keep room for the floating card below/above the target.
+          alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
+        );
+      }
+    });
+  }
+
+  void _syncTarget() {
+    if (!mounted) return;
+    final ctx = widget.step.targetKey?.currentContext;
+    final box = ctx?.findRenderObject() as RenderBox?;
+    if (box != null && box.hasSize && box.attached) {
+      final rect = box.localToGlobal(Offset.zero) & box.size;
+      if (rect != _targetRect) {
+        setState(() => _targetRect = rect);
+      }
+    }
+    // Keep tracking position for the next frame.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _syncTarget());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: IgnorePointer(
+            child: CustomPaint(
+              painter: _SpotlightPainter(targetRect: _targetRect),
+            ),
+          ),
+        ),
+        if (_targetRect != null)
+          _buildTooltip(context, _targetRect!),
+      ],
+    );
+  }
+
+  Widget _buildTooltip(BuildContext context, Rect target) {
+    final size = MediaQuery.sizeOf(context);
+    const cardWidth = 300.0;
+    const gap = 16.0;
+
+    final step = widget.step;
+
+    // Prefer to place the card above the target; fall back to below / center.
+    double top;
+    if (target.top > 260) {
+      top = math.max(8, target.top - 250);
+    } else if (target.bottom + 12 < size.height) {
+      top = target.bottom + gap;
+    } else {
+      top = (size.height - 180) / 2;
+    }
+
+    // Horizontally center the card over the target area, keeping it on-screen.
+    final left = (target.center.dx - cardWidth / 2)
+        .clamp(8.0, math.max(8.0, size.width - cardWidth - 8))
+        .toDouble();
+
+    return Positioned(
+      top: top,
+      left: left,
+      width: cardWidth,
+      child: Material(
+        color: context.colors.brandLavender,
+        elevation: 12,
+        borderRadius: BorderRadius.circular(20),
+        clipBehavior: Clip.antiAlias,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Icon(step.icon, color: Colors.white, size: 26),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      step.title,
+                      style: context.text.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
                       ),
-                      const SizedBox(height: 16),
-                      Text(
-                        step.title,
-                        textAlign: TextAlign.center,
-                        style: context.text.titleLarge?.copyWith(
-                          color: context.colors.brandDark,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        step.description,
-                        textAlign: TextAlign.center,
-                        style: context.text.bodyMedium?.copyWith(
-                          color: context.colors.brandDark.withValues(
-                            alpha: 0.7,
-                          ),
-                          height: 1.4,
-                        ),
-                      ),
-                      if (widget.steps.length > 1) ...[
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            for (var i = 0; i < widget.steps.length; i++)
-                              AnimatedContainer(
-                                duration: const Duration(milliseconds: 200),
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 3,
-                                ),
-                                width: 8,
-                                height: 8,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: i == _index
-                                      ? context.colors.brandLavender
-                                      : context.colors.brandLavender.withValues(
-                                          alpha: 0.25,
-                                        ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ],
-                      const SizedBox(height: 28),
-                      SizedBox(
-                        width: double.infinity,
-                        child: FilledButton(
-                          onPressed: _advance,
-                          child: Text(
-                            _isLast
-                                ? widget.doneLabel
-                                : (widget.nextLabel ?? ''),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                step.description,
+                style: context.text.bodyMedium?.copyWith(
+                  color: Colors.white.withValues(alpha: 0.95),
+                  height: 1.4,
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 44,
+                child: FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: context.colors.brandLavender,
+                  ),
+                  onPressed: widget.onAdvance,
+                  child: Text(
+                    widget.isLast
+                        ? widget.doneLabel
+                        : (widget.nextLabel ?? ''),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _targetRect = null;
+    super.dispose();
+  }
+}
+
+/// Paints the semi-transparent veil across the whole screen, cutting a
+/// rounded-rectangle "hole" (using `BlendMode.clear`) over the target widget.
+class _SpotlightPainter extends CustomPainter {
+  _SpotlightPainter({required this.targetRect});
+
+  final Rect? targetRect;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final bounds = Offset.zero & size;
+
+    canvas.saveLayer(bounds, Paint());
+
+    final veil = Paint()..color = Colors.black.withValues(alpha: 0.6);
+    canvas.drawRect(bounds, veil);
+
+    if (targetRect != null) {
+      final hole = RRect.fromRectAndRadius(
+        targetRect!.inflate(10),
+        const Radius.circular(14),
+      );
+      final cut = Paint()
+        ..blendMode = BlendMode.clear
+        ..isAntiAlias = true;
+      canvas.drawRRect(hole, cut);
+    }
+
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(_SpotlightPainter oldDelegate) =>
+      oldDelegate.targetRect != targetRect;
 }

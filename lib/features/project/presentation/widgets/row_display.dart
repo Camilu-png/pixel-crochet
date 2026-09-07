@@ -12,11 +12,13 @@ class RowDisplay extends StatelessWidget {
     required this.row,
     this.completedBlocks = const {},
     this.onToggleBlock,
+    this.blocksKey,
   });
 
   final PatternRow row;
   final Set<int> completedBlocks;
   final ValueChanged<int>? onToggleBlock;
+  final GlobalKey? blocksKey;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,7 @@ class RowDisplay extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Wrap(
+            key: blocksKey,
             spacing: 8,
             runSpacing: 4,
             children: () {
