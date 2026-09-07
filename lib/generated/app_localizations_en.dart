@@ -370,7 +370,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingImportImageDesc =>
-      'Tap \"Select Image\" and pick a PNG or JPG image. Each pixel of your image becomes a stitch, and \"Stitches wide\" and \"Stitches high\" control how many stitches your finished pattern is across and down.';
+      'Turn a PNG or JPG image into a pattern. After importing, fine-tune it here: edit the name, set \"Stitches wide\" and \"Stitches high\" to size your project, and pick your yarn colors.';
 
   @override
   String get onboardingImportImageButtonTitle => 'Import from an image';

@@ -37,6 +37,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   String? _errorMessage;
 
   final _selectImageKey = GlobalKey();
+  final _formKey = GlobalKey();
 
   @override
   void initState() {
@@ -82,7 +83,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
           icon: Icons.image_outlined,
           title: l10n.onboardingImportImageTitle,
           description: l10n.onboardingImportImageDesc,
-          targetKey: _selectImageKey,
+          targetKey: _imageBytes == null ? _selectImageKey : _formKey,
         ),
       ],
       child: Scaffold(
@@ -107,7 +108,11 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
           children: [
             if (_imageBytes != null) _buildImagePreview(),
             if (_imageBytes != null) const SizedBox(height: 24),
-            if (_imageBytes != null) _buildForm(l10n),
+            if (_imageBytes != null)
+              KeyedSubtree(
+                key: _formKey,
+                child: _buildForm(l10n),
+              ),
             if (_imageBytes != null) const SizedBox(height: 24),
             if (_errorMessage != null) _buildError(l10n),
             if (_gridInfo != null) _buildPreview(l10n),

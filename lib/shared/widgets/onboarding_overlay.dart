@@ -130,6 +130,8 @@ class _SpotlightLayer extends StatefulWidget {
 
 class _SpotlightLayerState extends State<_SpotlightLayer> {
   Rect? _targetRect;
+  double _tooltipHeight = 240;
+  final _cardKey = GlobalKey();
 
   @override
   void initState() {
@@ -166,14 +168,30 @@ class _SpotlightLayerState extends State<_SpotlightLayer> {
 
   void _syncTarget() {
     if (!mounted) return;
+    var changed = false;
+
     final ctx = widget.step.targetKey?.currentContext;
     final box = ctx?.findRenderObject() as RenderBox?;
     if (box != null && box.hasSize && box.attached) {
       final rect = box.localToGlobal(Offset.zero) & box.size;
       if (rect != _targetRect) {
-        setState(() => _targetRect = rect);
+        _targetRect = rect;
+        changed = true;
       }
     }
+
+    // Measure the actual tooltip height so it is placed on a side where it
+    // never overlaps the highlighted element.
+    final cardBox = _cardKey.currentContext?.findRenderObject() as RenderBox?;
+    if (cardBox != null && cardBox.hasSize && cardBox.attached) {
+      final height = cardBox.size.height;
+      if ((height - _tooltipHeight).abs() > 0.5) {
+        _tooltipHeight = height;
+        changed = true;
+      }
+    }
+
+    if (changed) setState(() {});
     // Keep tracking position for the next frame.
     WidgetsBinding.instance.addPostFrameCallback((_) => _syncTarget());
   }
@@ -189,31 +207,44 @@ class _SpotlightLayerState extends State<_SpotlightLayer> {
             ),
           ),
         ),
-        if (_targetRect != null)
-          _buildTooltip(context, _targetRect!),
+        // Always expose the card (and its dismiss button), even when the
+        // highlighted element is not currently mounted, so the overlay can
+        // never trap the user.
+        _buildTooltip(context, _targetRect),
       ],
     );
   }
 
-  Widget _buildTooltip(BuildContext context, Rect target) {
+  Widget _buildTooltip(BuildContext context, Rect? target) {
     final size = MediaQuery.sizeOf(context);
     const cardWidth = 300.0;
-    const gap = 16.0;
+    const gap = 12.0;
 
+    final cardHeight = _tooltipHeight;
     final step = widget.step;
 
-    // Prefer to place the card above the target; fall back to below / center.
     double top;
-    if (target.top > 260) {
-      top = math.max(8, target.top - 250);
-    } else if (target.bottom + 12 < size.height) {
-      top = target.bottom + gap;
+    if (target == null) {
+      // No highlighted element on screen: center the card.
+      top = math.max(8, (size.height - cardHeight) / 2);
     } else {
-      top = (size.height - 180) / 2;
+      // Prefer to place the card fully above the target; fall back to below;
+      // as a last resort center it (the card is capped so it always fits).
+      final spaceAbove = target.top - 8;
+      final spaceBelow = size.height - target.bottom - 8;
+      if (spaceAbove >= cardHeight + gap) {
+        top = target.top - cardHeight - gap;
+      } else if (spaceBelow >= cardHeight + gap) {
+        top = target.bottom + gap;
+      } else {
+        top = math.max(8, (size.height - cardHeight) / 2);
+      }
     }
 
-    // Horizontally center the card over the target area, keeping it on-screen.
-    final left = (target.center.dx - cardWidth / 2)
+    // Center the card over the target area (or the screen when there is no
+    // target), keeping it on-screen.
+    final targetCenterDx = target?.center.dx ?? size.width / 2;
+    final left = (targetCenterDx - cardWidth / 2)
         .clamp(8.0, math.max(8.0, size.width - cardWidth - 8))
         .toDouble();
 
@@ -222,56 +253,62 @@ class _SpotlightLayerState extends State<_SpotlightLayer> {
       left: left,
       width: cardWidth,
       child: Material(
+        key: _cardKey,
         color: context.colors.brandLavender,
         elevation: 12,
         borderRadius: BorderRadius.circular(20),
         clipBehavior: Clip.antiAlias,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: size.height - 16),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Icon(step.icon, color: Colors.white, size: 26),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      step.title,
-                      style: context.text.titleMedium?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
+                  Row(
+                    children: [
+                      Icon(step.icon, color: Colors.white, size: 26),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          step.title,
+                          style: context.text.titleMedium?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    step.description,
+                    style: context.text.bodyMedium?.copyWith(
+                      color: Colors.white.withValues(alpha: 0.95),
+                      height: 1.4,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 44,
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: context.colors.brandLavender,
+                      ),
+                      onPressed: widget.onAdvance,
+                      child: Text(
+                        widget.isLast
+                            ? widget.doneLabel
+                            : (widget.nextLabel ?? ''),
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              Text(
-                step.description,
-                style: context.text.bodyMedium?.copyWith(
-                  color: Colors.white.withValues(alpha: 0.95),
-                  height: 1.4,
-                ),
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                height: 44,
-                child: FilledButton(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: context.colors.brandLavender,
-                  ),
-                  onPressed: widget.onAdvance,
-                  child: Text(
-                    widget.isLast
-                        ? widget.doneLabel
-                        : (widget.nextLabel ?? ''),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

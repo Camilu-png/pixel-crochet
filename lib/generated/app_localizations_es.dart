@@ -370,7 +370,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardingImportImageDesc =>
-      'Toca \"Seleccionar imagen\" y elige una imagen PNG o JPG. Cada píxel de tu imagen se convierte en un punto, y \"Puntos ancho\" y \"Puntos alto\" controlan cuántos puntos tendrá tu patrón de ancho y de alto.';
+      'Convierte una imagen PNG o JPG en un patrón. Tras importarla, ajústala aquí: edita el nombre, define \"Puntos ancho\" y \"Puntos alto\" para dimensionar tu proyecto y elige tus colores de hilo.';
 
   @override
   String get onboardingImportImageButtonTitle => 'Importar desde una imagen';
