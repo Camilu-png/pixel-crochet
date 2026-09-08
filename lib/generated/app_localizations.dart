@@ -749,7 +749,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingImportDesc.
   ///
   /// In en, this message translates to:
-  /// **'Upload a .txt crochet pattern or paste its text. Each row looks like this: \"R1: 10 red, 5 white\" — a row number followed by the colours and stitch counts.'**
+  /// **'Upload a .txt crochet pattern or paste its text. Each row looks like this: \"R1: 10 red, 5 white\" — a row number followed by the colors and stitch counts.'**
   String get onboardingImportDesc;
 
   /// No description provided for @onboardingImportImageTitle.
@@ -767,7 +767,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingImportImageEditDesc.
   ///
   /// In en, this message translates to:
-  /// **'You can adjust the pattern name and the number of stitches it will have. Selecting preview shows the colors that are detected. You can change them freely.'**
+  /// **'You can adjust the pattern name and the number of stitches it will have. Preview the pattern to see the detected colors. You can change them freely.'**
   String get onboardingImportImageEditDesc;
 
   /// No description provided for @onboardingImportImageButtonTitle.
@@ -791,7 +791,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingImportPasteDesc.
   ///
   /// In en, this message translates to:
-  /// **'Paste your pattern text into the box below and tap \"Import Pattern\". Each row looks like: \"R1: 10 red, 5 white\" — a row number followed by the colours and stitch counts.'**
+  /// **'Paste your pattern text into the box below and tap \"Import Pattern\". Each row looks like: \"R1: 10 red, 5 white\" — a row number followed by the colors and stitch counts.'**
   String get onboardingImportPasteDesc;
 
   /// No description provided for @onboardingProjectDirectionTitle.
@@ -803,7 +803,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingProjectDirectionDesc.
   ///
   /// In en, this message translates to:
-  /// **'The arrow shows the direction to read each row, left-to-right or right-to-left. Reading left-to-right means you are now crocheting on the wrong (reverse) side of the fabric. This matters for tapestry crochet.'**
+  /// **'The arrow shows the direction to read each row, left-to-right or right-to-left. Reading left-to-right means you are now crocheting on the wrong (reverse) side of the fabric.'**
   String get onboardingProjectDirectionDesc;
 
   /// No description provided for @onboardingProjectBlocksTitle.
@@ -815,7 +815,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingProjectBlocksDesc.
   ///
   /// In en, this message translates to:
-  /// **'Tap a colour block to mark it as finished — it gets crossed out. Tap again to unmark it.'**
+  /// **'Tap a color block to mark it as finished — it gets crossed out. Tap again to unmark it.'**
   String get onboardingProjectBlocksDesc;
 
   /// No description provided for @onboardingProjectProgressTitle.

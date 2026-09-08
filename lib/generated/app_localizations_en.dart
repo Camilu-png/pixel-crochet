@@ -363,7 +363,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingImportDesc =>
-      'Upload a .txt crochet pattern or paste its text. Each row looks like this: \"R1: 10 red, 5 white\" — a row number followed by the colours and stitch counts.';
+      'Upload a .txt crochet pattern or paste its text. Each row looks like this: \"R1: 10 red, 5 white\" — a row number followed by the colors and stitch counts.';
 
   @override
   String get onboardingImportImageTitle => 'Turn an image into stitches';
@@ -374,7 +374,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingImportImageEditDesc =>
-      'You can adjust the pattern name and the number of stitches it will have. Selecting preview shows the colors that are detected. You can change them freely.';
+      'You can adjust the pattern name and the number of stitches it will have. Preview the pattern to see the detected colors. You can change them freely.';
 
   @override
   String get onboardingImportImageButtonTitle => 'Import from an image';
@@ -388,21 +388,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingImportPasteDesc =>
-      'Paste your pattern text into the box below and tap \"Import Pattern\". Each row looks like: \"R1: 10 red, 5 white\" — a row number followed by the colours and stitch counts.';
+      'Paste your pattern text into the box below and tap \"Import Pattern\". Each row looks like: \"R1: 10 red, 5 white\" — a row number followed by the colors and stitch counts.';
 
   @override
   String get onboardingProjectDirectionTitle => 'Which way to read';
 
   @override
   String get onboardingProjectDirectionDesc =>
-      'The arrow shows the direction to read each row, left-to-right or right-to-left. Reading left-to-right means you are now crocheting on the wrong (reverse) side of the fabric. This matters for tapestry crochet.';
+      'The arrow shows the direction to read each row, left-to-right or right-to-left. Reading left-to-right means you are now crocheting on the wrong (reverse) side of the fabric.';
 
   @override
   String get onboardingProjectBlocksTitle => 'Mark your progress';
 
   @override
   String get onboardingProjectBlocksDesc =>
-      'Tap a colour block to mark it as finished — it gets crossed out. Tap again to unmark it.';
+      'Tap a color block to mark it as finished — it gets crossed out. Tap again to unmark it.';
 
   @override
   String get onboardingProjectProgressTitle => 'Track your progress';

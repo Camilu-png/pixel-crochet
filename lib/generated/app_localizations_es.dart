@@ -370,18 +370,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardingImportImageSelectDesc =>
-      'Selecciona una imagen PNG o JPG con un diseño que te guste. Debe ser simple y con pocos colores. Asegúrate que tenga una buena calidad antes de importar.';
+      'Selecciona una imagen PNG o JPG con un diseño que te guste. Debe ser simple y con pocos colores. Asegúrate de que tenga buena calidad antes de importar.';
 
   @override
   String get onboardingImportImageEditDesc =>
-      'Puedes ajustar el nombre del patrón y la cantidad de puntos que va a tener. Al seleccionar vista previa puedes ver los colores que se detectan. Eres libre de cambiarlos a tu gusto.';
+      'Puedes ajustar el nombre del patrón y la cantidad de puntos que va a tener. Pulsa Vista Previa para ver los colores que se detectan. Eres libre de cambiarlos a tu gusto.';
 
   @override
   String get onboardingImportImageButtonTitle => 'Importar desde una imagen';
 
   @override
   String get onboardingImportImageButtonDesc =>
-      'Toca \"Importar imagen\" para convertir una foto en puntos. Sube una imagen PNG o JPG de tu pixel art o patrón de punto de cruz.';
+      'Toca \"Importar Imagen\" para convertir una foto en puntos. Sube una imagen PNG o JPG de tu pixel art o patrón de punto de cruz.';
 
   @override
   String get onboardingImportPasteTitle => 'Pega un patrón';
@@ -395,7 +395,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardingProjectDirectionDesc =>
-      'La flecha indica la dirección en la que leer cada fila, de izquierda a derecha o de derecha a izquierda. Leer de izquierda a derecha significa que ahora tejes por el revés (la parte de atrás) del tejido. Esto es importante en tapestry crochet.';
+      'La flecha indica la dirección en la que leer cada fila, de izquierda a derecha o de derecha a izquierda. Leer de izquierda a derecha significa que ahora tejes por el revés (la parte de atrás) del tejido.';
 
   @override
   String get onboardingProjectBlocksTitle => 'Marca tu progreso';
