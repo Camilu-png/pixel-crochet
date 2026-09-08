@@ -581,7 +581,7 @@ abstract class AppLocalizations {
   /// No description provided for @suggestEmail.
   ///
   /// In en, this message translates to:
-  /// **'camila.arancibia@proton.me'**
+  /// **'mypixelcrochet@gmail.com'**
   String get suggestEmail;
 
   /// No description provided for @suggestSubjectLabel.

@@ -272,7 +272,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get openUrlMessage => 'Could not open the link';
 
   @override
-  String get suggestEmail => 'camila.arancibia@proton.me';
+  String get suggestEmail => 'mypixelcrochet@gmail.com';
 
   @override
   String get suggestSubjectLabel => 'Subject';
