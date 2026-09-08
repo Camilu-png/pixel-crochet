@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/color_map.dart';
+import '../../../core/onboarding/onboarding_provider.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
+import '../../../shared/widgets/onboarding_overlay.dart';
 import '../../home/providers/home_provider.dart';
 import '../data/image_processor.dart';
 
@@ -31,7 +34,41 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   GridInfo? _gridInfo;
   bool _isProcessing = false;
   bool _isImporting = false;
+  bool _showTutorial = false;
   String? _errorMessage;
+
+  final _selectImageKey = GlobalKey();
+  final _formKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _maybeShowOnboarding();
+  }
+
+  Future<void> _maybeShowOnboarding() async {
+    final storage = ref.read(onboardingStorageProvider);
+    if (await storage.hasSeen(OnboardingTip.importImage)) return;
+    await storage.markAsSeen(OnboardingTip.importImage);
+    if (!mounted) return;
+    _launchTutorial();
+  }
+
+  Future<void> _maybeShowEditTutorial() async {
+    final storage = ref.read(onboardingStorageProvider);
+    if (await storage.hasSeen(OnboardingTip.importImageEdit)) return;
+    await storage.markAsSeen(OnboardingTip.importImageEdit);
+    if (!mounted) return;
+    _launchTutorial();
+  }
+
+  void _launchTutorial() {
+    if (!mounted) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      setState(() => _showTutorial = true);
+    });
+  }
 
   @override
   void dispose() {
@@ -45,13 +82,35 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
+    return OnboardingOverlay(
+      active: _showTutorial,
+      doneLabel: l10n.onboardingGotIt,
+      nextLabel: l10n.onboardingNext,
+      onDismiss: () => setState(() => _showTutorial = false),
+      steps: [
+        OnboardingStep(
+          icon: Icons.image_outlined,
+          title: l10n.onboardingImportImageTitle,
+          description: _imageBytes == null
+              ? l10n.onboardingImportImageSelectDesc
+              : l10n.onboardingImportImageEditDesc,
+          targetKey: _imageBytes == null ? _selectImageKey : _formKey,
+        ),
+      ],
+      child: Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
         ),
         title: Text(l10n.importImage),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: l10n.tutorial,
+            onPressed: _launchTutorial,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -60,7 +119,11 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
           children: [
             if (_imageBytes != null) _buildImagePreview(),
             if (_imageBytes != null) const SizedBox(height: 24),
-            if (_imageBytes != null) _buildForm(l10n),
+            if (_imageBytes != null)
+              KeyedSubtree(
+                key: _formKey,
+                child: _buildForm(l10n),
+              ),
             if (_imageBytes != null) const SizedBox(height: 24),
             if (_errorMessage != null) _buildError(l10n),
             if (_gridInfo != null) _buildPreview(l10n),
@@ -69,6 +132,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
             if (_imageBytes == null) _buildInitialState(l10n),
           ],
         ),
+      ),
       ),
     );
   }
@@ -93,6 +157,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
         ),
         const SizedBox(height: 32),
         FilledButton.icon(
+          key: _selectImageKey,
           onPressed: _pickImage,
           icon: const Icon(Icons.image),
           label: Text(l10n.selectImage),
@@ -399,6 +464,7 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
         _widthController.text = _suggestedStitches(data.width).toString();
         _heightController.text = _suggestedStitches(data.height).toString();
       });
+      unawaited(_maybeShowEditTutorial());
     } catch (e) {
       if (!mounted) return;
       setState(() {

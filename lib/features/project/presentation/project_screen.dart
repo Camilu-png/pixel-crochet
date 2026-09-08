@@ -5,9 +5,11 @@ import '../../../core/constants/color_map.dart';
 import '../../../core/models/crochet_project.dart';
 import '../../../core/models/pattern_row.dart';
 import '../../../core/models/color_block.dart';
+import '../../../core/onboarding/onboarding_provider.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
 import '../../../shared/widgets/confirm_dialog.dart';
+import '../../../shared/widgets/onboarding_overlay.dart';
 import '../providers/project_provider.dart';
 import 'widgets/pattern_image.dart';
 import 'widgets/row_display.dart';
@@ -43,14 +45,49 @@ class ProjectScreen extends ConsumerWidget {
   }
 }
 
-class _ProjectContent extends ConsumerWidget {
+class _ProjectContent extends ConsumerStatefulWidget {
   const _ProjectContent({required this.projectId, required this.project});
 
   final String projectId;
   final CrochetProject project;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_ProjectContent> createState() => _ProjectContentState();
+}
+
+class _ProjectContentState extends ConsumerState<_ProjectContent> {
+  final _progressKey = GlobalKey();
+  final _rowDisplayKey = GlobalKey();
+  final _blocksKey = GlobalKey();
+  bool _showTutorial = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _maybeShowOnboarding();
+  }
+
+  Future<void> _maybeShowOnboarding() async {
+    final storage = ref.read(onboardingStorageProvider);
+    if (await storage.hasSeen(OnboardingTip.projectDirection)) return;
+    await storage.markAsSeen(OnboardingTip.projectDirection);
+    await storage.markAsSeen(OnboardingTip.projectBlocks);
+    if (!mounted) return;
+    _launchTutorial();
+  }
+
+  void _launchTutorial() {
+    if (!mounted) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      setState(() => _showTutorial = true);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final project = widget.project;
+    final projectId = widget.projectId;
     final l10n = AppLocalizations.of(context)!;
     final currentRow = project.rows.isNotEmpty
         ? project.rows[project.currentRowIndex]
@@ -69,7 +106,32 @@ class _ProjectContent extends ConsumerWidget {
         );
     });
 
-    return Scaffold(
+    return OnboardingOverlay(
+      active: _showTutorial,
+      doneLabel: l10n.onboardingGotIt,
+      nextLabel: l10n.onboardingNext,
+      onDismiss: () => setState(() => _showTutorial = false),
+      steps: [
+        OnboardingStep(
+          icon: Icons.swap_horiz,
+          title: l10n.onboardingProjectDirectionTitle,
+          description: l10n.onboardingProjectDirectionDesc,
+          targetKey: _rowDisplayKey,
+        ),
+        OnboardingStep(
+          icon: Icons.check_circle_outline,
+          title: l10n.onboardingProjectBlocksTitle,
+          description: l10n.onboardingProjectBlocksDesc,
+          targetKey: _blocksKey,
+        ),
+        OnboardingStep(
+          icon: Icons.percent,
+          title: l10n.onboardingProjectProgressTitle,
+          description: l10n.onboardingProjectProgressDesc,
+          targetKey: _progressKey,
+        ),
+      ],
+      child: Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -77,6 +139,11 @@ class _ProjectContent extends ConsumerWidget {
         ),
         title: Text(project.name),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.help_outline),
+            tooltip: l10n.tutorial,
+            onPressed: _launchTutorial,
+          ),
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () => _showEditSheet(context, ref, project),
@@ -105,23 +172,31 @@ class _ProjectContent extends ConsumerWidget {
 
                 const SizedBox(height: 16),
 
-                LinearProgressIndicator(
-                  value: project.progress,
-                  backgroundColor: context.colors.brandLavenderLight,
-                  color: context.colors.brandLavender,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${l10n.rowLabel} ${project.currentRowNumber}/${project.totalRows} · ${(project.progress * 100).toStringAsFixed(0)}%',
-                  style: context.text.bodyMedium?.copyWith(
-                    color: context.colors.brandDark,
-                  ),
+                Column(
+                  key: _progressKey,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    LinearProgressIndicator(
+                      value: project.progress,
+                      backgroundColor: context.colors.brandLavenderLight,
+                      color: context.colors.brandLavender,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${l10n.rowLabel} ${project.currentRowNumber}/${project.totalRows} · ${(project.progress * 100).toStringAsFixed(0)}%',
+                      style: context.text.bodyMedium?.copyWith(
+                        color: context.colors.brandDark,
+                      ),
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: 16),
 
                 if (currentRow != null)
                   RowDisplay(
+                    key: _rowDisplayKey,
+                    blocksKey: _blocksKey,
                     row: currentRow,
                     completedBlocks:
                         project.completedBlocks[project.currentRowIndex] ??
@@ -167,13 +242,14 @@ class _ProjectContent extends ConsumerWidget {
           );
         },
       ),
+      ),
     );
   }
 
   Future<void> _goToRow(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
     final controller = TextEditingController(
-      text: '${project.currentRowNumber}',
+      text: '${widget.project.currentRowNumber}',
     );
 
     await showDialog<void>(
@@ -185,7 +261,7 @@ class _ProjectContent extends ConsumerWidget {
           keyboardType: TextInputType.number,
           autofocus: true,
           decoration: InputDecoration(
-            hintText: '1 – ${project.totalRows}',
+            hintText: '1 – ${widget.project.totalRows}',
             border: const OutlineInputBorder(),
           ),
         ),
@@ -200,11 +276,11 @@ class _ProjectContent extends ConsumerWidget {
               final rowNumber = int.tryParse(text);
               if (rowNumber == null ||
                   rowNumber < 1 ||
-                  rowNumber > project.totalRows) {
+                  rowNumber > widget.project.totalRows) {
                 return;
               }
               ref
-                  .read(projectProvider(projectId).notifier)
+                  .read(projectProvider(widget.projectId).notifier)
                   .setCurrentRow(rowNumber - 1);
               Navigator.of(dialogContext).pop();
             },
@@ -223,10 +299,10 @@ class _ProjectContent extends ConsumerWidget {
       context: context,
       builder: (dialogContext) => ConfirmDialog(
         title: l10n.deleteProject,
-        message: l10n.deleteProjectConfirm(project.name),
+        message: l10n.deleteProjectConfirm(widget.project.name),
         confirmLabel: l10n.delete,
         onConfirm: () {
-          ref.read(projectProvider(projectId).notifier).delete();
+          ref.read(projectProvider(widget.projectId).notifier).delete();
           Navigator.of(dialogContext).pop();
           dialogContext.goNamed('home');
         },
@@ -258,7 +334,7 @@ class _ProjectContent extends ConsumerWidget {
         usedColors: usedColors,
         onSave: (updatedProject) {
           ref
-              .read(projectProvider(projectId).notifier)
+              .read(projectProvider(widget.projectId).notifier)
               .updateProject(updatedProject);
           Navigator.of(ctx).pop();
         },

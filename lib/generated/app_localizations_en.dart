@@ -272,7 +272,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get openUrlMessage => 'Could not open the link';
 
   @override
-  String get suggestEmail => 'camila.arancibia@proton.me';
+  String get suggestEmail => 'mypixelcrochet@gmail.com';
 
   @override
   String get suggestSubjectLabel => 'Subject';
@@ -348,4 +348,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get morePatternsPriceBadge => 'Ready-made';
+
+  @override
+  String get tutorial => 'Tutorial';
+
+  @override
+  String get onboardingGotIt => 'Got it';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingImportTitle => 'Import a pattern';
+
+  @override
+  String get onboardingImportDesc =>
+      'Upload a .txt crochet pattern or paste its text. Each row looks like this: \"R1: 10 red, 5 white\" — a row number followed by the colors and stitch counts.';
+
+  @override
+  String get onboardingImportImageTitle => 'Turn an image into stitches';
+
+  @override
+  String get onboardingImportImageSelectDesc =>
+      'Choose a PNG or JPG image with a design you like. It should be simple and use few colors. Make sure it is good quality before importing.';
+
+  @override
+  String get onboardingImportImageEditDesc =>
+      'You can adjust the pattern name and the number of stitches it will have. Preview the pattern to see the detected colors. You can change them freely.';
+
+  @override
+  String get onboardingImportImageButtonTitle => 'Import from an image';
+
+  @override
+  String get onboardingImportImageButtonDesc =>
+      'Tap \"Import Image\" to turn a picture into stitches. Upload a PNG or JPG image of your pixel art or cross-stitch pattern.';
+
+  @override
+  String get onboardingImportPasteTitle => 'Paste a pattern';
+
+  @override
+  String get onboardingImportPasteDesc =>
+      'Paste your pattern text into the box below and tap \"Import Pattern\". Each row looks like: \"R1: 10 red, 5 white\" — a row number followed by the colors and stitch counts.';
+
+  @override
+  String get onboardingProjectDirectionTitle => 'Which way to read';
+
+  @override
+  String get onboardingProjectDirectionDesc =>
+      'The arrow shows the direction to read each row, left-to-right or right-to-left. Reading left-to-right means you are now crocheting on the wrong (reverse) side of the fabric.';
+
+  @override
+  String get onboardingProjectBlocksTitle => 'Mark your progress';
+
+  @override
+  String get onboardingProjectBlocksDesc =>
+      'Tap a color block to mark it as finished — it gets crossed out. Tap again to unmark it.';
+
+  @override
+  String get onboardingProjectProgressTitle => 'Track your progress';
+
+  @override
+  String get onboardingProjectProgressDesc =>
+      'The bar and the percentage show how much of the pattern you have finished so far.';
 }

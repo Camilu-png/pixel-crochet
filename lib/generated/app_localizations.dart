@@ -581,7 +581,7 @@ abstract class AppLocalizations {
   /// No description provided for @suggestEmail.
   ///
   /// In en, this message translates to:
-  /// **'camila.arancibia@proton.me'**
+  /// **'mypixelcrochet@gmail.com'**
   String get suggestEmail;
 
   /// No description provided for @suggestSubjectLabel.
@@ -721,6 +721,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ready-made'**
   String get morePatternsPriceBadge;
+
+  /// No description provided for @tutorial.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutorial'**
+  String get tutorial;
+
+  /// No description provided for @onboardingGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get onboardingGotIt;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingImportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import a pattern'**
+  String get onboardingImportTitle;
+
+  /// No description provided for @onboardingImportDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a .txt crochet pattern or paste its text. Each row looks like this: \"R1: 10 red, 5 white\" — a row number followed by the colors and stitch counts.'**
+  String get onboardingImportDesc;
+
+  /// No description provided for @onboardingImportImageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn an image into stitches'**
+  String get onboardingImportImageTitle;
+
+  /// No description provided for @onboardingImportImageSelectDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a PNG or JPG image with a design you like. It should be simple and use few colors. Make sure it is good quality before importing.'**
+  String get onboardingImportImageSelectDesc;
+
+  /// No description provided for @onboardingImportImageEditDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'You can adjust the pattern name and the number of stitches it will have. Preview the pattern to see the detected colors. You can change them freely.'**
+  String get onboardingImportImageEditDesc;
+
+  /// No description provided for @onboardingImportImageButtonTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import from an image'**
+  String get onboardingImportImageButtonTitle;
+
+  /// No description provided for @onboardingImportImageButtonDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \"Import Image\" to turn a picture into stitches. Upload a PNG or JPG image of your pixel art or cross-stitch pattern.'**
+  String get onboardingImportImageButtonDesc;
+
+  /// No description provided for @onboardingImportPasteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a pattern'**
+  String get onboardingImportPasteTitle;
+
+  /// No description provided for @onboardingImportPasteDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste your pattern text into the box below and tap \"Import Pattern\". Each row looks like: \"R1: 10 red, 5 white\" — a row number followed by the colors and stitch counts.'**
+  String get onboardingImportPasteDesc;
+
+  /// No description provided for @onboardingProjectDirectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Which way to read'**
+  String get onboardingProjectDirectionTitle;
+
+  /// No description provided for @onboardingProjectDirectionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The arrow shows the direction to read each row, left-to-right or right-to-left. Reading left-to-right means you are now crocheting on the wrong (reverse) side of the fabric.'**
+  String get onboardingProjectDirectionDesc;
+
+  /// No description provided for @onboardingProjectBlocksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark your progress'**
+  String get onboardingProjectBlocksTitle;
+
+  /// No description provided for @onboardingProjectBlocksDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a color block to mark it as finished — it gets crossed out. Tap again to unmark it.'**
+  String get onboardingProjectBlocksDesc;
+
+  /// No description provided for @onboardingProjectProgressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your progress'**
+  String get onboardingProjectProgressTitle;
+
+  /// No description provided for @onboardingProjectProgressDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'The bar and the percentage show how much of the pattern you have finished so far.'**
+  String get onboardingProjectProgressDesc;
 }
 
 class _AppLocalizationsDelegate

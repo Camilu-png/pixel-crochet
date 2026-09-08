@@ -272,7 +272,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get openUrlMessage => 'No pudimos abrir el link';
 
   @override
-  String get suggestEmail => 'camila.arancibia@proton.me';
+  String get suggestEmail => 'mypixelcrochet@gmail.com';
 
   @override
   String get suggestSubjectLabel => 'Asunto';
@@ -348,4 +348,66 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get morePatternsPriceBadge => 'Listo para usar';
+
+  @override
+  String get tutorial => 'Tutorial';
+
+  @override
+  String get onboardingGotIt => 'Entendido';
+
+  @override
+  String get onboardingNext => 'Siguiente';
+
+  @override
+  String get onboardingImportTitle => 'Importa un patrón';
+
+  @override
+  String get onboardingImportDesc =>
+      'Sube un patrón .txt de crochet o pega su texto. Cada fila se ve así: \"R1: 10 rojo, 5 blanco\" — un número de fila seguido de los colores y cantidades de puntos.';
+
+  @override
+  String get onboardingImportImageTitle => 'Convierte tu imagen en puntos';
+
+  @override
+  String get onboardingImportImageSelectDesc =>
+      'Selecciona una imagen PNG o JPG con un diseño que te guste. Debe ser simple y con pocos colores. Asegúrate de que tenga buena calidad antes de importar.';
+
+  @override
+  String get onboardingImportImageEditDesc =>
+      'Puedes ajustar el nombre del patrón y la cantidad de puntos que va a tener. Pulsa Vista Previa para ver los colores que se detectan. Eres libre de cambiarlos a tu gusto.';
+
+  @override
+  String get onboardingImportImageButtonTitle => 'Importar desde una imagen';
+
+  @override
+  String get onboardingImportImageButtonDesc =>
+      'Toca \"Importar Imagen\" para convertir una foto en puntos. Sube una imagen PNG o JPG de tu pixel art o patrón de punto de cruz.';
+
+  @override
+  String get onboardingImportPasteTitle => 'Pega un patrón';
+
+  @override
+  String get onboardingImportPasteDesc =>
+      'Pega el texto de tu patrón en la caja de abajo y toca \"Importar Patrón\". Cada fila se ve así: \"R1: 10 rojo, 5 blanco\" — un número de fila seguido de los colores y cantidades de puntos.';
+
+  @override
+  String get onboardingProjectDirectionTitle => 'En qué dirección leer';
+
+  @override
+  String get onboardingProjectDirectionDesc =>
+      'La flecha indica la dirección en la que leer cada fila, de izquierda a derecha o de derecha a izquierda. Leer de izquierda a derecha significa que ahora tejes por el revés (la parte de atrás) del tejido.';
+
+  @override
+  String get onboardingProjectBlocksTitle => 'Marca tu progreso';
+
+  @override
+  String get onboardingProjectBlocksDesc =>
+      'Toca un bloque de color para marcarlo como terminado — se tachará. Tócalo de nuevo para desmarcarlo.';
+
+  @override
+  String get onboardingProjectProgressTitle => 'Sigue tu progreso';
+
+  @override
+  String get onboardingProjectProgressDesc =>
+      'La barra y el porcentaje muestran cuánto del patrón has terminado hasta ahora.';
 }
