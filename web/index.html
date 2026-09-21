@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
         <!--
     If you are serving your web app in a path other than the root, change the
@@ -21,11 +21,15 @@
         <meta name="description" content="Pixel Crochet — convert images and Stitch Fiddle patterns into interactive tapestry crochet guides." />
         <meta name="robots" content="index, follow" />
         <meta name="google-site-verification" content="FEF4IeTAA53yzfX6yuDvC-o7vwd5d-el-6bU8b7fXyo" />
+        <meta name="theme-color" content="#6E5CA6" />
+        <meta name="application-name" content="Pixel Crochet" />
         <link rel="canonical" href="https://pixel-crochet.vercel.app/" />
 
         <!-- Open Graph -->
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Pixel Crochet" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:locale:alternate" content="es_ES" />
         <meta property="og:title" content="Pixel Crochet — tapestry crochet stitch by stitch" />
         <meta property="og:description" content="Turn images and Stitch Fiddle patterns into an interactive row-by-row guide. Free, open-source, made stitch by stitch." />
         <meta property="og:url" content="https://pixel-crochet.vercel.app/" />
@@ -40,6 +44,17 @@
         <meta name="twitter:image" content="https://pixel-crochet.vercel.app/og-image.png" />
 
         <!-- Schema.org -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "Pixel Crochet",
+          "alternateName": "PixelCrochet",
+          "url": "https://pixel-crochet.vercel.app/",
+          "description": "Pixel Crochet turns images and Stitch Fiddle patterns into interactive tapestry crochet guides — row by row, stitch by stitch.",
+          "inLanguage": ["en", "es"]
+        }
+        </script>
         <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -75,6 +90,14 @@
         <link rel="manifest" href="manifest.json" />
     </head>
     <body>
+        <noscript>
+            <div style="max-width:720px;margin:0 auto;padding:40px 24px;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:#241F2B;background:#FFF9F2;">
+                <h1>Pixel Crochet — tapestry crochet without the counting</h1>
+                <p>Pixel Crochet is a free, open-source app that turns tapestry crochet patterns into an interactive, stitch-by-stitch guide. Instead of counting every stitch while reading a pattern, you follow the current row, tap each color block as you finish it, and your progress is saved automatically.</p>
+                <p>Import a PNG or JPG of pixel art or cross-stitch, or paste a Stitch Fiddle pattern, and Pixel Crochet builds a row-by-row guide with the reading direction, yarn colors and a progress bar. Made stitch by stitch.</p>
+                <p>Pixel Crochet es una app gratuita y de código abierto que convierte patrones de tapestry crochet en una guía interactiva puntada a puntada.</p>
+            </div>
+        </noscript>
         <script src="flutter_bootstrap.js" async></script>
         <script defer src="/_vercel/speed-insights/script.js"></script>
         <script defer src="/_vercel/insights/script.js"></script>
