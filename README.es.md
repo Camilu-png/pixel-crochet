@@ -90,6 +90,12 @@ lib/
   generated/   localizaciones generadas
 ```
 
+## Guías
+
+- [Cómo hacer pixel crochet y tapestry crochet](https://pixel-crochet.vercel.app/como-hacer-pixel-crochet) — qué son el pixel crochet y el tapestry, y cómo empezar una pieza con la app.
+- [Convertir una imagen en patrón de crochet](https://pixel-crochet.vercel.app/convertir-imagen-a-patron-de-crochet) — paso a paso desde la foto hasta la cuadrícula de puntos.
+- [Stitch Fiddle: de patrón de texto a guía interactiva](https://pixel-crochet.vercel.app/stitch-fiddle-to-crochet-guide) — pega el patrón y síguelo fila a fila.
+
 ## Licencia
 
 [MIT](LICENSE) © 2026 Camilú

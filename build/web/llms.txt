@@ -1,0 +1,21 @@
+# Pixel Crochet
+
+> Pixel Crochet is a free, open-source app that turns your images — and even Stitch Fiddle text patterns — into a stitch-by-stitch tapestry crochet guide: which color to work, how many stitches, and your progress saved automatically.
+
+Pixel Crochet lives at https://pixel-crochet.vercel.app/. Everything runs on your device: your photos never leave it.
+
+## Key pages
+- [Pixel Crochet (the app)](https://pixel-crochet.vercel.app/): open the app in your browser.
+- [Cómo hacer pixel crochet y tapestry (Spanish guide)](https://pixel-crochet.vercel.app/como-hacer-pixel-crochet): what pixel and tapestry crochet are, how the techniques compare, and how Pixel Crochet guides you row by row.
+- [Convertir una imagen en patrón de crochet (Spanish guide)](https://pixel-crochet.vercel.app/convertir-imagen-a-patron-de-crochet): step by step from photo to stitch chart.
+- [Stitch Fiddle to interactive guide (English guide)](https://pixel-crochet.vercel.app/stitch-fiddle-to-crochet-guide): paste a text pattern and follow it interactively.
+- [Source code (GitHub)](https://github.com/Camilu-png/pixel-crochet): MIT-licensed open source.
+- [README in Spanish](https://github.com/Camilu-png/pixel-crochet/blob/main/README.es.md)
+
+## Key facts
+- Free and open source (MIT). No account, no sign-up, no watermark.
+- Your images and patterns never leave your device — all processing is local.
+- Works on web, Android and iOS.
+- Bilingual: English and Spanish.
+- Built for tapestry crochet, pixel crochet, graphgan (pixel blankets), C2C and any piece counted square by square — from blankets to a knitted Peruvian "buganda" shawl.
+- Contact and feedback: mypixelcrochet@gmail.com

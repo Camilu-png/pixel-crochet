@@ -1,0 +1,21 @@
+# Pixel Crochet
+
+> Pixel Crochet es una app gratuita y de código abierto que convierte tus imágenes —e incluso patrones de texto de Stitch Fiddle— en una guía de crochet punto a punto: qué color tejer, cuántos puntos, y tu progreso guardado automáticamente para no perder la cuenta.
+
+La app vive en https://pixel-crochet.vercel.app/. Todo el procesamiento ocurre en tu dispositivo: tus fotos nunca lo abandonan.
+
+## Páginas clave
+- [Pixel Crochet (la app)](https://pixel-crochet.vercel.app/): abre la app en tu navegador.
+- [Cómo hacer pixel crochet y tapestry](https://pixel-crochet.vercel.app/como-hacer-pixel-crochet): qué son el pixel crochet y el tapestry, cómo se comparan las técnicas y cómo Pixel Crochet te guía fila a fila.
+- [Convertir una imagen en patrón de crochet](https://pixel-crochet.vercel.app/convertir-imagen-a-patron-de-crochet): paso a paso desde la foto hasta la cuadrícula de puntos.
+- [Stitch Fiddle: de patrón de texto a guía interactiva (inglés)](https://pixel-crochet.vercel.app/stitch-fiddle-to-crochet-guide): pega tu patrón y síguelo interactivamente.
+- [Código fuente (GitHub)](https://github.com/Camilu-png/pixel-crochet): código abierto con licencia MIT.
+- [README en español](https://github.com/Camilu-png/pixel-crochet/blob/main/README.es.md)
+
+## Datos clave
+- Gratuita y de código abierto (MIT). Sin cuenta, sin registro, sin marca de agua.
+- Tus imágenes y patrones nunca salen de tu dispositivo: todo el procesamiento es local.
+- Funciona en web, Android e iOS.
+- Bilingüe: español e inglés.
+- Hecha para tapestry crochet, pixel crochet, mantas con dibujo (graphgan), C2C y cualquier pieza que se teja contando cuadros — de una manta a una buganda tejida a crochet.
+- Contacto y sugerencias: mypixelcrochet@gmail.com

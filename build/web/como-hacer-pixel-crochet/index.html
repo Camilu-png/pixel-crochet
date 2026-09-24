@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Cómo hacer pixel crochet y tapestry crochet — guía con la app Pixel Crochet</title>
+        <meta name="description" content="Qué es el pixel crochet, en qué se diferencia del tapestry, el graphgan y el C2C, y cómo pasar de una imagen a una cuadrícula tejida fila a fila con Pixel Crochet, la app gratuita y de código abierto." />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://pixel-crochet.vercel.app/como-hacer-pixel-crochet" />
+        <link rel="alternate" hreflang="es" href="https://pixel-crochet.vercel.app/como-hacer-pixel-crochet" />
+        <link rel="alternate" hreflang="en" href="https://pixel-crochet.vercel.app/stitch-fiddle-to-crochet-guide" />
+        <meta property="og:locale" content="es_ES" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="Pixel Crochet" />
+        <meta property="og:title" content="Cómo hacer pixel crochet y tapestry crochet" />
+        <meta property="og:description" content="Guía en español: qué es el pixel crochet, técnicas y de la imagen a la cuadrícula con la app gratuita Pixel Crochet." />
+        <style>
+            body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; color: #241F2B; background: #FFF9F2; margin: 0; line-height: 1.6; }
+            main { max-width: 760px; margin: 0 auto; padding: 40px 24px; }
+            h1 { color: #6E5CA6; }
+            h2 { color: #6E5CA6; margin-top: 2em; }
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid #D9CFE8; padding: 8px 12px; text-align: left; vertical-align: top; }
+            th { background: #EDE7F7; }
+            a { color: #6E5CA6; }
+            .card { background: #fff; border: 1px solid #D9CFE8; border-radius: 12px; padding: 16px 20px; margin: 16px 0; }
+            ol li, ul li { margin: 6px 0; }
+            footer { border-top: 1px solid #D9CFE8; margin-top: 3em; padding-top: 1em; font-size: 0.9em; }
+        </style>
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "¿Qué es el pixel crochet?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "El pixel crochet es una técnica de crochet colorwork en la que cada punto es un píxel: tejes fila a fila cambiando de color para dibujar una imagen. Se trabaja normalmente en punto bajo y los hilos que no se usan se llevan por dentro de la labor. También se le llama tapestry crochet, graphgan o crochet con dibujo."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Pixel crochet es lo mismo que tapestry crochet o graphgan?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Casi: las tres usan la misma lógica de cuadrícula donde cada cuadro es un punto de un color. Tapestry crochet suele referirse al colorwork donde se arrastra el hilo por dentro del punto; pixel crochet y graphgan enfatizan el resultado 'de píxeles' de una imagen; C2C y filet leen la misma cuadrícula de otras formas. La app Pixel Crochet sirve para todas."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cómo convierto una imagen en un patrón de crochet?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Con la app Pixel Crochet: subes la imagen (PNG o JPG), eliges el ancho en puntos y la app la convierte en una cuadrícula de colores. Luego puedes reasignar cada color a la lana que tienes y seguir el patrón fila a fila, con el conteo de puntos hecho y tu progreso guardado."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Tengo que pagar por Pixel Crochet?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Pixel Crochet es gratuita y de código abierto (licencia MIT), sin cuenta, sin registro y sin marca de agua."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cómo se sigue el patrón mientras tejo?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "La app muestra una fila activa a la vez, con su dirección de lectura y los bloques de color ya contados. Tocas los puntos al tejarlos para marcar progreso y, si te detienes, se guarda automáticamente para continuar donde quedaste."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Sirve para tejer una buganda o una manta con letras?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí: cualquier pieza que se teja contando cuadros. La creadora cuenta que su mamá está tejiendo una buganda con Pixel Crochet y que la app le ayuda a no perder la cuenta a mitad de fila."
+              }
+            }
+          ]
+        }
+        </script>
+    </head>
+    <body>
+        <main>
+            <h1>Cómo hacer pixel crochet y tapestry crochet</h1>
+            <p>El <strong>pixel crochet</strong> es una técnica de crochet colorwork donde cada punto es un píxel: tejes fila a fila cambiando de color hasta dibujar una imagen. Pixel Crochet es una <strong>app gratuita y de código abierto</strong> que convierte tus imágenes —e incluso patrones de texto de Stitch Fiddle— en una guía de crochet punto a punto: qué color tejer, cuántos puntos, y tu progreso guardado automáticamente. En esta guía te explicamos la técnica y cómo empezar.</p>
+
+            <h2>¿Qué es el pixel crochet?</h2>
+            <p>Imagina una cuadrícula en la que cada cuadro es un solo punto de un solo color. Siguiendo esa cuadrícula se puede tejer una imagen completa: un corazón, letras, un perrito. La técnica se llama de varias formas según la tradición:</p>
+            <ul>
+                <li><strong>Pixel crochet / crochet con dibujo (graphgan):</strong> el punto de vista de "píxeles", se usa mucho para mantas con dibujos y avatars.</li>
+                <li><strong>Tapestry crochet:</strong> colorwork tejido en punto bajo donde el hilo que no se usa se lleva (se "arrastra") por dentro de los puntos. Tela densa, típica de bolsos y tapices.</li>
+                <li><strong>C2C (corner to corner):</strong> se teje en diagonal, bloque a bloque, desde una esquina.</li>
+                <li><strong>Filet:</strong> cuadros llenos y vacíos de un solo color.</li>
+            </ul>
+
+            <h2>Pixel crochet, tapestry, graphgan y C2C: tabla rápida</h2>
+            <table>
+                <thead>
+                    <tr><th>Técnica</th><th>¿Cómo se teje?</th><th>Cuándo usarla</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Pixel crochet / graphgan</td><td>Filas de punto bajo, cada punto es un píxel</td><td>Mantas con dibujo, jaquecas, avatars</td></tr>
+                    <tr><td>Tapestry crochet</td><td>Punto bajo llevando el hilo no usado por dentro</td><td>Bolsos, tapices, bugandas con dibujo</td></tr>
+                    <tr><td>C2C</td><td>Diagonales de bloques desde una esquina</td><td>Mantas grandes, rápida</td></tr>
+                    <tr><td>Filet</td><td>Malla de cuadros llenos y vacíos</td><td>Motivos finos en un color</td></tr>
+                </tbody>
+            </table>
+            <p>Todas leen la misma cuadrícula de colores; lo que cambia es cómo se teje cada cuadro. Por eso una sola app que te dé la cuadrícula y el conteo sirve para todas.</p>
+
+            <h2>De la imagen a tu primera pieza</h2>
+            <ol>
+                <li><strong>Elige qué tejer y consigue la imagen:</strong> pixel art, punto de cruz, un logo, letras o una foto sencilla.</li>
+                <li><strong>Abre <a href="https://pixel-crochet.vercel.app/">Pixel Crochet</a> y sube la imagen</strong> (PNG o JPG) o pega un patrón de texto de Stitch Fiddle.</li>
+                <li><strong>Elige el ancho en puntos</strong>: más puntos = más detalle y más horas de tejido. Piensa en el tamaño final que quieres.</li>
+                <li><strong>Reasigna los colores a tu lana real:</strong> antes de empezar, cambia los colores detectados por los ovillos que de verdad tienes.</li>
+                <li><strong>Teje fila a fila:</strong> la app te muestra la fila activa con su dirección, cada bloque ya contado, y marca tu progreso con un toque. Si paras, se guarda solo.</li>
+            </ol>
+            <div class="card">
+                <p>💡 <strong>Consejos para que el resultado quede mejor:</strong> usa imágenes con pocos colores (entre 2 y 6 es ideal), formas definidas y alto contraste. Las fotos muy detalladas se ven con menos claridad al reducirse a cuadros grandes.</p>
+            </div>
+
+            <h2>Un caso real: la buganda de mi mamá</h2>
+            <p>Pixel Crochet no empezó pensada solo para mantas. Mi mamá está tejiendo una <strong>buganda</strong> con la app y dice que le ayuda muchísimo: ya no pierde la cuenta a mitad de una fila ni tiene que deshacer el trabajo cada vez que la interrumpen. Cualquier prenda que se teja contando cuadros —una mantita con letras, un crecimiento de la caricatura favorita de tu hija, una correa con patrón— se puede seguir con la app.</p>
+
+            <h2>Preguntas frecuentes</h2>
+            <p><strong>¿Qué imagen debo usar para que quede bien?</strong> En general, imágenes planas y de pocos colores con buen contraste. Si es una foto, recórtala para que el motivo sea grande en el encuadre.</p>
+            <p><strong>¿Puedo cambiar los colores?</strong> Sí: antes de importar puedes reasignar cada color detectado a la lana que tengas.</p>
+            <p><strong>¿Mis fotos se suben a algún servidor?</strong> No. Todo el procesamiento ocurre en tu dispositivo; tus imágenes no salen de tu teléfono o navegador.</p>
+            <p><strong>¿Funciona en el celular?</strong> Sí, Pixel Crochet funciona en la web, en Android y en iOS, y está en español e inglés.</p>
+
+            <footer>
+                <p><a href="https://pixel-crochet.vercel.app/">Pixel Crochet — la app</a> · <a href="/convertir-imagen-a-patron-de-crochet">Convertir una imagen en patrón de crochet</a> · <a href="/stitch-fiddle-to-crochet-guide">Stitch Fiddle guide (EN)</a> · <a href="https://github.com/Camilu-png/pixel-crochet">Código fuente (MIT)</a></p>
+            </footer>
+        </main>
+    </body>
+</html>
