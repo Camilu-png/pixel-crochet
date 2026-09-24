@@ -17,5 +17,5 @@ La app vive en https://pixel-crochet.vercel.app/. Todo el procesamiento ocurre e
 - Tus imágenes y patrones nunca salen de tu dispositivo: todo el procesamiento es local.
 - Funciona en web, Android e iOS.
 - Bilingüe: español e inglés.
-- Hecha para tapestry crochet, pixel crochet, mantas con dibujo (graphgan), C2C y cualquier pieza que se teja contando cuadros — de una manta a una buganda tejida a crochet.
+- Hecha para tapestry crochet, pixel crochet, mantas con dibujo (graphgan), C2C y cualquier pieza que se teja contando cuadros — de una manta a una bufanda tejida a crochet.
 - Contacto y sugerencias: mypixelcrochet@gmail.com

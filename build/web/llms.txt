@@ -17,5 +17,5 @@ Pixel Crochet lives at https://pixel-crochet.vercel.app/. Everything runs on you
 - Your images and patterns never leave your device — all processing is local.
 - Works on web, Android and iOS.
 - Bilingual: English and Spanish.
-- Built for tapestry crochet, pixel crochet, graphgan (pixel blankets), C2C and any piece counted square by square — from blankets to a knitted Peruvian "buganda" shawl.
+- Built for tapestry crochet, pixel crochet, graphgan (pixel blankets), C2C and any piece counted square by square — from blankets to a knitted Peruvian "bufanda" shawl.
 - Contact and feedback: mypixelcrochet@gmail.com
