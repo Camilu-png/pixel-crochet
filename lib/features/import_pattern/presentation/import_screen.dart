@@ -6,9 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/models/crochet_project.dart';
+import '../../../core/models/double_knitting.dart';
 import '../../../core/onboarding/onboarding_provider.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
+import '../../../shared/widgets/double_knitting_option.dart';
 import '../../../shared/widgets/onboarding_overlay.dart';
 import '../../home/providers/home_provider.dart';
 import '../data/pattern_parser.dart';
@@ -29,6 +31,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
   final _pastePatternKey = GlobalKey();
   bool _isImporting = false;
   bool _showTutorial = false;
+  bool _doubleKnitting = false;
   CrochetProject? _parsedProject;
 
   @override
@@ -236,6 +239,12 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
             color: context.colors.brandDark.withValues(alpha: 0.6),
           ),
         ),
+        const SizedBox(height: 16),
+        DoubleKnittingOption(
+          colorCount: distinctProjectColors(_parsedProject!).length,
+          value: _doubleKnitting,
+          onChanged: (value) => setState(() => _doubleKnitting = value),
+        ),
         const SizedBox(height: 24),
         Row(
           children: [
@@ -333,7 +342,12 @@ class _ImportScreenState extends ConsumerState<ImportScreen> {
     setState(() => _isImporting = true);
 
     try {
-      final project = _parsedProject!.copyWith(name: name);
+      final project = _parsedProject!.copyWith(
+        name: name,
+        doubleKnitting:
+            _doubleKnitting &&
+            distinctProjectColors(_parsedProject!).length == 2,
+      );
       await ref.read(projectsProvider.notifier).addProject(project);
 
       if (mounted) {

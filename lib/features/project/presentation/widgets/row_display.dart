@@ -11,12 +11,17 @@ class RowDisplay extends StatelessWidget {
     super.key,
     required this.row,
     this.completedBlocks = const {},
+    this.colorSwap = const {},
     this.onToggleBlock,
     this.blocksKey,
   });
 
   final PatternRow row;
   final Set<int> completedBlocks;
+
+  /// Two-color exchange for the reverse-side rows. Empty when the row is
+  /// worked on the front of the fabric or the project is not double knitted.
+  final Map<String, String> colorSwap;
   final ValueChanged<int>? onToggleBlock;
   final GlobalKey? blocksKey;
 
@@ -70,54 +75,55 @@ class RowDisplay extends StatelessWidget {
                   : List.generate(n, (i) => i);
               return indices.map((blockIndex) {
                 final block = row.colorBlocks[blockIndex];
-                final color = getYarnColor(block.colorName);
+                final colorName = colorSwap[block.colorName] ?? block.colorName;
+                final color = getYarnColor(colorName);
                 final isCompleted = completedBlocks.contains(blockIndex);
 
                 return GestureDetector(
                   onTap: onToggleBlock != null
                       ? () => onToggleBlock!(blockIndex)
                       : null,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: isCompleted ? 0.1 : 0.2),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: color.withValues(alpha: isCompleted ? 0.3 : 0.5),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: isCompleted ? 0.1 : 0.2),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: color.withValues(alpha: isCompleted ? 0.3 : 0.5),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 12,
+                          height: 12,
+                          decoration: BoxDecoration(
+                            color: color.withValues(
+                              alpha: isCompleted ? 0.4 : 1.0,
+                            ),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${block.count} $colorName',
+                          style: context.text.bodySmall?.copyWith(
+                            color: context.colors.brandDark.withValues(
+                              alpha: isCompleted ? 0.4 : 1.0,
+                            ),
+                            decoration: isCompleted
+                                ? TextDecoration.lineThrough
+                                : null,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: color.withValues(
-                            alpha: isCompleted ? 0.4 : 1.0,
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '${block.count} ${block.colorName}',
-                        style: context.text.bodySmall?.copyWith(
-                          color: context.colors.brandDark.withValues(
-                            alpha: isCompleted ? 0.4 : 1.0,
-                          ),
-                          decoration: isCompleted
-                              ? TextDecoration.lineThrough
-                              : null,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
+                );
               }).toList();
             }(),
           ),

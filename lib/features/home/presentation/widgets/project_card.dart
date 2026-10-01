@@ -82,6 +82,37 @@ class _ProjectCardState extends State<ProjectCard> {
                         overflow: TextOverflow.ellipsis,
                         style: texts.titleMedium,
                       ),
+                      if (p.doubleKnitting) ...[
+                        const SizedBox(height: 6),
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: brand.lavenderSoft,
+                            borderRadius: BorderRadius.circular(AppRadii.xs),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.flip, size: 14, color: brand.ink),
+                                const SizedBox(width: 4),
+                                Text(
+                                  l10n.doubleKnitting,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: texts.labelSmall?.copyWith(
+                                    color: brand.ink,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                       const SizedBox(height: 10),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(6),

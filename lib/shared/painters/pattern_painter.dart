@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/constants/color_map.dart';
 import '../../core/models/crochet_project.dart';
+import '../../core/models/double_knitting.dart';
 import '../../core/models/row_direction.dart';
 
 class PatternPainter extends CustomPainter {
@@ -31,11 +32,15 @@ class PatternPainter extends CustomPainter {
     final pixelWidth = size.width / project.width;
     final pixelHeight = size.height / visibleRows;
 
+    final swap = project.doubleKnitting && project.invertedView
+        ? buildColorSwap(distinctProjectColors(project))
+        : const <String, String>{};
+
     for (var i = 0; i < visibleRows; i++) {
       final rowIndex = startRow + i;
       if (rowIndex >= project.rows.length) break;
 
-      final row = project.rows[rowIndex];
+      final row = swapRowColors(project.rows[rowIndex], swap);
       var x = row.direction == RowDirection.readLeftToRight
           ? 0.0
           : size.width - pixelWidth;
@@ -47,10 +52,7 @@ class PatternPainter extends CustomPainter {
         final paint = Paint()..color = color;
 
         for (var j = 0; j < block.count; j++) {
-          canvas.drawRect(
-            Rect.fromLTWH(x, y, pixelWidth, pixelHeight),
-            paint,
-          );
+          canvas.drawRect(Rect.fromLTWH(x, y, pixelWidth, pixelHeight), paint);
 
           x += row.direction == RowDirection.readLeftToRight
               ? pixelWidth
@@ -97,15 +99,17 @@ class PatternPainter extends CustomPainter {
         oldDelegate.startRow != startRow ||
         oldDelegate.endRow != endRow ||
         oldDelegate.project.width != project.width ||
+        oldDelegate.project.doubleKnitting != project.doubleKnitting ||
+        oldDelegate.project.invertedView != project.invertedView ||
         !listEquals(oldDelegate.project.rows, project.rows) ||
         !_sameCompletedBlocks(
-            oldDelegate.project.completedBlocks, project.completedBlocks);
+          oldDelegate.project.completedBlocks,
+
+          project.completedBlocks,
+        );
   }
 
-  bool _sameCompletedBlocks(
-    Map<int, Set<int>> a,
-    Map<int, Set<int>> b,
-  ) {
+  bool _sameCompletedBlocks(Map<int, Set<int>> a, Map<int, Set<int>> b) {
     if (a.length != b.length) return false;
     for (final entry in a.entries) {
       final other = b[entry.key];

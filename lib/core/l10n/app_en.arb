@@ -121,5 +121,9 @@
   "onboardingProjectBlocksTitle": "Mark your progress",
   "onboardingProjectBlocksDesc": "Tap a color block to mark it as finished — it gets crossed out. Tap again to unmark it.",
   "onboardingProjectProgressTitle": "Track your progress",
-  "onboardingProjectProgressDesc": "The bar and the percentage show how much of the pattern you have finished so far."
+  "onboardingProjectProgressDesc": "The bar and the percentage show how much of the pattern you have finished so far.",
+  "doubleKnitting": "Double knitting",
+  "doubleKnittingView": "Double knitting colors",
+  "doubleKnittingRequiresTwoColors": "Double knitting needs exactly 2 colors. Change the pattern colors to enable it.",
+  "doubleKnittingTurnedOff": "Double knitting was turned off because the pattern no longer has exactly 2 colors."
 }

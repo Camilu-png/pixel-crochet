@@ -216,6 +216,21 @@ class ImageProcessor {
     );
   }
 
+  /// The number of distinct yarn names [generateProject] would produce for
+  /// [matrix].
+  ///
+  /// Two raw colors can resolve to the same nearest yarn, so this is not a
+  /// count of the colors present in the image.
+  int distinctYarnNames(List<List<Color>> matrix) {
+    final names = <String>{};
+    for (final row in matrix) {
+      for (final color in row) {
+        names.add(colorIdentifier(color));
+      }
+    }
+    return names.length;
+  }
+
   String colorIdentifier(Color color) {
     String? bestName;
     var bestDistance = double.infinity;

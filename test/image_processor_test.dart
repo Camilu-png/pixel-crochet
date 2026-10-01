@@ -113,6 +113,28 @@ void main() {
     });
   });
 
+  group('ImageProcessor.distinctYarnNames', () {
+    test('counts yarn names, not raw colors', () {
+      // Two raw colors that both resolve to the nearest yarn name "black".
+      const nearBlack = Color(0xFF303030);
+      final matrix = <List<Color>>[
+        [_black, nearBlack],
+      ];
+
+      expect(processor.distinctYarnNames(matrix), 1);
+    });
+
+    test('counts every distinct yarn name in the pattern', () {
+      final matrix = <List<Color>>[
+        [_black, _white, _red],
+        [_white, _red, _black],
+      ];
+
+      expect(processor.distinctYarnNames(matrix), 3);
+    });
+
+  });
+
   group('ImageProcessor.loadImageBytes', () {
     test('rejects images that exceed the pixel limit', () {
       // 5000 x 1001 = 5,005,000 pixels, just over the 5,000,000 cap.

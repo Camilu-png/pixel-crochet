@@ -18,7 +18,10 @@ class CrochetProject {
     this.currentRowIndex = 0,
     Map<int, Set<int>>? completedBlocks,
     DateTime? createdAt,
-  }) : id = id ?? _uuid.v4(),
+    this.doubleKnitting = false,
+    bool invertedView = false,
+  }) : invertedView = doubleKnitting ? invertedView : false,
+       id = id ?? _uuid.v4(),
        createdAt = createdAt ?? DateTime.now(),
        completedBlocks = completedBlocks ?? {};
 
@@ -30,6 +33,19 @@ class CrochetProject {
   final int currentRowIndex;
   final Map<int, Set<int>> completedBlocks;
   final DateTime createdAt;
+
+  /// Whether the project is worked as double knitting: the two yarns exchange
+  /// roles on every row read left to right.
+  ///
+  /// Only projects using exactly two distinct colors may enable this; see
+  /// `distinctProjectColors`.
+  final bool doubleKnitting;
+
+  /// Which of the two colorings the pattern is currently displayed in.
+  ///
+  /// Only meaningful while [doubleKnitting] is on — the constructor forces it
+  /// to false otherwise, so no stored project can hold an invalid combination.
+  final bool invertedView;
 
   int get totalRows => rows.length;
   int get currentRowNumber {
@@ -44,8 +60,7 @@ class CrochetProject {
     completedBlocks.forEach((rowIndex, blocks) {
       if (rowIndex < 0 || rowIndex >= rows.length) return;
       for (final blockIndex in blocks) {
-        if (blockIndex >= 0 &&
-            blockIndex < rows[rowIndex].colorBlocks.length) {
+        if (blockIndex >= 0 && blockIndex < rows[rowIndex].colorBlocks.length) {
           count++;
         }
       }
@@ -71,6 +86,8 @@ class CrochetProject {
     List<PatternRow>? rows,
     int? currentRowIndex,
     Map<int, Set<int>>? completedBlocks,
+    bool? doubleKnitting,
+    bool? invertedView,
   }) {
     return CrochetProject(
       id: id,
@@ -82,6 +99,8 @@ class CrochetProject {
       completedBlocks: (completedBlocks ?? this.completedBlocks).map(
         (k, v) => MapEntry(k, Set<int>.from(v)),
       ),
+      doubleKnitting: doubleKnitting ?? this.doubleKnitting,
+      invertedView: invertedView ?? this.invertedView,
       createdAt: createdAt,
     );
   }
@@ -116,6 +135,8 @@ class CrochetProject {
       (k, v) => MapEntry(k.toString(), v.toList()),
     ),
     'createdAt': createdAt.toIso8601String(),
+    'doubleKnitting': doubleKnitting,
+    'invertedView': invertedView,
   };
 
   factory CrochetProject.fromJson(Map<String, dynamic> json) {
@@ -129,12 +150,16 @@ class CrochetProject {
 
     final rows = json['rows'] is List
         ? (json['rows'] as List)
-            .whereType<Map<String, dynamic>>()
-            .map(PatternRow.fromJson)
-            .toList()
+              .whereType<Map<String, dynamic>>()
+              .map(PatternRow.fromJson)
+              .toList()
         : const <PatternRow>[];
 
-    final completedBlocks = _parseCompletedBlocks(json['completedBlocks'], rows);
+    final completedBlocks = _parseCompletedBlocks(
+      json['completedBlocks'],
+
+      rows,
+    );
 
     // Clamp the persisted index so corrupted or legacy data can never produce
     // a RangeError when reading the current row.
@@ -156,6 +181,8 @@ class CrochetProject {
       rows: rows,
       currentRowIndex: currentRowIndex,
       completedBlocks: completedBlocks,
+      doubleKnitting: _readBool(json['doubleKnitting']) ?? false,
+      invertedView: _readBool(json['invertedView']) ?? false,
       createdAt: createdAt,
     );
   }
@@ -173,9 +200,7 @@ class CrochetProject {
 
     for (final entry in rawCompleted.entries) {
       final rowIndex = int.tryParse('${entry.key}');
-      if (rowIndex == null ||
-          rowIndex < 0 ||
-          rowIndex >= rows.length) {
+      if (rowIndex == null || rowIndex < 0 || rowIndex >= rows.length) {
         continue;
       }
       final blockIndices = <int>{};
@@ -200,6 +225,8 @@ class CrochetProject {
   static int? _readInt(Object? value) => value is int ? value : null;
 
   static String? _readString(Object? value) => value is String ? value : null;
+
+  static bool? _readBool(Object? value) => value is bool ? value : null;
 
   @override
   bool operator ==(Object other) =>

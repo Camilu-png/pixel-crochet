@@ -410,4 +410,18 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingProjectProgressDesc =>
       'The bar and the percentage show how much of the pattern you have finished so far.';
+
+  @override
+  String get doubleKnitting => 'Double knitting';
+
+  @override
+  String get doubleKnittingView => 'Double knitting colors';
+
+  @override
+  String get doubleKnittingRequiresTwoColors =>
+      'Double knitting needs exactly 2 colors. Change the pattern colors to enable it.';
+
+  @override
+  String get doubleKnittingTurnedOff =>
+      'Double knitting was turned off because the pattern no longer has exactly 2 colors.';
 }

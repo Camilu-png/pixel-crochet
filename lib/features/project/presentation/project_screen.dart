@@ -5,6 +5,8 @@ import '../../../core/constants/color_map.dart';
 import '../../../core/models/crochet_project.dart';
 import '../../../core/models/pattern_row.dart';
 import '../../../core/models/color_block.dart';
+import '../../../core/models/double_knitting.dart';
+import '../../../core/models/row_direction.dart';
 import '../../../core/onboarding/onboarding_provider.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
@@ -94,6 +96,16 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
         : null;
     final notifier = ref.read(projectProvider(projectId).notifier);
 
+    // Only the rows worked on the reverse side of the fabric swap the two
+    // yarns, so their blocks show the colors actually being used. This follows
+    // doubleKnitting alone: the chart keeps its own, view-driven inversion in
+    // PatternPainter.
+    final colorSwap =
+        project.doubleKnitting &&
+            currentRow?.direction == RowDirection.readLeftToRight
+        ? buildColorSwap(distinctProjectColors(project))
+        : const <String, String>{};
+
     ref.listen<Object?>(projectSaveErrorProvider(projectId), (prev, next) {
       if (next == null) return;
       ScaffoldMessenger.of(context)
@@ -132,116 +144,130 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
         ),
       ],
       child: Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.goNamed('home'),
-        ),
-        title: Text(project.name),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.help_outline),
-            tooltip: l10n.tutorial,
-            onPressed: _launchTutorial,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => context.goNamed('home'),
           ),
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () => _showEditSheet(context, ref, project),
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete_outline),
-            onPressed: () => _confirmDelete(context, ref),
-          ),
-        ],
-      ),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          final imageHeight = (constraints.maxHeight * 0.6).clamp(150.0, 400.0);
-
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: imageHeight,
-                  child: PatternImage(
-                    project: project,
-                    highlightRowIndex: project.currentRowIndex,
-                  ),
+          title: Text(project.name),
+          actions: [
+            if (project.doubleKnitting)
+              IconButton(
+                icon: const Icon(Icons.flip),
+                tooltip: l10n.doubleKnittingView,
+                isSelected: project.invertedView,
+                onPressed: () => notifier.updateProject(
+                  project.copyWith(invertedView: !project.invertedView),
                 ),
-
-                const SizedBox(height: 16),
-
-                Column(
-                  key: _progressKey,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    LinearProgressIndicator(
-                      value: project.progress,
-                      backgroundColor: context.colors.brandLavenderLight,
-                      color: context.colors.brandLavender,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      '${l10n.rowLabel} ${project.currentRowNumber}/${project.totalRows} · ${(project.progress * 100).toStringAsFixed(0)}%',
-                      style: context.text.bodyMedium?.copyWith(
-                        color: context.colors.brandDark,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-
-                if (currentRow != null)
-                  RowDisplay(
-                    key: _rowDisplayKey,
-                    blocksKey: _blocksKey,
-                    row: currentRow,
-                    completedBlocks:
-                        project.completedBlocks[project.currentRowIndex] ??
-                        const {},
-                    onToggleBlock: notifier.toggleBlock,
-                  ),
-
-                const SizedBox(height: 16),
-
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    OutlinedButton.icon(
-                      onPressed: project.currentRowIndex > 0
-                          ? () => notifier.setCurrentRow(
-                              project.currentRowIndex - 1,
-                            )
-                          : null,
-                      icon: const Icon(Icons.arrow_back, size: 16),
-                      label: Text(l10n.previousRow),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: () => _goToRow(context, ref),
-                      icon: const Icon(Icons.unfold_more, size: 16),
-                      label: Text('${l10n.goToRow}…'),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: project.currentRowIndex < project.totalRows - 1
-                          ? () => notifier.setCurrentRow(
-                              project.currentRowIndex + 1,
-                            )
-                          : null,
-                      icon: const Icon(Icons.arrow_forward, size: 16),
-                      label: Text(l10n.nextRow),
-                      iconAlignment: IconAlignment.end,
-                    ),
-                  ],
-                ),
-              ],
+              ),
+            IconButton(
+              icon: const Icon(Icons.help_outline),
+              tooltip: l10n.tutorial,
+              onPressed: _launchTutorial,
             ),
-          );
-        },
-      ),
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () => _showEditSheet(context, ref, project),
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete_outline),
+              onPressed: () => _confirmDelete(context, ref),
+            ),
+          ],
+        ),
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            final imageHeight = (constraints.maxHeight * 0.6).clamp(
+              150.0,
+              400.0,
+            );
+
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: imageHeight,
+                    child: PatternImage(
+                      project: project,
+                      highlightRowIndex: project.currentRowIndex,
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  Column(
+                    key: _progressKey,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      LinearProgressIndicator(
+                        value: project.progress,
+                        backgroundColor: context.colors.brandLavenderLight,
+                        color: context.colors.brandLavender,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '${l10n.rowLabel} ${project.currentRowNumber}/${project.totalRows} · ${(project.progress * 100).toStringAsFixed(0)}%',
+                        style: context.text.bodyMedium?.copyWith(
+                          color: context.colors.brandDark,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  if (currentRow != null)
+                    RowDisplay(
+                      key: _rowDisplayKey,
+                      blocksKey: _blocksKey,
+                      row: currentRow,
+                      colorSwap: colorSwap,
+                      completedBlocks:
+                          project.completedBlocks[project.currentRowIndex] ??
+                          const {},
+                      onToggleBlock: notifier.toggleBlock,
+                    ),
+
+                  const SizedBox(height: 16),
+
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      OutlinedButton.icon(
+                        onPressed: project.currentRowIndex > 0
+                            ? () => notifier.setCurrentRow(
+                                project.currentRowIndex - 1,
+                              )
+                            : null,
+                        icon: const Icon(Icons.arrow_back, size: 16),
+                        label: Text(l10n.previousRow),
+                      ),
+                      OutlinedButton.icon(
+                        onPressed: () => _goToRow(context, ref),
+                        icon: const Icon(Icons.unfold_more, size: 16),
+                        label: Text('${l10n.goToRow}…'),
+                      ),
+                      OutlinedButton.icon(
+                        onPressed:
+                            project.currentRowIndex < project.totalRows - 1
+                            ? () => notifier.setCurrentRow(
+                                project.currentRowIndex + 1,
+                              )
+                            : null,
+                        icon: const Icon(Icons.arrow_forward, size: 16),
+                        label: Text(l10n.nextRow),
+                        iconAlignment: IconAlignment.end,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -362,16 +388,20 @@ class _EditProjectSheet extends StatefulWidget {
 
 class _EditProjectSheetState extends State<_EditProjectSheet> {
   late List<String> _currentColors;
+  late bool _doubleKnitting;
 
   @override
   void initState() {
     super.initState();
     _currentColors = List<String>.from(widget.usedColors);
+    _doubleKnitting = widget.project.doubleKnitting;
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final colorCount = _currentColors.toSet().length;
+    final canEnableDoubleKnitting = colorCount == 2;
 
     return Padding(
       padding: EdgeInsets.only(
@@ -451,6 +481,28 @@ class _EditProjectSheetState extends State<_EditProjectSheet> {
                 );
               }),
             ],
+            const SizedBox(height: 20),
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(
+                l10n.doubleKnitting,
+                style: context.text.titleMedium?.copyWith(
+                  color: context.colors.brandDark,
+                ),
+              ),
+              subtitle: canEnableDoubleKnitting
+                  ? null
+                  : Text(
+                      l10n.doubleKnittingRequiresTwoColors,
+                      style: context.text.bodySmall?.copyWith(
+                        color: context.colors.brandDark.withValues(alpha: 0.6),
+                      ),
+                    ),
+              value: canEnableDoubleKnitting && _doubleKnitting,
+              onChanged: canEnableDoubleKnitting
+                  ? (value) => setState(() => _doubleKnitting = value)
+                  : null,
+            ),
             const SizedBox(height: 16),
             FilledButton(onPressed: _save, child: Text(l10n.save)),
           ],
@@ -544,13 +596,47 @@ class _EditProjectSheetState extends State<_EditProjectSheet> {
         if (widget.usedColors[i] != _currentColors[i])
           widget.usedColors[i]: _currentColors[i],
     };
-    final updatedProject = colorTranslations.isEmpty
+    var updatedProject = colorTranslations.isEmpty
         ? widget.project.copyWith(name: name)
         : _replaceColorInProject(
             widget.project.copyWith(name: name),
             colorTranslations,
           );
+
+    updatedProject = _applyDoubleKnitting(updatedProject);
+
     widget.onSave(updatedProject);
+  }
+
+  /// Applies the double knitting switch to [project].
+  ///
+  /// Merging colors can leave the pattern with anything other than exactly
+  /// two, and the mode cannot stay on without them: it is switched off and the
+  /// user is told why, instead of the pattern silently rendering wrong.
+  CrochetProject _applyDoubleKnitting(CrochetProject project) {
+    final eligible = distinctProjectColors(project).length == 2;
+
+    if (eligible) {
+      return project.copyWith(doubleKnitting: _doubleKnitting);
+    }
+
+    if (project.doubleKnitting) {
+      _notifyDoubleKnittingDisabled();
+      return project.copyWith(doubleKnitting: false, invertedView: false);
+    }
+    return project.copyWith(doubleKnitting: false);
+  }
+
+  void _notifyDoubleKnittingDisabled() {
+    final l10n = AppLocalizations.of(context)!;
+    ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(l10n.doubleKnittingTurnedOff),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
   }
 
   CrochetProject _replaceColorInProject(

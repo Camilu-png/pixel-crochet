@@ -829,6 +829,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The bar and the percentage show how much of the pattern you have finished so far.'**
   String get onboardingProjectProgressDesc;
+
+  /// No description provided for @doubleKnitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Double knitting'**
+  String get doubleKnitting;
+
+  /// No description provided for @doubleKnittingView.
+  ///
+  /// In en, this message translates to:
+  /// **'Double knitting colors'**
+  String get doubleKnittingView;
+
+  /// No description provided for @doubleKnittingRequiresTwoColors.
+  ///
+  /// In en, this message translates to:
+  /// **'Double knitting needs exactly 2 colors. Change the pattern colors to enable it.'**
+  String get doubleKnittingRequiresTwoColors;
+
+  /// No description provided for @doubleKnittingTurnedOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Double knitting was turned off because the pattern no longer has exactly 2 colors.'**
+  String get doubleKnittingTurnedOff;
 }
 
 class _AppLocalizationsDelegate

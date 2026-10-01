@@ -6,9 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/color_map.dart';
+import '../../../core/models/double_knitting.dart';
 import '../../../core/onboarding/onboarding_provider.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
+import '../../../shared/widgets/double_knitting_option.dart';
 import '../../../shared/widgets/onboarding_overlay.dart';
 import '../../home/providers/home_provider.dart';
 import '../data/image_processor.dart';
@@ -36,6 +38,28 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
   bool _isImporting = false;
   bool _showTutorial = false;
   String? _errorMessage;
+
+  bool _doubleKnitting = false;
+
+  /// The matrix [_yarnColorCount] was computed from, so a chart is only
+  /// ever walked once.
+  List<List<Color>>? _countedMatrix;
+  int _countedYarnColors = 0;
+
+  /// Distinct yarn names the previewed chart resolves to.
+  ///
+  /// Derived from [_matrix] instead of stored beside it, so the count cannot
+  /// fall behind when the user recolors the chart. Counting walks every
+  /// cell, so the result is memoised against the matrix it came from.
+  int get _yarnColorCount {
+    final matrix = _matrix;
+    if (matrix == null) return 0;
+    if (!identical(matrix, _countedMatrix)) {
+      _countedMatrix = matrix;
+      _countedYarnColors = _processor.distinctYarnNames(matrix);
+    }
+    return _countedYarnColors;
+  }
 
   final _selectImageKey = GlobalKey();
   final _formKey = GlobalKey();
@@ -311,6 +335,12 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
         ),
         const SizedBox(height: 8),
         ...palette.map((dc) => _buildColorRow(dc, l10n)),
+        const SizedBox(height: 16),
+        DoubleKnittingOption(
+          colorCount: _yarnColorCount,
+          value: _doubleKnitting,
+          onChanged: (value) => setState(() => _doubleKnitting = value),
+        ),
       ],
     );
   }
@@ -633,8 +663,11 @@ class _ImportImageScreenState extends ConsumerState<ImportImageScreen> {
       }
 
       final project = _processor.generateProject(name, _matrix!);
+      final canDoubleKnit = distinctProjectColors(project).length == 2;
 
-      await ref.read(projectsProvider.notifier).addProject(project);
+      await ref.read(projectsProvider.notifier).addProject(
+        project.copyWith(doubleKnitting: _doubleKnitting && canDoubleKnit),
+      );
 
       if (mounted) {
         context.pushReplacementNamed(

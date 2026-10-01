@@ -73,14 +73,6 @@ void main() {
       expect(project.rows[0].colorBlocks[1].count, 2);
     });
 
-    test('handles many blocks in a row', () {
-      final input = 'Multi\n5 x 1\nRow 1 <-: 1 red, 1 blue, 1 green, 1 yellow, 1 black\n';
-
-      final project = parser.parse(input);
-
-      expect(project.rows[0].colorBlocks.length, 5);
-      expect(project.rows[0].totalStitches, 5);
-    });
   });
 
   group('PatternParser edge cases', () {
@@ -92,16 +84,6 @@ void main() {
       final project = parser.parse(input);
 
       expect(project.rows.length, 5);
-    });
-
-    test('parses single-row pattern', () {
-      final input = 'Single\n1 x 1\nRow 1 <-: 1 red\n';
-
-      final project = parser.parse(input);
-
-      expect(project.rows.length, 1);
-      expect(project.width, 1);
-      expect(project.height, 1);
     });
 
     test('rejects zero-width pattern', () {

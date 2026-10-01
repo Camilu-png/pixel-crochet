@@ -10,20 +10,7 @@ import 'package:pixel_crochet/core/storage/project_storage_service.dart';
 import 'package:pixel_crochet/core/theme/app_theme.dart';
 import 'package:pixel_crochet/features/project/presentation/project_screen.dart';
 import 'package:pixel_crochet/generated/app_localizations.dart';
-
-class _InMemoryStorage extends ProjectStorageService {
-  _InMemoryStorage(Map<String, CrochetProject> projects) : _projects = projects;
-
-  final Map<String, CrochetProject> _projects;
-
-  @override
-  Future<CrochetProject?> load(String id) async => _projects[id];
-
-  @override
-  Future<void> save(CrochetProject project) async {
-    _projects[project.id] = project;
-  }
-}
+import 'support/in_memory_storage.dart';
 
 void main() {
   late Map<String, CrochetProject> projects;
@@ -52,25 +39,25 @@ void main() {
   });
 
   Widget buildScreen() => MaterialApp(
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [Locale('en'), Locale('es')],
-        theme: AppTheme.light(),
-        home: ProviderScope(
-          overrides: [
-            storageServiceProvider
-                .overrideWithValue(_InMemoryStorage(projects)),
-          ],
-          child: ProjectScreen(projectId: projectId),
-        ),
-      );
+    localizationsDelegates: const [
+      AppLocalizations.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
+    supportedLocales: const [Locale('en'), Locale('es')],
+    theme: AppTheme.light(),
+    home: ProviderScope(
+      overrides: [
+        storageServiceProvider.overrideWithValue(InMemoryStorage(projects)),
+      ],
+      child: ProjectScreen(projectId: projectId),
+    ),
+  );
 
-  testWidgets('renders the current row and persists row navigation',
-      (tester) async {
+  testWidgets('renders the current row and persists row navigation', (
+    tester,
+  ) async {
     await tester.pumpWidget(buildScreen());
     await tester.pumpAndSettle();
 
@@ -91,5 +78,154 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(projects[projectId]!.isBlockCompleted(0, 0), isTrue);
+  });
+
+  testWidgets('swaps a reverse-side row whenever double knitting is on', (
+    tester,
+  ) async {
+    projects[projectId] = projects[projectId]!.copyWith(
+      doubleKnitting: true,
+      invertedView: false,
+    );
+
+    await tester.pumpWidget(buildScreen());
+    await tester.pumpAndSettle();
+
+    // Row 1 reads left to right, so it is worked on the reverse side of the
+    // fabric: its blocks show the two yarns actually being swapped.
+    expect(find.text('3 white'), findsOneWidget);
+    expect(find.text('3 black'), findsNothing);
+  });
+
+  testWidgets('leaves a right-side row in the pattern colors', (tester) async {
+    projects[projectId] = projects[projectId]!.copyWith(
+      doubleKnitting: true,
+      invertedView: false,
+      currentRowIndex: 1,
+    );
+
+    await tester.pumpWidget(buildScreen());
+    await tester.pumpAndSettle();
+
+    // Row 2 reads right to left, the front of the fabric: the blocks keep the
+    // colors the pattern stores.
+    expect(find.text('3 white'), findsOneWidget);
+    expect(find.text('3 black'), findsNothing);
+  });
+
+  testWidgets('shows the view toggle for a double knitting project', (
+    tester,
+  ) async {
+    projects[projectId] = projects[projectId]!.copyWith(doubleKnitting: true);
+
+    await tester.pumpWidget(buildScreen());
+    await tester.pumpAndSettle();
+
+    expect(find.byTooltip('Double knitting colors'), findsOneWidget);
+  });
+
+  testWidgets('the view toggle flips and persists the inverted view', (
+    tester,
+  ) async {
+    projects[projectId] = projects[projectId]!.copyWith(doubleKnitting: true);
+
+    await tester.pumpWidget(buildScreen());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Double knitting colors'));
+    await tester.pumpAndSettle();
+
+    expect(projects[projectId]!.invertedView, isTrue);
+    // The blocks follow the row, not the view, so flipping it changes nothing.
+    expect(find.text('3 white'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Double knitting colors'));
+    await tester.pumpAndSettle();
+
+    expect(projects[projectId]!.invertedView, isFalse);
+    expect(find.text('3 white'), findsOneWidget);
+  });
+
+  testWidgets('keeps double knitting unavailable for a three color pattern', (
+    tester,
+  ) async {
+    projects[projectId] = CrochetProject(
+      name: 'Three',
+      width: 3,
+      height: 1,
+      rows: const [
+        PatternRow(
+          rowNumber: 1,
+          direction: RowDirection.readLeftToRight,
+          colorBlocks: [
+            ColorBlock(colorName: 'black', count: 1),
+            ColorBlock(colorName: 'white', count: 1),
+            ColorBlock(colorName: 'red', count: 1),
+          ],
+        ),
+      ],
+    );
+
+    await tester.pumpWidget(buildScreen());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.edit));
+    await tester.pumpAndSettle();
+
+    final toggle = tester.widget<SwitchListTile>(find.byType(SwitchListTile));
+    expect(toggle.onChanged, isNull);
+    expect(find.textContaining('exactly 2 colors'), findsOneWidget);
+  });
+
+  testWidgets('enables double knitting from the edit sheet', (tester) async {
+    await tester.pumpWidget(buildScreen());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.edit));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byType(SwitchListTile));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(projects[projectId]!.doubleKnitting, isTrue);
+  });
+
+  testWidgets('turns double knitting off when the colors are merged', (
+    tester,
+  ) async {
+    projects[projectId] = projects[projectId]!.copyWith(
+      doubleKnitting: true,
+      invertedView: true,
+    );
+
+    await tester.pumpWidget(buildScreen());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.edit));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Change').first);
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('white'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(projects[projectId]!.doubleKnitting, isFalse);
+    expect(projects[projectId]!.invertedView, isFalse);
+    expect(
+      find.textContaining('no longer has exactly 2 colors'),
+      findsOneWidget,
+    );
   });
 }
