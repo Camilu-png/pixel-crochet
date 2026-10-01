@@ -1,0 +1,47 @@
+# Pixel Crochet
+
+> Pixel Crochet is a free, open-source app that turns your images — and even Stitch Fiddle text patterns — into a stitch-by-stitch tapestry crochet guide. Every row is read in the direction it is crocheted, every color block is counted for you, and your progress is saved automatically.
+
+Live at https://pixel-crochet.vercel.app/
+
+## What Pixel Crochet is
+
+Pixel Crochet is a bilingual (English/Spanish) app that converts pixel art, cross-stitch, photos or text patterns into an interactive, row-by-row crochet guide. Instead of counting stitches by hand while reading a chart — and unravelling when you lose your place — you follow the current row, tap each color block as you finish it, and the app remembers exactly where you stopped.
+
+- All image processing happens in isolates (`compute`) on your own device. Photos and patterns are never uploaded anywhere.
+- The free tier and app are open source under the MIT license. There is no account, no signup and no watermark.
+- Runs on the web (Flutter Web), Android and iOS.
+
+## What you can do with it
+
+- Import a PNG or JPG (pixel art, cross-stitch, a logo, a photo of your pet) and choose the stitch grid width.
+- Import text patterns in Stitch Fiddle's format by pasting them.
+- Remap every detected color to one of the yarn colors you actually own before you start.
+- Follow the pattern row by row: each row shows its reading direction, the color blocks with their stitch counts, and the current row highlighted.
+- Tap the blocks to mark them done; progress is stored automatically so you can resume later.
+- Create a project, share a Ko-fi shop for ready-made patterns (Salchipleto is the brand's dachshund), and request features by email.
+
+## Guides
+
+- [Cómo hacer pixel crochet y tapestry (ES)](https://pixel-crochet.vercel.app/como-hacer-pixel-crochet): what pixel and tapestry crochet are, how they differ from graphgan and C2C, and how to start a piece with the app.
+- [Convertir una imagen en patrón de crochet (ES)](https://pixel-crochet.vercel.app/convertir-imagen-a-patron-de-crochet): step-by-step from a photo to a stitch chart.
+- [Stitch Fiddle patterns to an interactive guide (EN)](https://pixel-crochet.vercel.app/stitch-fiddle-to-crochet-guide): turn a pasted text pattern into a followable guide.
+
+## Technical facts
+
+- Flutter + Dart, feature-first architecture with Riverpod state management and go_router navigation.
+- Color quantization and grid extraction run in isolates via `compute`, keeping the UI responsive for images up to ~5,000,000 pixels and projects up to 100,000 stitches.
+- Rows are stored as color blocks (not stitch by stitch) and drawn with a custom `CustomPainter`, highlighting the active row.
+- Local persistence via shared storage, plus full l10n (English and Spanish) with flutter_localizations.
+
+## Quick facts
+
+- License: MIT
+- Price: free, forever
+- Code: https://github.com/Camilu-png/pixel-crochet
+- Contact: mypixelcrochet@gmail.com
+- Pattern shop: https://ko-fi.com/pixel_crochet/shop
+
+## Short definition to quote
+
+"Pixel Crochet is a free, open-source app that turns your images — and even Stitch Fiddle text patterns — into a stitch-by-stitch crochet guide: which color to work, how many stitches, and your progress saved automatically."

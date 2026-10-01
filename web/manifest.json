@@ -1,11 +1,11 @@
 {
-    "name": "pixel_crochet",
-    "short_name": "pixel_crochet",
+    "name": "Pixel Crochet",
+    "short_name": "Pixel Crochet",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FFF9F2",
+    "theme_color": "#6E5CA6",
+    "description": "Pixel Crochet — follow tapestry crochet patterns stitch by stitch. Turn images and Stitch Fiddle text patterns into an interactive row-by-row guide.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
