@@ -120,7 +120,6 @@ void main() {
 
     expect(projects, hasLength(1));
     expect(projects.values.single.doubleKnitting, isTrue);
-    expect(projects.values.single.invertedView, isFalse);
   });
 }
 

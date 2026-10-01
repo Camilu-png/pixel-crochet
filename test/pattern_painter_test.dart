@@ -39,17 +39,19 @@ void main() {
     expect(painter.shouldRepaint(other), isTrue);
   });
 
-  test('shouldRepaint is true when completed blocks change', () {
+  test('shouldRepaint is false when only the completed blocks change', () {
+    // paint() draws rows and colors, never the completion marks, so the chart
+    // must not be repainted for a state it does not render.
     final painter = PatternPainter(project: project());
     final updated = PatternPainter(project: project().toggleBlock(0, 0));
 
-    expect(painter.shouldRepaint(updated), isTrue);
+    expect(painter.shouldRepaint(updated), isFalse);
   });
 
-  test('shouldRepaint is true when the double knitting view changes', () {
+  test('shouldRepaint is true when double knitting is turned on', () {
     final painter = PatternPainter(project: project());
     final inverted = PatternPainter(
-      project: project().copyWith(doubleKnitting: true, invertedView: true),
+      project: project().copyWith(doubleKnitting: true),
     );
 
     expect(painter.shouldRepaint(inverted), isTrue);
@@ -62,30 +64,53 @@ void main() {
     Future<Color> leftHalf(CrochetProject subject) => _pixel(subject, 5);
     Future<Color> rightHalf(CrochetProject subject) => _pixel(subject, 15);
 
-    test('paints the stored colors when the view is not inverted', () async {
+    CrochetProject frontRow() => CrochetProject(
+      name: 'Paint',
+      width: 2,
+      height: 2,
+      doubleKnitting: true,
+      currentRowIndex: 1,
+      rows: [
+        PatternRow(
+          rowNumber: 1,
+          direction: RowDirection.readLeftToRight,
+          colorBlocks: [ColorBlock(colorName: 'black', count: 2)],
+        ),
+        PatternRow(
+          rowNumber: 2,
+          direction: RowDirection.readRightToLeft,
+          colorBlocks: [
+            ColorBlock(colorName: 'black', count: 1),
+            ColorBlock(colorName: 'white', count: 1),
+          ],
+        ),
+      ],
+    );
+
+    test('inverts the whole pattern on a reverse-side row', () async {
+      // Row 1 reads left to right, so the knitter is looking at the back of
+      // the fabric: every row of the chart shows the other face, not just
+      // the one being worked.
       final subject = project().copyWith(doubleKnitting: true);
-
-      expect(await leftHalf(subject), black);
-      expect(await rightHalf(subject), white);
-    });
-
-    test('exchanges the two colors when the view is inverted', () async {
-      final subject = project().copyWith(
-        doubleKnitting: true,
-        invertedView: true,
-      );
 
       expect(await leftHalf(subject), white);
       expect(await rightHalf(subject), black);
     });
 
-    test('exchanges a right-to-left row of the inverted view too', () async {
+    test('paints the stored colors on a front-side row', () async {
+      // Row 2 reads right to left: the front of the fabric, no exchange.
+      final subject = frontRow();
+
+      expect(await _pixel(subject, 5, y: 0), white);
+      expect(await _pixel(subject, 15, y: 0), black);
+    });
+
+    test('exchanges a right-to-left row elsewhere in the chart too', () async {
       final subject = CrochetProject(
         name: 'Paint',
         width: 2,
         height: 2,
         doubleKnitting: true,
-        invertedView: true,
         rows: [
           PatternRow(
             rowNumber: 1,

@@ -83,10 +83,7 @@ void main() {
   testWidgets('swaps a reverse-side row whenever double knitting is on', (
     tester,
   ) async {
-    projects[projectId] = projects[projectId]!.copyWith(
-      doubleKnitting: true,
-      invertedView: false,
-    );
+    projects[projectId] = projects[projectId]!.copyWith(doubleKnitting: true);
 
     await tester.pumpWidget(buildScreen());
     await tester.pumpAndSettle();
@@ -100,7 +97,6 @@ void main() {
   testWidgets('leaves a right-side row in the pattern colors', (tester) async {
     projects[projectId] = projects[projectId]!.copyWith(
       doubleKnitting: true,
-      invertedView: false,
       currentRowIndex: 1,
     );
 
@@ -113,37 +109,13 @@ void main() {
     expect(find.text('3 black'), findsNothing);
   });
 
-  testWidgets('shows the view toggle for a double knitting project', (
-    tester,
-  ) async {
+  testWidgets('has no view toggle: the chart follows the row', (tester) async {
     projects[projectId] = projects[projectId]!.copyWith(doubleKnitting: true);
 
     await tester.pumpWidget(buildScreen());
     await tester.pumpAndSettle();
 
-    expect(find.byTooltip('Double knitting colors'), findsOneWidget);
-  });
-
-  testWidgets('the view toggle flips and persists the inverted view', (
-    tester,
-  ) async {
-    projects[projectId] = projects[projectId]!.copyWith(doubleKnitting: true);
-
-    await tester.pumpWidget(buildScreen());
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.byTooltip('Double knitting colors'));
-    await tester.pumpAndSettle();
-
-    expect(projects[projectId]!.invertedView, isTrue);
-    // The blocks follow the row, not the view, so flipping it changes nothing.
-    expect(find.text('3 white'), findsOneWidget);
-
-    await tester.tap(find.byTooltip('Double knitting colors'));
-    await tester.pumpAndSettle();
-
-    expect(projects[projectId]!.invertedView, isFalse);
-    expect(find.text('3 white'), findsOneWidget);
+    expect(find.byTooltip('Double knitting colors'), findsNothing);
   });
 
   testWidgets('keeps double knitting unavailable for a three color pattern', (
@@ -196,10 +168,7 @@ void main() {
   testWidgets('turns double knitting off when the colors are merged', (
     tester,
   ) async {
-    projects[projectId] = projects[projectId]!.copyWith(
-      doubleKnitting: true,
-      invertedView: true,
-    );
+    projects[projectId] = projects[projectId]!.copyWith(doubleKnitting: true);
 
     await tester.pumpWidget(buildScreen());
     await tester.pumpAndSettle();
@@ -222,7 +191,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(projects[projectId]!.doubleKnitting, isFalse);
-    expect(projects[projectId]!.invertedView, isFalse);
     expect(
       find.textContaining('no longer has exactly 2 colors'),
       findsOneWidget,

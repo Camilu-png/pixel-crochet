@@ -32,7 +32,7 @@ class PatternPainter extends CustomPainter {
     final pixelWidth = size.width / project.width;
     final pixelHeight = size.height / visibleRows;
 
-    final swap = project.doubleKnitting && project.invertedView
+    final swap = project.showsReverseFace
         ? buildColorSwap(distinctProjectColors(project))
         : const <String, String>{};
 
@@ -99,22 +99,7 @@ class PatternPainter extends CustomPainter {
         oldDelegate.startRow != startRow ||
         oldDelegate.endRow != endRow ||
         oldDelegate.project.width != project.width ||
-        oldDelegate.project.doubleKnitting != project.doubleKnitting ||
-        oldDelegate.project.invertedView != project.invertedView ||
-        !listEquals(oldDelegate.project.rows, project.rows) ||
-        !_sameCompletedBlocks(
-          oldDelegate.project.completedBlocks,
-
-          project.completedBlocks,
-        );
-  }
-
-  bool _sameCompletedBlocks(Map<int, Set<int>> a, Map<int, Set<int>> b) {
-    if (a.length != b.length) return false;
-    for (final entry in a.entries) {
-      final other = b[entry.key];
-      if (other == null || !setEquals(entry.value, other)) return false;
-    }
-    return true;
+        oldDelegate.project.showsReverseFace != project.showsReverseFace ||
+        !listEquals(oldDelegate.project.rows, project.rows);
   }
 }

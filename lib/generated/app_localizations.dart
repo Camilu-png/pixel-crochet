@@ -836,12 +836,6 @@ abstract class AppLocalizations {
   /// **'Double knitting'**
   String get doubleKnitting;
 
-  /// No description provided for @doubleKnittingView.
-  ///
-  /// In en, this message translates to:
-  /// **'Double knitting colors'**
-  String get doubleKnittingView;
-
   /// No description provided for @doubleKnittingRequiresTwoColors.
   ///
   /// In en, this message translates to:

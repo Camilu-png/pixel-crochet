@@ -415,9 +415,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get doubleKnitting => 'Double knitting';
 
   @override
-  String get doubleKnittingView => 'Double knitting colors';
-
-  @override
   String get doubleKnittingRequiresTwoColors =>
       'Double knitting needs exactly 2 colors. Change the pattern colors to enable it.';
 

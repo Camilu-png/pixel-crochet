@@ -174,7 +174,6 @@ void main() {
 
     expect(projects, hasLength(1));
     expect(projects.values.single.doubleKnitting, isTrue);
-    expect(projects.values.single.invertedView, isFalse);
   });
 
   testWidgets('keeps double knitting disabled for a three color image', (

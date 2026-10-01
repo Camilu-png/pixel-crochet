@@ -6,7 +6,6 @@ import '../../../core/models/crochet_project.dart';
 import '../../../core/models/pattern_row.dart';
 import '../../../core/models/color_block.dart';
 import '../../../core/models/double_knitting.dart';
-import '../../../core/models/row_direction.dart';
 import '../../../core/onboarding/onboarding_provider.dart';
 import '../../../core/theme/context_extensions.dart';
 import '../../../generated/app_localizations.dart';
@@ -91,18 +90,11 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
     final project = widget.project;
     final projectId = widget.projectId;
     final l10n = AppLocalizations.of(context)!;
-    final currentRow = project.rows.isNotEmpty
-        ? project.rows[project.currentRowIndex]
-        : null;
+    final currentRow = project.currentRow;
     final notifier = ref.read(projectProvider(projectId).notifier);
 
-    // Only the rows worked on the reverse side of the fabric swap the two
-    // yarns, so their blocks show the colors actually being used. This follows
-    // doubleKnitting alone: the chart keeps its own, view-driven inversion in
-    // PatternPainter.
-    final colorSwap =
-        project.doubleKnitting &&
-            currentRow?.direction == RowDirection.readLeftToRight
+    // On a reverse-side row both yarns read swapped, exactly as the chart.
+    final colorSwap = project.showsReverseFace
         ? buildColorSwap(distinctProjectColors(project))
         : const <String, String>{};
 
@@ -151,15 +143,6 @@ class _ProjectContentState extends ConsumerState<_ProjectContent> {
           ),
           title: Text(project.name),
           actions: [
-            if (project.doubleKnitting)
-              IconButton(
-                icon: const Icon(Icons.flip),
-                tooltip: l10n.doubleKnittingView,
-                isSelected: project.invertedView,
-                onPressed: () => notifier.updateProject(
-                  project.copyWith(invertedView: !project.invertedView),
-                ),
-              ),
             IconButton(
               icon: const Icon(Icons.help_outline),
               tooltip: l10n.tutorial,
@@ -620,10 +603,7 @@ class _EditProjectSheetState extends State<_EditProjectSheet> {
       return project.copyWith(doubleKnitting: _doubleKnitting);
     }
 
-    if (project.doubleKnitting) {
-      _notifyDoubleKnittingDisabled();
-      return project.copyWith(doubleKnitting: false, invertedView: false);
-    }
+    if (project.doubleKnitting) _notifyDoubleKnittingDisabled();
     return project.copyWith(doubleKnitting: false);
   }
 

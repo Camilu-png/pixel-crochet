@@ -415,13 +415,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get doubleKnitting => 'Doble tejido';
 
   @override
-  String get doubleKnittingView => 'Colores de doble tejido';
-
-  @override
   String get doubleKnittingRequiresTwoColors =>
       'El doble tejido necesita exactamente 2 colores. Cambia los colores del patrón para activarlo.';
 
   @override
   String get doubleKnittingTurnedOff =>
-      'Se desactivó el doble tejido porque porque el patrón ya noya no tiene exactamente 2exactamente 2 colores.';
+      'Se desactivó el doble tejido porque el patrón ya no tiene exactamente 2 colores.';
 }

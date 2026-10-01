@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 import 'pattern_row.dart';
+import 'row_direction.dart';
 
 const _uuid = Uuid();
 
@@ -19,9 +20,7 @@ class CrochetProject {
     Map<int, Set<int>>? completedBlocks,
     DateTime? createdAt,
     this.doubleKnitting = false,
-    bool invertedView = false,
-  }) : invertedView = doubleKnitting ? invertedView : false,
-       id = id ?? _uuid.v4(),
+  }) : id = id ?? _uuid.v4(),
        createdAt = createdAt ?? DateTime.now(),
        completedBlocks = completedBlocks ?? {};
 
@@ -41,19 +40,27 @@ class CrochetProject {
   /// `distinctProjectColors`.
   final bool doubleKnitting;
 
-  /// Which of the two colorings the pattern is currently displayed in.
+  /// The row the knitter is working on, or null when the pattern is empty.
   ///
-  /// Only meaningful while [doubleKnitting] is on — the constructor forces it
-  /// to false otherwise, so no stored project can hold an invalid combination.
-  final bool invertedView;
-
-  int get totalRows => rows.length;
-  int get currentRowNumber {
-    if (rows.isEmpty) return 0;
-    return rows[currentRowIndex.clamp(0, rows.length - 1).toInt()].rowNumber;
+  /// The index is clamped here, in a single place, so an out-of-range
+  /// persisted index can never surface as a RangeError in the UI.
+  PatternRow? get currentRow {
+    if (rows.isEmpty) return null;
+    return rows[currentRowIndex.clamp(0, rows.length - 1).toInt()];
   }
 
-  double get rowProgress => totalRows > 0 ? currentRowIndex / totalRows : 0.0;
+  /// Whether the chart shows the reverse face of the fabric right now.
+  ///
+  /// Double knitting shows the other face while the row being worked is read
+  /// left to right — the reverse side — so the whole pattern inverts, not just
+  /// that row's stitches. It follows the current row on its own: there is no
+  /// manual override, so the chart is always drawn for the stitches being
+  /// worked right now.
+  bool get showsReverseFace =>
+      doubleKnitting && currentRow?.direction == RowDirection.readLeftToRight;
+
+  int get totalRows => rows.length;
+  int get currentRowNumber => currentRow?.rowNumber ?? 0;
 
   int get totalCompletedBlocks {
     var count = 0;
@@ -87,7 +94,6 @@ class CrochetProject {
     int? currentRowIndex,
     Map<int, Set<int>>? completedBlocks,
     bool? doubleKnitting,
-    bool? invertedView,
   }) {
     return CrochetProject(
       id: id,
@@ -100,7 +106,6 @@ class CrochetProject {
         (k, v) => MapEntry(k, Set<int>.from(v)),
       ),
       doubleKnitting: doubleKnitting ?? this.doubleKnitting,
-      invertedView: invertedView ?? this.invertedView,
       createdAt: createdAt,
     );
   }
@@ -136,7 +141,6 @@ class CrochetProject {
     ),
     'createdAt': createdAt.toIso8601String(),
     'doubleKnitting': doubleKnitting,
-    'invertedView': invertedView,
   };
 
   factory CrochetProject.fromJson(Map<String, dynamic> json) {
@@ -182,7 +186,6 @@ class CrochetProject {
       currentRowIndex: currentRowIndex,
       completedBlocks: completedBlocks,
       doubleKnitting: _readBool(json['doubleKnitting']) ?? false,
-      invertedView: _readBool(json['invertedView']) ?? false,
       createdAt: createdAt,
     );
   }

@@ -123,7 +123,6 @@
   "onboardingProjectProgressTitle": "Sigue tu progreso",
   "onboardingProjectProgressDesc": "La barra y el porcentaje muestran cuánto del patrón has terminado hasta ahora.",
   "doubleKnitting": "Doble tejido",
-  "doubleKnittingView": "Colores de doble tejido",
   "doubleKnittingRequiresTwoColors": "El doble tejido necesita exactamente 2 colores. Cambia los colores del patrón para activarlo.",
-  "doubleKnittingTurnedOff": "Se desactivó el doble tejido porque porque el patrón ya noya no tiene exactamente 2exactamente 2 colores."
+  "doubleKnittingTurnedOff": "Se desactivó el doble tejido porque el patrón ya no tiene exactamente 2 colores."
 }

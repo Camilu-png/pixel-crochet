@@ -314,54 +314,29 @@ void main() {
     });
 
     group('double knitting mode', () {
-      test('round-trips both flags through JSON', () {
-        final project = createProject().copyWith(
-          doubleKnitting: true,
-          invertedView: true,
-        );
+      test('round-trips the double knitting flag through JSON', () {
+        final project = createProject().copyWith(doubleKnitting: true);
 
         final restored = CrochetProject.fromJson(project.toJson());
 
         expect(restored.doubleKnitting, true);
-        expect(restored.invertedView, true);
       });
 
-      test('defaults both flags to false for a project saved without them', () {
+      test('defaults double knitting to false when saved without it', () {
         final json = createProject().toJson();
         json.remove('doubleKnitting');
-        json.remove('invertedView');
 
         final restored = CrochetProject.fromJson(json);
 
         expect(restored.doubleKnitting, false);
-        expect(restored.invertedView, false);
-      });
-
-      test('clears the inverted view when double knitting is off', () {
-        final json = createProject().toJson();
-        json['doubleKnitting'] = false;
-        json['invertedView'] = true;
-
-        final restored = CrochetProject.fromJson(json);
-
-        expect(restored.doubleKnitting, false);
-        expect(
-          restored.invertedView,
-          false,
-          reason: 'an inverted view without the mode is not a real state',
-        );
       });
 
       test('copyWith keeps the mode when other fields change', () {
-        final project = createProject().copyWith(
-          doubleKnitting: true,
-          invertedView: true,
-        );
+        final project = createProject().copyWith(doubleKnitting: true);
 
         final renamed = project.copyWith(name: 'Renamed');
 
         expect(renamed.doubleKnitting, true);
-        expect(renamed.invertedView, true);
       });
     });
 
