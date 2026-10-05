@@ -44,7 +44,7 @@ Las rutas existentes que se modificarán siguen la organización actual del repo
 - `lib/features/more_patterns/presentation/more_patterns_screen.dart`: secciones Ko-fi, gratuitos y comunidad.
 - `assets/patterns/` y `pubspec.yaml`: patrones estáticos curados.
 - `lib/features/account/`, `lib/core/sync/`, `lib/features/community/`: presentación y lógica Flutter separadas por responsabilidad.
-- `api/_lib/`: sesión, validación, límites, acceso Neon y autorización compartidos.
+- `api/_lib/`: helpers privados de sesión, validación, límites, acceso Neon y autorización; cada archivo empieza con `_` para Vercel.
 - `api/auth/`, `api/projects/`, `api/patterns/`, `api/admin/`: funciones HTTP agrupadas por recurso.
 - `api/migrations/`: migraciones SQL versionadas; `api/tests/`: pruebas de handlers/repositorio/autorización.
 - `vercel.json`, `package.json`, `tsconfig.json`: configuración para servir Flutter y desplegar funciones.
@@ -81,17 +81,17 @@ Cada entrega marcada **integración** es un punto de revisión independiente. Tr
 
 ### Task 3: Base Vercel/Neon y sesiones Google
 
-**Archivos:** nuevos `package.json`, `tsconfig.json`, `api/_lib/{db,session,errors,validation}.ts`, `api/auth/google/{start,callback,logout,me}.ts`, `api/migrations/001_initial.sql`, `api/tests/`; `vercel.json`; documentación nueva `docs/deployment/community-backend.md`.
+**Archivos:** nuevos `package.json`, `package-lock.json`, `tsconfig.json`, `api/_lib/_{auth,db,errors,google_oidc,handlers,validation}.ts`, `api/auth/google/{start,callback,logout,me}.ts`, `api/health.ts`, `api/migrations/001_initial.sql`, pruebas auxiliares `api/tests/_*.test.ts`; `vercel.json`; documentación nueva `docs/deployment/vercel-api.md`.
 
-**Interfaces:** handlers HTTP tipados; repositorio PostgreSQL aislado tras funciones en `api/_lib/db.ts`; sesión firmada en cookie `HttpOnly`, `Secure`, `SameSite=Lax`; endpoint `GET /api/auth/me` solo devuelve ID interno, alias y estado de sesión.
+**Interfaces:** handlers HTTP tipados con Web `Request`/`Response`; consultas PostgreSQL parametrizadas con Neon; cookie de sesión opaca y aleatoria (`HttpOnly`, `Secure`, `SameSite=Lax`) cuyo hash se guarda en DB; endpoint `GET /api/auth/google/me` solo devuelve estado autenticado, sin correo ni tokens.
 
-- [ ] Añadir pruebas Node para callback OAuth inválido, `state`/nonce faltante, cookie vencida/falsificada, CORS/origin no permitido y endpoint de identidad sin sesión.
-- [ ] Crear migración inicial para usuarios y sesiones; `sub` de Google es identificador estable. No guardar tokens OAuth si no hacen falta después del callback.
-- [ ] Implementar flujo OIDC con verificación de firma/issuer/audience/nonce, protección CSRF y cookie de sesión. Ningún endpoint acepta un ID de usuario proporcionado por el cliente como identidad.
-- [ ] Añadir health check que no revele configuración, límites de tamaño/rate, consultas parametrizadas y manejo uniforme de errores.
-- [ ] Configurar TypeScript y ejecución de pruebas con scripts reproducibles. Documentar variables secretas y configuración manual sin incluir valores.
-- [ ] Probar localmente con DB/OAuth simulados; pruebas de integración con credenciales reales quedan para entorno de preview después de que la propietaria configure secretos y confirme elegibilidad de Vercel Hobby.
-- [ ] Ejecutar `npm test`, `npm run typecheck`, `flutter analyze` y `flutter build web` para comprobar que API y hosting coexisten.
+- [x] Añadir pruebas Node para callback OAuth inválido, `state`/nonce faltante, cookie vencida/falsificada, origin no permitido, límites de tasa y endpoint de identidad sin sesión.
+- [x] Crear migración inicial para usuarios, estados OAuth, sesiones y límites; `sub` de Google es identificador estable. No guardar tokens OAuth ni correo.
+- [x] Implementar flujo OIDC con verificación de firma/issuer/audience/nonce, protección CSRF y cookie de sesión. Ningún endpoint acepta un ID de usuario proporcionado por el cliente como identidad.
+- [x] Añadir health check genérico, límite de tamaño JSON reutilizable, límites de tasa persistentes, consultas parametrizadas y manejo uniforme de errores.
+- [x] Configurar TypeScript y ejecución de pruebas con scripts reproducibles. Documentar variables secretas y configuración manual sin incluir valores.
+- [x] Probar localmente con almacén de sesión OAuth simulado, sin DB ni llamadas a Google; pruebas de integración con credenciales reales quedan para entorno de preview después de que la propietaria configure secretos y confirme elegibilidad del proveedor.
+- [x] Ejecutar `npm test`, `npm run typecheck`, `flutter analyze`, `flutter test` y `flutter build web` para comprobar que API y hosting coexisten.
 - [ ] **Gate de activación:** no crear/deployar recursos reales hasta confirmar términos, cuotas sin upgrades, proyecto Neon gratuito y credenciales. Tras el gate, deploy preview y smoke test OAuth.
 - [ ] **Integración:** merge de los fundamentos a `main` después del preview validado; mantener endpoints cloud desactivados para usuarios hasta completar sync.
 
