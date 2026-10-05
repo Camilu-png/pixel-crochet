@@ -65,18 +65,18 @@ Cada entrega marcada **integración** es un punto de revisión independiente. Tr
 - [x] Implementar formato JSON con `formatVersion`, fecha de exportación y proyectos. Importar debe ofrecer combinar por ID; si un ID colisiona con contenido distinto, crear una copia con ID nuevo y conservar ambas versiones.
 - [x] Añadir controles accesibles para exportar/importar en la biblioteca y confirmación previa a combinar; conservar almacenamiento existente como fuente primaria.
 - [x] Ejecutar `flutter test test/crochet_project_test.dart test/project_backup_service_test.dart` y pruebas de widgets nuevas; después `flutter analyze`.
-- [ ] **Integración:** revisión del diff y commit de respaldo; merge de esta entrega a `main` solo si todas las verificaciones pasan.
+- [x] **Integración:** revisión del diff y commit de respaldo; merge de esta entrega a `main` solo si todas las verificaciones pasan.
 
 ### Task 2: Catálogo gratuito estático en `+Patrones`
 
-**Archivos:** nuevos `assets/patterns/` y `lib/features/more_patterns/data/free_pattern_catalog.dart`; `pubspec.yaml`; `lib/features/more_patterns/presentation/more_patterns_screen.dart`; `lib/core/router/app_router.dart`; `lib/core/l10n/app_{es,en}.arb` y localizaciones generadas; nuevas pruebas `test/free_pattern_catalog_test.dart` y `test/more_patterns_screen_test.dart`.
+**Archivos:** `example/blue_guy.txt` y `example/mariposa_amarilla.txt` como assets estáticos ya existentes; `pubspec.yaml`; nuevo `lib/features/more_patterns/data/free_pattern_catalog.dart`; `lib/features/more_patterns/presentation/more_patterns_screen.dart`; `lib/core/l10n/app_{es,en}.arb` y localizaciones generadas; nuevas pruebas `test/free_pattern_catalog_test.dart` y `test/more_patterns_screen_test.dart`.
 
 **Interfaces:** catálogo inmutable de patrones gratuitos con ID, título localizado, atribución/licencia y datos parseables por el modelo actual. Al seleccionar, crea un `CrochetProject` independiente con avance inicial.
 
-- [ ] Probar que cada asset declarado se puede decodificar y que su patrón tiene dimensiones, filas y colores consistentes.
-- [ ] Añadir contenido gratuito empaquetado en el build y un grupo visible separado de productos Ko-fi y comunidad.
-- [ ] Probar en widget que Ko-fi conserva los mismos destinos, los gratuitos aparecen sin red y copiar un patrón produce avance limpio sin mutar el asset.
-- [ ] Ejecutar las pruebas de catálogo/pantalla, `flutter gen-l10n`, `flutter analyze` y `flutter build web`.
+- [x] Probar que cada asset declarado se puede decodificar y que su patrón tiene dimensiones, filas y colores consistentes.
+- [x] Añadir contenido gratuito empaquetado en el build y un grupo visible separado de productos Ko-fi y comunidad.
+- [x] Probar que Ko-fi conserva los mismos destinos, los gratuitos aparecen sin red y copiar un patrón produce avance limpio sin mutar el asset.
+- [x] Ejecutar las pruebas de catálogo/pantalla, `flutter gen-l10n`, `flutter analyze` y `flutter build web`.
 - [ ] **Integración:** revisión/commit y merge de solo catálogo estático a `main` si las verificaciones pasan.
 
 ### Task 3: Base Vercel/Neon y sesiones Google

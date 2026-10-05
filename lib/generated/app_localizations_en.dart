@@ -205,6 +205,44 @@ class AppLocalizationsEn extends AppLocalizations {
       'You can import your own pixel art patterns or purchase ready-made ones.';
 
   @override
+  String get morePatternsFreeTitle => 'Free patterns';
+
+  @override
+  String get morePatternsFreeDescription =>
+      'Practice with these patterns before browsing the Ko-fi shop.';
+
+  @override
+  String get freePatternBlueGuyTitle => 'Blue Guy';
+
+  @override
+  String get freePatternBlueGuyDescription =>
+      'A cheerful 32 × 32 pixel character.';
+
+  @override
+  String get freePatternButterflyTitle => 'Yellow Butterfly';
+
+  @override
+  String get freePatternButterflyDescription =>
+      'A detailed butterfly tapestry pattern, 82 × 213 stitches.';
+
+  @override
+  String get freePatternUse => 'Add to my projects';
+
+  @override
+  String get freePatternAdded => 'Pattern added to your projects.';
+
+  @override
+  String freePatternAddError(Object error) {
+    return 'Could not add this pattern: $error';
+  }
+
+  @override
+  String get freePatternAttribution => 'Created by Camilú · MIT License';
+
+  @override
+  String get morePatternsPaidTitle => 'Ready-made patterns on Ko-fi';
+
+  @override
   String get morePatternsHowToUpload =>
       'To import a pattern, tap the + button on the home screen and select an image or text file.';
 

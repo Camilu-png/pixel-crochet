@@ -9,6 +9,9 @@ class InMemoryStorage extends ProjectStorageService {
   final Map<String, CrochetProject> projects;
 
   @override
+  Future<List<CrochetProject>> loadAll() async => projects.values.toList();
+
+  @override
   Future<CrochetProject?> load(String id) async => projects[id];
 
   @override

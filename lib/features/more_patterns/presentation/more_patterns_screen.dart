@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pixel_crochet/core/constants/products.dart';
 import 'package:pixel_crochet/core/theme/app_colors.dart';
 import 'package:pixel_crochet/core/theme/app_theme.dart';
+import 'package:pixel_crochet/features/home/providers/home_provider.dart';
+import 'package:pixel_crochet/features/more_patterns/data/free_pattern_catalog.dart';
+import 'package:pixel_crochet/shared/painters/pattern_painter.dart';
 import 'package:pixel_crochet/shared/widgets/kofi_button.dart';
 import 'package:pixel_crochet/shared/layout/grid_columns.dart';
 
@@ -20,6 +23,7 @@ class MorePatternsScreen extends ConsumerWidget {
     final width = MediaQuery.sizeOf(context).width;
     final isMobile = width < 600;
     final products = sampleProducts(l10n);
+    final freePatterns = ref.watch(freePatternsProvider);
 
     return Scaffold(
       body: CustomScrollView(
@@ -44,10 +48,7 @@ class MorePatternsScreen extends ConsumerWidget {
                   ),
                   child: Column(
                     children: [
-                      Text(
-                        l10n.morePatternsTitle,
-                        style: texts.headlineMedium,
-                      ),
+                      Text(l10n.morePatternsTitle, style: texts.headlineMedium),
                       const SizedBox(height: 8),
                       Text(
                         l10n.morePatternsDescription,
@@ -58,6 +59,55 @@ class MorePatternsScreen extends ConsumerWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l10n.morePatternsFreeTitle, style: texts.titleLarge),
+                  const SizedBox(height: 4),
+                  Text(l10n.morePatternsFreeDescription),
+                ],
+              ),
+            ),
+          ),
+          freePatterns.when(
+            data: (patterns) => SliverPadding(
+              padding: const EdgeInsets.all(20),
+              sliver: SliverGrid(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: gridColumns(width),
+                  childAspectRatio: 0.58,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) =>
+                      _FreePatternCard(pattern: patterns[index]),
+                  childCount: patterns.length,
+                ),
+              ),
+            ),
+            loading: () => const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(32),
+                child: Center(child: CircularProgressIndicator()),
+              ),
+            ),
+            error: (error, _) => SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(l10n.errorOccurred('$error')),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+              child: Text(l10n.morePatternsPaidTitle, style: texts.titleLarge),
             ),
           ),
           SliverPadding(
@@ -81,8 +131,7 @@ class MorePatternsScreen extends ConsumerWidget {
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 96),
                 child: KofiButton(
                   label: l10n.morePatternsVisitKofi,
-                  onPressed: () =>
-                      openUrl(context, l10n.morePatternsKofiUrl),
+                  onPressed: () => openUrl(context, l10n.morePatternsKofiUrl),
                 ),
               ),
             ),
@@ -91,6 +140,122 @@ class MorePatternsScreen extends ConsumerWidget {
     );
   }
 }
+
+class _FreePatternCard extends ConsumerWidget {
+  const _FreePatternCard({required this.pattern});
+
+  final FreePattern pattern;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final (title, description) = _localizedPatternText(pattern.id, l10n);
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 3,
+            child: ColoredBox(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              child: Center(
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: CustomPaint(
+                    size: Size(
+                      pattern.project.width.toDouble(),
+                      pattern.project.height.toDouble(),
+                    ),
+                    painter: PatternPainter(project: pattern.project),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 4),
+                  Expanded(
+                    child: Text(
+                      description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                  Text(
+                    l10n.freePatternAttribution,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                  const SizedBox(height: 8),
+                  FilledButton.tonal(
+                    onPressed: () => _addPattern(context, ref, title, l10n),
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(44),
+                    ),
+                    child: Text(
+                      l10n.freePatternUse,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _addPattern(
+    BuildContext context,
+    WidgetRef ref,
+    String title,
+    AppLocalizations l10n,
+  ) async {
+    try {
+      await ref
+          .read(projectsProvider.notifier)
+          .addProject(pattern.createProject(name: title));
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.freePatternAdded)));
+    } catch (error) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.freePatternAddError('$error'))),
+      );
+    }
+  }
+}
+
+(String, String) _localizedPatternText(
+  String patternId,
+  AppLocalizations l10n,
+) => switch (patternId) {
+  'blue-guy' => (
+    l10n.freePatternBlueGuyTitle,
+    l10n.freePatternBlueGuyDescription,
+  ),
+  _ => (l10n.freePatternButterflyTitle, l10n.freePatternButterflyDescription),
+};
 
 class _ProductCard extends StatelessWidget {
   const _ProductCard({required this.product});

@@ -452,6 +452,72 @@ abstract class AppLocalizations {
   /// **'You can import your own pixel art patterns or purchase ready-made ones.'**
   String get morePatternsDescription;
 
+  /// No description provided for @morePatternsFreeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Free patterns'**
+  String get morePatternsFreeTitle;
+
+  /// No description provided for @morePatternsFreeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice with these patterns before browsing the Ko-fi shop.'**
+  String get morePatternsFreeDescription;
+
+  /// No description provided for @freePatternBlueGuyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue Guy'**
+  String get freePatternBlueGuyTitle;
+
+  /// No description provided for @freePatternBlueGuyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'A cheerful 32 × 32 pixel character.'**
+  String get freePatternBlueGuyDescription;
+
+  /// No description provided for @freePatternButterflyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Yellow Butterfly'**
+  String get freePatternButterflyTitle;
+
+  /// No description provided for @freePatternButterflyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'A detailed butterfly tapestry pattern, 82 × 213 stitches.'**
+  String get freePatternButterflyDescription;
+
+  /// No description provided for @freePatternUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to my projects'**
+  String get freePatternUse;
+
+  /// No description provided for @freePatternAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Pattern added to your projects.'**
+  String get freePatternAdded;
+
+  /// No description provided for @freePatternAddError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not add this pattern: {error}'**
+  String freePatternAddError(Object error);
+
+  /// No description provided for @freePatternAttribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Created by Camilú · MIT License'**
+  String get freePatternAttribution;
+
+  /// No description provided for @morePatternsPaidTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready-made patterns on Ko-fi'**
+  String get morePatternsPaidTitle;
+
   /// No description provided for @morePatternsHowToUpload.
   ///
   /// In en, this message translates to:

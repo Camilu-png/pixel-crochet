@@ -205,6 +205,44 @@ class AppLocalizationsEs extends AppLocalizations {
       'Puedes importar tus propios patrones de pixel art o comprar listos para usar.';
 
   @override
+  String get morePatternsFreeTitle => 'Patrones gratuitos';
+
+  @override
+  String get morePatternsFreeDescription =>
+      'Practica con estos patrones antes de visitar la tienda de Ko-fi.';
+
+  @override
+  String get freePatternBlueGuyTitle => 'Muñeco azul';
+
+  @override
+  String get freePatternBlueGuyDescription =>
+      'Un simpático personaje de 32 × 32 píxeles.';
+
+  @override
+  String get freePatternButterflyTitle => 'Mariposa amarilla';
+
+  @override
+  String get freePatternButterflyDescription =>
+      'Un patrón detallado de mariposa, de 82 × 213 puntos.';
+
+  @override
+  String get freePatternUse => 'Agregar a mis proyectos';
+
+  @override
+  String get freePatternAdded => 'El patrón se agregó a tus proyectos.';
+
+  @override
+  String freePatternAddError(Object error) {
+    return 'No se pudo agregar este patrón: $error';
+  }
+
+  @override
+  String get freePatternAttribution => 'Creado por Camilú · Licencia MIT';
+
+  @override
+  String get morePatternsPaidTitle => 'Patrones listos para usar en Ko-fi';
+
+  @override
   String get morePatternsHowToUpload =>
       'Para importar un patrón, toca el botón + en la pantalla principal y selecciona una imagen o archivo de texto.';
 
