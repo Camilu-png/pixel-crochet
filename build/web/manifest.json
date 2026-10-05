@@ -6,7 +6,7 @@
     "background_color": "#FFF9F2",
     "theme_color": "#6E5CA6",
     "description": "Pixel Crochet — follow tapestry crochet patterns stitch by stitch. Turn images and Stitch Fiddle text patterns into an interactive row-by-row guide.",
-    "orientation": "portrait-primary",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {
