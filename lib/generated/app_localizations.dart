@@ -656,6 +656,78 @@ abstract class AppLocalizations {
   /// **'Options'**
   String get optionsLabel;
 
+  /// No description provided for @projectBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Project backup'**
+  String get projectBackup;
+
+  /// No description provided for @exportLocalBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Export local backup'**
+  String get exportLocalBackup;
+
+  /// No description provided for @importLocalBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Import local backup'**
+  String get importLocalBackup;
+
+  /// No description provided for @backupExported.
+  ///
+  /// In en, this message translates to:
+  /// **'Your backup file was downloaded.'**
+  String get backupExported;
+
+  /// No description provided for @backupImported.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported {count} projects without replacing existing work.'**
+  String backupImported(int count);
+
+  /// No description provided for @backupImportNoNewProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'All projects in this backup are already in your library.'**
+  String get backupImportNoNewProjects;
+
+  /// No description provided for @backupImportConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {count} projects from this backup? Existing projects will not be overwritten.'**
+  String backupImportConfirm(int count);
+
+  /// No description provided for @backupImportError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not import this backup: {error}'**
+  String backupImportError(Object error);
+
+  /// No description provided for @backupExportError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not export your backup: {error}'**
+  String backupExportError(Object error);
+
+  /// No description provided for @backupImportInvalidFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a valid Pixel Crochet JSON backup file.'**
+  String get backupImportInvalidFile;
+
+  /// No description provided for @backupCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get backupCancel;
+
+  /// No description provided for @backupConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Add projects'**
+  String get backupConfirm;
+
   /// No description provided for @deletePatternTitle.
   ///
   /// In en, this message translates to:

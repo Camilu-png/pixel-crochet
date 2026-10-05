@@ -314,6 +314,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get optionsLabel => 'Options';
 
   @override
+  String get projectBackup => 'Project backup';
+
+  @override
+  String get exportLocalBackup => 'Export local backup';
+
+  @override
+  String get importLocalBackup => 'Import local backup';
+
+  @override
+  String get backupExported => 'Your backup file was downloaded.';
+
+  @override
+  String backupImported(int count) {
+    return 'Imported $count projects without replacing existing work.';
+  }
+
+  @override
+  String get backupImportNoNewProjects =>
+      'All projects in this backup are already in your library.';
+
+  @override
+  String backupImportConfirm(int count) {
+    return 'Add $count projects from this backup? Existing projects will not be overwritten.';
+  }
+
+  @override
+  String backupImportError(Object error) {
+    return 'Could not import this backup: $error';
+  }
+
+  @override
+  String backupExportError(Object error) {
+    return 'Could not export your backup: $error';
+  }
+
+  @override
+  String get backupImportInvalidFile =>
+      'Choose a valid Pixel Crochet JSON backup file.';
+
+  @override
+  String get backupCancel => 'Cancel';
+
+  @override
+  String get backupConfirm => 'Add projects';
+
+  @override
   String get deletePatternTitle => 'Delete pattern?';
 
   @override

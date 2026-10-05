@@ -314,6 +314,52 @@ class AppLocalizationsEs extends AppLocalizations {
   String get optionsLabel => 'Opciones';
 
   @override
+  String get projectBackup => 'Respaldo de proyectos';
+
+  @override
+  String get exportLocalBackup => 'Exportar respaldo local';
+
+  @override
+  String get importLocalBackup => 'Importar respaldo local';
+
+  @override
+  String get backupExported => 'Se descargó el archivo de respaldo.';
+
+  @override
+  String backupImported(int count) {
+    return 'Se importaron $count proyectos sin reemplazar los existentes.';
+  }
+
+  @override
+  String get backupImportNoNewProjects =>
+      'Todos los proyectos de este respaldo ya están en tu biblioteca.';
+
+  @override
+  String backupImportConfirm(int count) {
+    return '¿Agregar $count proyectos de este respaldo? Los proyectos existentes no se reemplazarán.';
+  }
+
+  @override
+  String backupImportError(Object error) {
+    return 'No se pudo importar este respaldo: $error';
+  }
+
+  @override
+  String backupExportError(Object error) {
+    return 'No se pudo exportar el respaldo: $error';
+  }
+
+  @override
+  String get backupImportInvalidFile =>
+      'Selecciona un archivo de respaldo JSON válido de Pixel Crochet.';
+
+  @override
+  String get backupCancel => 'Cancelar';
+
+  @override
+  String get backupConfirm => 'Agregar proyectos';
+
+  @override
   String get deletePatternTitle => '¿Eliminar patrón?';
 
   @override

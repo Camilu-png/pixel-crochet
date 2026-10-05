@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../generated/app_localizations.dart';
+import '../../features/home/presentation/widgets/project_backup_actions.dart';
 import 'app_drawer.dart';
 
 class AppShell extends StatelessWidget {
@@ -15,7 +16,10 @@ class AppShell extends StatelessWidget {
     final currentPath = GoRouterState.of(context).uri.path;
 
     return Scaffold(
-      appBar: AppBar(title: Text(_getTitle(currentPath, l10n))),
+      appBar: AppBar(
+        title: Text(_getTitle(currentPath, l10n)),
+        actions: currentPath == '/' ? const [ProjectBackupActions()] : null,
+      ),
       drawer: const AppDrawer(),
       body: child,
     );
