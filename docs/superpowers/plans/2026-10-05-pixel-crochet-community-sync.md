@@ -77,7 +77,7 @@ Cada entrega marcada **integración** es un punto de revisión independiente. Tr
 - [x] Añadir contenido gratuito empaquetado en el build y un grupo visible separado de productos Ko-fi y comunidad.
 - [x] Probar que Ko-fi conserva los mismos destinos, los gratuitos aparecen sin red y copiar un patrón produce avance limpio sin mutar el asset.
 - [x] Ejecutar las pruebas de catálogo/pantalla, `flutter gen-l10n`, `flutter analyze` y `flutter build web`.
-- [ ] **Integración:** revisión/commit y merge de solo catálogo estático a `main` si las verificaciones pasan.
+- [x] **Integración:** revisión/commit y merge de solo catálogo estático a `main` si las verificaciones pasan.
 
 ### Task 3: Base Vercel/Neon y sesiones Google
 
