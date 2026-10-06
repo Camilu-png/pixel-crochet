@@ -192,6 +192,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get menuMorePatterns => 'More Patterns';
 
   @override
+  String get menuAccount => 'Account & backup';
+
+  @override
   String get menuSupport => 'Support';
 
   @override
@@ -390,6 +393,84 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get backupImportInvalidFile =>
       'Choose a valid Pixel Crochet JSON backup file.';
+
+  @override
+  String get accountCloudUnavailableTitle => 'Cloud backup unavailable';
+
+  @override
+  String get accountCloudUnavailableBody =>
+      'Your projects are still saved on this device. Cloud access is not configured or is temporarily unavailable.';
+
+  @override
+  String get accountGuestTitle => 'Using Pixel Crochet as a guest';
+
+  @override
+  String get accountGuestDescription =>
+      'Your projects stay saved on this device. Sign in with Google to back them up and access them on another device.';
+
+  @override
+  String get accountSignInGoogle => 'Sign in with Google';
+
+  @override
+  String get accountSignInError =>
+      'Could not start Google sign-in. Check the Supabase Google provider and redirect URLs.';
+
+  @override
+  String get accountSignedInTitle => 'Google account connected';
+
+  @override
+  String accountSignedInAs(Object email) {
+    return 'Signed in as $email';
+  }
+
+  @override
+  String get accountSignOut => 'Sign out';
+
+  @override
+  String get accountSignOutError =>
+      'Could not sign out. Your local projects are unchanged.';
+
+  @override
+  String get syncNow => 'Sync now';
+
+  @override
+  String get syncLocalOnly => 'Projects are saved on this device only.';
+
+  @override
+  String get syncPending => 'Syncing projects…';
+
+  @override
+  String get migrationRequiredLabel =>
+      'Your local projects have not been uploaded.';
+
+  @override
+  String get migrationDialogTitle => 'Back up local projects?';
+
+  @override
+  String migrationDialogBody(int count) {
+    return 'This will upload $count projects from this device to your Google account. Their local copies will be kept. Continue?';
+  }
+
+  @override
+  String get migrationApprove => 'Back up projects';
+
+  @override
+  String get migrationCancel => 'Keep using locally';
+
+  @override
+  String get migrationStillRequired =>
+      'Your local projects are still only on this device.';
+
+  @override
+  String get syncComplete => 'Cloud backup is up to date.';
+
+  @override
+  String get syncConflict =>
+      'Both versions were kept. Review the local copy before deleting either version.';
+
+  @override
+  String get syncUnavailable =>
+      'Cloud sync is unavailable. Your local projects are unchanged.';
 
   @override
   String get backupCancel => 'Cancel';

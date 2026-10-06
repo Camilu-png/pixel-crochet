@@ -9,6 +9,7 @@ import '../../features/suggest/presentation/suggest_screen.dart';
 import '../../features/import_image/presentation/import_image_screen.dart';
 import '../../features/import_pattern/presentation/import_screen.dart';
 import '../../features/project/presentation/project_screen.dart';
+import '../../features/account/presentation/account_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -36,6 +37,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: '/suggest',
             name: 'suggest',
             builder: (context, state) => const SuggestScreen(),
+          ),
+          GoRoute(
+            path: '/account',
+            name: 'account',
+            builder: (context, state) => const AccountScreen(),
           ),
         ],
       ),

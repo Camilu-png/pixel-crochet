@@ -428,6 +428,12 @@ abstract class AppLocalizations {
   /// **'More Patterns'**
   String get menuMorePatterns;
 
+  /// No description provided for @menuAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account & backup'**
+  String get menuAccount;
+
   /// No description provided for @menuSupport.
   ///
   /// In en, this message translates to:
@@ -781,6 +787,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a valid Pixel Crochet JSON backup file.'**
   String get backupImportInvalidFile;
+
+  /// No description provided for @accountCloudUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud backup unavailable'**
+  String get accountCloudUnavailableTitle;
+
+  /// No description provided for @accountCloudUnavailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your projects are still saved on this device. Cloud access is not configured or is temporarily unavailable.'**
+  String get accountCloudUnavailableBody;
+
+  /// No description provided for @accountGuestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Using Pixel Crochet as a guest'**
+  String get accountGuestTitle;
+
+  /// No description provided for @accountGuestDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your projects stay saved on this device. Sign in with Google to back them up and access them on another device.'**
+  String get accountGuestDescription;
+
+  /// No description provided for @accountSignInGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get accountSignInGoogle;
+
+  /// No description provided for @accountSignInError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start Google sign-in. Check the Supabase Google provider and redirect URLs.'**
+  String get accountSignInError;
+
+  /// No description provided for @accountSignedInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Google account connected'**
+  String get accountSignedInTitle;
+
+  /// No description provided for @accountSignedInAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in as {email}'**
+  String accountSignedInAs(Object email);
+
+  /// No description provided for @accountSignOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get accountSignOut;
+
+  /// No description provided for @accountSignOutError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not sign out. Your local projects are unchanged.'**
+  String get accountSignOutError;
+
+  /// No description provided for @syncNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync now'**
+  String get syncNow;
+
+  /// No description provided for @syncLocalOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Projects are saved on this device only.'**
+  String get syncLocalOnly;
+
+  /// No description provided for @syncPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing projects…'**
+  String get syncPending;
+
+  /// No description provided for @migrationRequiredLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your local projects have not been uploaded.'**
+  String get migrationRequiredLabel;
+
+  /// No description provided for @migrationDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up local projects?'**
+  String get migrationDialogTitle;
+
+  /// No description provided for @migrationDialogBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This will upload {count} projects from this device to your Google account. Their local copies will be kept. Continue?'**
+  String migrationDialogBody(int count);
+
+  /// No description provided for @migrationApprove.
+  ///
+  /// In en, this message translates to:
+  /// **'Back up projects'**
+  String get migrationApprove;
+
+  /// No description provided for @migrationCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep using locally'**
+  String get migrationCancel;
+
+  /// No description provided for @migrationStillRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Your local projects are still only on this device.'**
+  String get migrationStillRequired;
+
+  /// No description provided for @syncComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud backup is up to date.'**
+  String get syncComplete;
+
+  /// No description provided for @syncConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'Both versions were kept. Review the local copy before deleting either version.'**
+  String get syncConflict;
+
+  /// No description provided for @syncUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud sync is unavailable. Your local projects are unchanged.'**
+  String get syncUnavailable;
 
   /// No description provided for @backupCancel.
   ///

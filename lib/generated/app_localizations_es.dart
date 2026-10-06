@@ -192,6 +192,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get menuMorePatterns => '+ Patrones';
 
   @override
+  String get menuAccount => 'Cuenta y respaldo';
+
+  @override
   String get menuSupport => 'Apoyar';
 
   @override
@@ -390,6 +393,86 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get backupImportInvalidFile =>
       'Selecciona un archivo de respaldo JSON válido de Pixel Crochet.';
+
+  @override
+  String get accountCloudUnavailableTitle =>
+      'Respaldo en la nube no disponible';
+
+  @override
+  String get accountCloudUnavailableBody =>
+      'Tus proyectos siguen guardados en este dispositivo. El acceso a la nube no está configurado o no está disponible temporalmente.';
+
+  @override
+  String get accountGuestTitle => 'Usando Pixel Crochet como invitada';
+
+  @override
+  String get accountGuestDescription =>
+      'Tus proyectos siguen guardados en este dispositivo. Inicia sesión con Google para respaldarlos y acceder desde otro dispositivo.';
+
+  @override
+  String get accountSignInGoogle => 'Iniciar sesión con Google';
+
+  @override
+  String get accountSignInError =>
+      'No se pudo iniciar el acceso con Google. Revisa el proveedor Google y las URL de redirección en Supabase.';
+
+  @override
+  String get accountSignedInTitle => 'Cuenta de Google conectada';
+
+  @override
+  String accountSignedInAs(Object email) {
+    return 'Sesión iniciada como $email';
+  }
+
+  @override
+  String get accountSignOut => 'Cerrar sesión';
+
+  @override
+  String get accountSignOutError =>
+      'No se pudo cerrar la sesión. Tus proyectos locales no cambiaron.';
+
+  @override
+  String get syncNow => 'Sincronizar ahora';
+
+  @override
+  String get syncLocalOnly =>
+      'Los proyectos están guardados solo en este dispositivo.';
+
+  @override
+  String get syncPending => 'Sincronizando proyectos…';
+
+  @override
+  String get migrationRequiredLabel =>
+      'Tus proyectos locales aún no se han subido.';
+
+  @override
+  String get migrationDialogTitle => '¿Respaldar tus proyectos locales?';
+
+  @override
+  String migrationDialogBody(int count) {
+    return 'Se subirán $count proyectos de este dispositivo a tu cuenta de Google. Se conservarán sus copias locales. ¿Quieres continuar?';
+  }
+
+  @override
+  String get migrationApprove => 'Respaldar proyectos';
+
+  @override
+  String get migrationCancel => 'Seguir usando el modo local';
+
+  @override
+  String get migrationStillRequired =>
+      'Tus proyectos siguen guardados solo en este dispositivo.';
+
+  @override
+  String get syncComplete => 'El respaldo en la nube está actualizado.';
+
+  @override
+  String get syncConflict =>
+      'Se conservaron ambas versiones. Revisa la copia local antes de eliminar cualquiera.';
+
+  @override
+  String get syncUnavailable =>
+      'La sincronización no está disponible. Tus proyectos locales no cambiaron.';
 
   @override
   String get backupCancel => 'Cancelar';

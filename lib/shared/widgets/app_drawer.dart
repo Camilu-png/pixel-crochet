@@ -16,8 +16,9 @@ class AppDrawer extends StatelessWidget {
 
     final destination = switch (currentPath) {
       '/more-patterns' => 1,
-      '/support' => 2,
-      '/suggest' => 3,
+      '/account' => 2,
+      '/support' => 3,
+      '/suggest' => 4,
       _ => 0,
     };
 
@@ -29,8 +30,10 @@ class AppDrawer extends StatelessWidget {
           case 1:
             context.goNamed('more-patterns');
           case 2:
-            context.goNamed('support');
+            context.goNamed('account');
           case 3:
+            context.goNamed('support');
+          case 4:
             context.goNamed('suggest');
           default:
             context.goNamed('home');
@@ -81,6 +84,11 @@ class AppDrawer extends StatelessWidget {
           icon: const Icon(Icons.add_circle_outline),
           selectedIcon: const Icon(Icons.add_circle_rounded),
           label: Text(l10n.menuMorePatterns),
+        ),
+        NavigationDrawerDestination(
+          icon: const Icon(Icons.account_circle_outlined),
+          selectedIcon: const Icon(Icons.account_circle),
+          label: Text(l10n.menuAccount),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(28, 12, 28, 12),
