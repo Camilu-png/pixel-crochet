@@ -1,12 +1,12 @@
 # Pixel Crochet: sincronización, patrones gratuitos y comunidad
 
-**Estado:** borrador para revisión de la persona propietaria del producto  
+**Estado:** aprobado; proveedor actualizado por decisión de la persona propietaria el 2026-10-06
 **Rama de diseño:** `dev`  
 **Fecha:** 2026-10-05
 
 ## Resumen
 
-Pixel Crochet mantendrá el uso como invitada y el guardado local. Quien inicie sesión opcionalmente con Google podrá respaldar y sincronizar sus proyectos mediante una API en Vercel Functions y una base de datos PostgreSQL Neon. La sección `+Patrones` conservará sus enlaces a Ko-fi, añadirá patrones gratuitos seleccionados por la autora y mostrará patrones de la comunidad después de una revisión manual.
+Pixel Crochet mantendrá el uso como invitada y el guardado local. Quien inicie sesión opcionalmente con Google podrá respaldar y sincronizar sus proyectos con Supabase Auth y PostgreSQL. Vercel seguirá alojando y desplegando Flutter Web; el cliente Flutter se conecta a Supabase con su clave pública y la seguridad de filas (RLS) limita cada operación a su propietario. Las funciones de Vercel quedan reservadas para acciones privilegiadas que no se deban ejecutar desde el cliente. La sección `+Patrones` conservará sus enlaces a Ko-fi, añadirá patrones gratuitos seleccionados por la autora y mostrará patrones de la comunidad después de una revisión manual.
 
 El objetivo de costo es **cero gasto recurrente**. La solución propuesta usa niveles gratuitos y debe degradarse sin perder el modo local si alcanza una cuota o si una condición del proveedor deja de ser válida. No se habilitará un plan pago ni un aumento automático de gasto.
 
@@ -80,21 +80,22 @@ Cada patrón comunitario aprobado tiene una página con un enlace compartible y 
 ## Arquitectura propuesta
 
 ```text
-Flutter Web
+Flutter Web ── desplegada en Vercel
   ├─ guardado local y cola de sincronización
   ├─ contenido gratuito estático incluido en el build
-  └─ HTTPS ──> Vercel Functions ──> Neon PostgreSQL
-                    ├─ sesión/identidad Google
-                    ├─ proyectos privados por usuario
-                    ├─ envíos y galería pública
-                    └─ acciones de moderación
+  └─ Supabase Flutter SDK ──> Supabase Auth + PostgreSQL
+                                ├─ Google OAuth
+                                ├─ proyectos privados protegidos por RLS
+                                ├─ envíos y galería pública con RLS
+                                └─ Vercel Functions para moderación privilegiada, si hace falta
 ```
 
-- La app nunca contiene credenciales de Neon. Toda lectura/escritura remota pasa por endpoints serverless.
-- El inicio de sesión de Google produce una sesión de servidor protegida con cookie segura; la API valida la identidad en cada operación.
-- El identificador estable de usuario es el `sub` de Google. El correo y tokens de acceso no forman parte de campos públicos.
-- Neon almacena cuentas, proyectos privados, patrones de comunidad y reportes. Los patrones gratuitos seleccionados por la autora permanecen como assets versionados del repositorio para que sigan funcionando offline y no dependan de una consulta de base de datos.
-- La autorización se aplica en el servidor: cada usuario solo lee/escribe sus proyectos; los patrones públicos solo exponen filas aprobadas y metadatos públicos; solo una identidad administradora configurada en servidor puede revisar envíos.
+- Vercel continúa sirviendo la web y sus previews; cambiar el proveedor de datos no cambia el hosting. La consulta de Vercel indicó que un proveedor externo como Supabase no afecta la elegibilidad de Hobby para el uso descrito.
+- La aplicación usa únicamente la URL y la clave pública de Supabase. Nunca incluir la clave `service_role` ni secretos de Google en Flutter, variables de build públicas, assets o Git.
+- Auth de Supabase gestiona Google OAuth. La app invitada conserva datos locales; al iniciar sesión, una migración idempotente sube proyectos y conserva la copia local hasta verificar el resultado. Se puede vincular una sesión anónima de Supabase a Google, pero no es requisito para usar la app.
+- Row Level Security (RLS) protege los proyectos por `auth.uid()`. Patrones de comunidad y moderación tienen políticas separadas para publicar solo contenido aprobado y reservar acciones administrativas a una identidad verificada.
+- Supabase almacena cuentas, proyectos privados, patrones de comunidad y reportes. Los patrones gratuitos seleccionados por la autora permanecen como assets versionados del repositorio para que sigan funcionando offline y no dependan de una consulta a la base.
+- Las funciones de Vercel se mantienen solo para operaciones que requieren secretos privilegiados; no se necesita una API propia para el login o el CRUD normal de proyectos.
 
 ### Entidades principales
 
@@ -107,10 +108,10 @@ El snapshot comunitario solo incluye los datos necesarios para tejerlo. No inclu
 
 ## Presupuesto y condiciones de servicio
 
-- Objetivo de despliegue: Vercel Functions más una integración PostgreSQL gratuita de Neon. Vercel integra bases de proveedores externos desde Marketplace; Vercel Postgres ya no está disponible como producto propio.
-- El plan gratuito de Neon que se encontró en la documentación al redactar este borrador publica 1 GB y 100 horas de cómputo por proyecto/mes. El uso de 200 personas podría caber si cada patrón y proyecto conserva datos estructurados compactos, pero la cantidad de usuarios por sí sola no garantiza el consumo.
+- Objetivo de despliegue: Vercel Hobby para Flutter Web y Supabase Free para Auth/PostgreSQL, sin comprar recursos ni activar upgrades u overages. La respuesta compartida de Vercel indica que el proyecto parece elegible con las condiciones descritas; para una confirmación legal formal remitió a `privacy@vercel.com`.
+- Los límites publicados de Supabase Free incluyen cuotas para usuarios, base de datos y almacenamiento; los proyectos gratuitos también pueden pausarse tras una semana de inactividad. El uso de 200 personas podría caber si los datos son compactos, pero la cantidad de usuarios por sí sola no garantiza el consumo. La guía de despliegue debe indicar cómo revisar cuotas y cómo degradar a modo local.
 - No activar upgrades, overages ni facturación automática. Definir límites de tamaño por patrón/proyecto, limitar frecuencia de escrituras y observar cuotas. Si se alcanza el límite, detener nuevas escrituras remotas de forma explícita; los datos locales y la exportación siguen disponibles.
-- **Gate de elegibilidad:** los términos de Vercel Hobby restringen ese plan a uso personal/no comercial. Pixel Crochet conserva enlaces a productos de Ko-fi. Antes de crear recursos o desplegar API bajo Hobby, la persona propietaria debe confirmar que su uso cumple esos términos. Si no cumple, no se migra a un plan de pago: se revisa un proveedor gratuito cuyo uso sea permitido o se mantiene el producto sin funciones cloud hasta elegir una alternativa compatible.
+- **Elegibilidad:** la propietaria consultó Vercel Support y recibió la indicación de que el proyecto parece elegible bajo Hobby con el modelo descrito; el uso de Supabase tampoco cambia esa evaluación. No contratar planes ni activar overages. La respuesta señala `privacy@vercel.com` para una confirmación legal formal.
 - Las cuotas y condiciones de servicios gratuitos pueden cambiar; el sistema debe conservar exportación/importación y una ruta de degradación local.
 
 ## Privacidad y publicación
@@ -140,7 +141,7 @@ El snapshot comunitario solo incluye los datos necesarios para tejerlo. No inclu
 El plan de implementación detallado se presenta junto con este diseño para revisión en `docs/superpowers/plans/2026-10-05-pixel-crochet-community-sync.md`. Como orden de entregas:
 
 1. Diagnóstico/backup: exportar e importar datos locales versionados y agregar protección ante reemplazos accidentales.
-2. Fundamentos de backend: endpoints Vercel, conexión Neon, esquema, sesiones y autorización.
+2. Fundamentos de cuenta: Supabase Auth, Google OAuth, esquema, RLS y configuración de Vercel Preview.
 3. Cuenta opcional y sincronización privada: Google sign-in, migración guest→cuenta, restauración y conflictos.
 4. Catálogo estático: sección de patrones gratuitos, conservando Ko-fi.
 5. Moderación: enviar patrón estructurado, bandeja privada, aprobación/rechazo/retirada y rol administrador.
@@ -151,7 +152,7 @@ Cada slice debe quedar implementado y probado en `dev` antes de su merge a `main
 
 ## Decisiones pendientes para cerrar el diseño
 
-1. Verificar si el uso actual de Vercel Hobby cumple sus términos dada la promoción de Ko-fi; de lo contrario seleccionar una alternativa permitida con costo cero, sin activarla automáticamente.
+1. Crear un proyecto Supabase en Free y configurar el proveedor Google y URLs de redirección; no compartir claves administrativas.
 2. Elegir y aprobar el texto de permiso/licencia/atribución que se acepta al publicar.
 3. Configurar la identidad Google administradora (no mostrar ni codificar datos sensibles en el cliente).
 4. Acordar límites iniciales de tamaño para un proyecto, un patrón compartido y metadatos.

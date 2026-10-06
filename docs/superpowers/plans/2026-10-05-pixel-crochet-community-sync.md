@@ -4,9 +4,9 @@
 
 **Goal:** Mantener Pixel Crochet útil como invitada, proteger y sincronizar proyectos opcionalmente, y ampliar `+Patrones` con contenido gratuito y publicaciones comunitarias moderadas.
 
-**Architecture:** Flutter seguirá guardando primero en el dispositivo. La web añadirá endpoints Node/TypeScript en Vercel que validan sesiones de Google y acceden a Neon; los secretos no llegan al cliente. Los patrones gratuitos versionados viven en los assets Flutter, mientras que los comunitarios solo se sirven públicamente después de aprobación manual.
+**Architecture:** Flutter seguirá guardando primero en el dispositivo. Vercel continuará alojando Flutter Web; Supabase Auth gestionará Google/guest y Flutter accederá a PostgreSQL mediante el SDK y políticas RLS. Ninguna clave administrativa se incluirá en el cliente. Las funciones de Vercel se reservan para acciones que requieran privilegios de servidor. Los patrones gratuitos versionados viven en los assets Flutter, mientras que los comunitarios solo se sirven públicamente después de aprobación manual.
 
-**Tech Stack:** Flutter/Dart, Riverpod, go_router, Flutter Web, TypeScript en Vercel Functions, PostgreSQL en Neon, Google OAuth/OpenID Connect, `flutter_test` y pruebas Node para API.
+**Tech Stack:** Flutter/Dart, Riverpod, go_router, Flutter Web, `supabase_flutter`, Supabase Auth/PostgreSQL/RLS, SQL migrations, Vercel Functions solo para tareas privilegiadas, `flutter_test`.
 
 **Spec:** `docs/superpowers/specs/2026-10-05-pixel-crochet-community-sync-design.md`
 
@@ -15,12 +15,12 @@
 - El trabajo de producto se realiza en `dev`; `main` recibe una feature solo después de que sus verificaciones pasen.
 - El modo invitado y el guardado local siguen funcionando sin cuenta, API, red ni base de datos.
 - Guardar localmente precede a sincronizar; un error remoto nunca elimina ni reemplaza silenciosamente datos locales.
-- No incluir secretos de Google, Neon ni administración en Flutter, assets, logs o respuestas públicas.
+- No incluir secretos OAuth, Supabase `service_role` ni credenciales administrativas en Flutter, assets, logs o respuestas públicas. La URL y la clave pública de Supabase sí son configuración cliente y deben protegerse con RLS.
 - No activar upgrades, overages, facturación automática ni recursos de pago.
 - Mantener intactos los enlaces de Ko-fi actuales.
 - En la primera versión, solo patrones estructurados; no aceptar imágenes ni archivos arbitrarios en envíos comunitarios.
 - No exponer email, avance privado ni proyectos en rutas públicas.
-- Antes de desplegar bajo Vercel Hobby, confirmar elegibilidad de acuerdo con sus términos; si no es elegible, detener el despliegue cloud y seleccionar una opción gratuita compatible.
+- Vercel Support respondió que Pixel Crochet parece elegible para Hobby bajo las condiciones descritas y que un proveedor externo como Supabase no altera esa evaluación. Mantener el modo local ante cuotas agotadas y no habilitar cobros.
 - No aceptar envíos comunitarios hasta aprobar el texto de permiso/atribución y configurar una identidad administradora.
 
 ## Enfoque de revisión
@@ -44,10 +44,11 @@ Las rutas existentes que se modificarán siguen la organización actual del repo
 - `lib/features/more_patterns/presentation/more_patterns_screen.dart`: secciones Ko-fi, gratuitos y comunidad.
 - `assets/patterns/` y `pubspec.yaml`: patrones estáticos curados.
 - `lib/features/account/`, `lib/core/sync/`, `lib/features/community/`: presentación y lógica Flutter separadas por responsabilidad.
-- `api/_lib/`: helpers privados de sesión, validación, límites, acceso Neon y autorización; cada archivo empieza con `_` para Vercel.
-- `api/auth/`, `api/projects/`, `api/patterns/`, `api/admin/`: funciones HTTP agrupadas por recurso.
-- `api/migrations/`: migraciones SQL versionadas; `api/tests/`: pruebas de handlers/repositorio/autorización.
-- `vercel.json`, `package.json`, `tsconfig.json`: configuración para servir Flutter y desplegar funciones.
+- `lib/core/supabase/`: configuración opcional, proveedor SDK y adaptadores de Auth/DB.
+- `supabase/migrations/`: esquema PostgreSQL, funciones RPC y políticas RLS versionadas.
+- `api/`: solo funciones Vercel que requieran privilegios no disponibles en el cliente; no implementar OAuth ni CRUD ordinario aquí.
+- `docs/deployment/supabase.md`: creación/configuración del proyecto, redirecciones OAuth, variables cliente públicas y procedimiento para aplicar/verificar migraciones.
+- `vercel.json`: conserva el fallback Flutter SPA; se modifica solo si se agregan funciones Vercel privilegiadas.
 - `test/`: pruebas Flutter para importación/exportación, estado, navegación y widgets.
 
 ## Entregas y tareas
@@ -79,34 +80,35 @@ Cada entrega marcada **integración** es un punto de revisión independiente. Tr
 - [x] Ejecutar las pruebas de catálogo/pantalla, `flutter gen-l10n`, `flutter analyze` y `flutter build web`.
 - [x] **Integración:** revisión/commit y merge de solo catálogo estático a `main` si las verificaciones pasan.
 
-### Task 3: Base Vercel/Neon y sesiones Google
+### Task 3: Fundamentos Supabase y acceso opcional
 
-**Archivos:** nuevos `package.json`, `package-lock.json`, `tsconfig.json`, `api/_lib/_{auth,db,errors,google_oidc,handlers,validation}.ts`, `api/auth/google/{start,callback,logout,me}.ts`, `api/health.ts`, `api/migrations/001_initial.sql`, pruebas auxiliares `api/tests/_*.test.ts`; `vercel.json`; documentación nueva `docs/deployment/vercel-api.md`.
+**Decisión actualizada:** la persona propietaria eligió Supabase después de aprobar el plan inicial basado en Neon. El commit local `b8b3829` contiene una prueba de concepto Vercel/Neon/OIDC que no se desplegó; se reemplaza en `dev` por Supabase Auth y RLS antes de integrar cualquier backend.
 
-**Interfaces:** handlers HTTP tipados con Web `Request`/`Response`; consultas PostgreSQL parametrizadas con Neon; cookie de sesión opaca y aleatoria (`HttpOnly`, `Secure`, `SameSite=Lax`) cuyo hash se guarda en DB; endpoint `GET /api/auth/google/me` solo devuelve estado autenticado, sin correo ni tokens.
+**Archivos:** `pubspec.yaml` y `pubspec.lock`; nuevos `lib/core/supabase/supabase_config.dart` y `supabase_client_provider.dart`; `main.dart`; `supabase/migrations/001_initial_schema.sql`; `docs/deployment/supabase.md`; pruebas Dart. Retirar el scaffolding Neon/OIDC no desplegado (`api/_lib`, `api/auth/google`, paquete Node, vercel-api guide) en esta entrega después de que la inicialización local/cloud pase pruebas.
 
-- [x] Añadir pruebas Node para callback OAuth inválido, `state`/nonce faltante, cookie vencida/falsificada, origin no permitido, límites de tasa y endpoint de identidad sin sesión.
-- [x] Crear migración inicial para usuarios, estados OAuth, sesiones y límites; `sub` de Google es identificador estable. No guardar tokens OAuth ni correo.
-- [x] Implementar flujo OIDC con verificación de firma/issuer/audience/nonce, protección CSRF y cookie de sesión. Ningún endpoint acepta un ID de usuario proporcionado por el cliente como identidad.
-- [x] Añadir health check genérico, límite de tamaño JSON reutilizable, límites de tasa persistentes, consultas parametrizadas y manejo uniforme de errores.
-- [x] Configurar TypeScript y ejecución de pruebas con scripts reproducibles. Documentar variables secretas y configuración manual sin incluir valores.
-- [x] Probar localmente con almacén de sesión OAuth simulado, sin DB ni llamadas a Google; pruebas de integración con credenciales reales quedan para entorno de preview después de que la propietaria configure secretos y confirme elegibilidad del proveedor.
-- [x] Ejecutar `npm test`, `npm run typecheck`, `flutter analyze`, `flutter test` y `flutter build web` para comprobar que API y hosting coexisten.
-- [ ] **Gate de activación:** no crear/deployar recursos reales hasta confirmar términos, cuotas sin upgrades, proyecto Neon gratuito y credenciales. Tras el gate, deploy preview y smoke test OAuth.
-- [ ] **Integración:** merge de los fundamentos a `main` después del preview validado; mantener endpoints cloud desactivados para usuarios hasta completar sync.
+**Interfaces:** configuración cliente (`SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`) opcional por `--dart-define`; la app arranca sin Supabase cuando no está configurado. Auth Google y respaldo sincronizado se implementan como una experiencia completa en Task 4, no se expone un botón de acceso antes de que sincronizar esté disponible. La biblioteca local sigue accesible siempre. RLS exige `auth.uid() = user_id` para datos privados; la identidad de usuario se obtiene de la sesión SDK, nunca de un campo elegido por el cliente.
+
+- [x] Probar que configuración ausente/inválida mantiene modo local y que configuración válida inicializa Supabase una sola vez.
+- [x] Crear esquema inicial de proyectos con propietario, JSON versionado, revisión y marcas temporales; políticas RLS de aislamiento para lectura/escritura/borrado. (La validación real de políticas queda para Preview.)
+- [x] Documentar proyecto Supabase Free, proveedor Google, redirects de Vercel/local, variables públicas de build y prohibición de exponer `service_role`.
+- [x] Retirar los endpoints personalizados de Google OAuth/Neon y sus dependencias, conservando solo API Vercel que futuras features realmente necesiten.
+- [x] Ejecutar pruebas unitarias/configuración, `flutter analyze`, `flutter test` y `flutter build web` sin credenciales externas.
+- [ ] **Gate de activación:** la propietaria crea/configura Supabase y agrega los `--dart-define` a Vercel Preview; validar Google OAuth y RLS en Preview antes de mostrar acciones de cuenta a usuarios.
+- [ ] **Integración:** solicitar autorización antes de integrar `main`; no se altera producción ni se elimina información local.
 
 ### Task 4: Sincronización privada y migración opcional
 
-**Archivos:** `api/projects/{index,[id]}.ts`, migración de revisiones; nuevos `lib/core/sync/{sync_client,sync_repository,sync_state}.dart`, `lib/features/account/{data,presentation,providers}/`; ajustes a `lib/core/storage/project_storage_service.dart`, `lib/features/home/providers/home_provider.dart`, router y localizaciones; pruebas Flutter y API.
+**Archivos:** nuevos `lib/core/supabase/supabase_account_service.dart`, `lib/core/sync/{sync_repository,sync_state}.dart`, `lib/features/account/{presentation,providers}/`; ajustes a `lib/core/storage/project_storage_service.dart`, `lib/features/home/providers/home_provider.dart`, router y localizaciones; migración Supabase de revisiones; pruebas Flutter y políticas SQL.
 
-**Interfaces:** API: `GET/PUT /api/projects`, `PUT/DELETE /api/projects/:id` con `revision` monotónica. Flutter: `SyncRepository.syncPending()`, `SyncState` (`localOnly`, `pending`, `synced`, `conflict`, `unavailable`). Escrituras remotas autenticadas por cookie, no por `userId` del cuerpo.
+**Interfaces:** Flutter: `SyncRepository.syncPending()`, `SyncState` (`localOnly`, `pending`, `synced`, `conflict`, `unavailable`). Operaciones directas del SDK/RPC contra Supabase Postgres; RLS asocia cada fila con `auth.uid()` y RPC/condición de revisión evita escritura perdida. No confiar en un `userId` proporcionado por el cliente.
 
-- [ ] Probar aislamiento entre dos usuarios, operaciones CRUD, límite de tamaño, revisión obsoleta (409) y cuota/API caída.
+- [ ] Probar aislamiento entre dos usuarios, operaciones CRUD, límite de tamaño, revisión obsoleta y cuota/Supabase no disponible.
 - [ ] Probar cola offline, reintento, estado guardado local primero y que timeout/401/5xx no borren ni sobrescriban la biblioteca local.
-- [ ] Añadir inicio de sesión opcional y flujo de migración repetible: preservar copia local hasta comprobar IDs/revisiones en remoto; volver a intentarlo no duplica proyectos.
+- [ ] Añadir inicio de sesión opcional con Google, acceso invitado local y cierre de sesión que no borra proyectos locales.
+- [ ] Añadir flujo de migración repetible: preservar copia local hasta comprobar IDs/revisiones en remoto; volver a intentarlo no duplica proyectos.
 - [ ] En conflictos conservar las dos revisiones como copias recuperables y ofrecer resolución explícita; no aplicar “última escritura gana”.
 - [ ] Añadir restauración en navegador nuevo y desconexión de cuenta sin borrar datos locales. Presentar estados local/sincronizando/respaldado con mensajes localizados.
-- [ ] Ejecutar pruebas específicas de sync (unitarias, provider/widget, API), `flutter analyze`, `flutter test` y `flutter build web`.
+- [ ] Ejecutar pruebas específicas de sync (unitarias, provider/widget, políticas/RPC), `flutter analyze`, `flutter test` y `flutter build web`.
 - [ ] Probar preview en dos perfiles de navegador, invitado offline y cuenta autenticada; verificar exportación antes/después de sincronizar.
 - [ ] **Integración:** merge a `main` solo después de pasar API, Flutter y recorrido preview; habilitar cuenta por configuración de despliegue documentada.
 
@@ -142,7 +144,7 @@ Cada entrega marcada **integración** es un punto de revisión independiente. Tr
 
 **Archivos:** documentación de despliegue/privacidad, pruebas de límites en API/sync, configuración de Vercel y runbook de recuperación.
 
-- [ ] Simular Neon fuera de cuota, API 429/5xx, sesión expirada y pérdida de red; confirmar guardado y exportación local disponibles y estado remoto honesto.
+- [ ] Simular Supabase fuera de cuota, errores de red/5xx, sesión expirada y pérdida de conexión; confirmar guardado y exportación local disponibles y estado remoto honesto.
 - [ ] Confirmar límites iniciales documentados para bytes por proyecto, patrón y solicitud; probar rechazo antes de persistir un tamaño excedido.
 - [ ] Revisar minimización de datos, retención/eliminación de cuenta, cookies, texto de publicación, reporte/retirada y exposición de endpoints.
 - [ ] Documentar backup/export de base de datos, rollback de migraciones, desactivar cloud y recuperación con export JSON.
@@ -154,4 +156,4 @@ Cada entrega marcada **integración** es un punto de revisión independiente. Tr
 
 Una feature no se integra por el mero hecho de compilar. Su checklist de aceptación y pruebas automatizadas deben pasar en `dev`, se revisa su diff y se prueba el flujo manual de navegador/preview descrito en su entrega. Cada feature aprobada se fusiona por separado a `main` y se comprueba la URL de producción antes de comenzar una feature que dependa de ella. Si una verificación falla, se corrige en `dev` y se repite la suite afectada; `main` no recibe esa entrega hasta entonces.
 
-La configuración real de OAuth, Neon y la elegibilidad de Vercel son dependencias externas: el plan implementa y valida código/configuración en preview primero, pero la activación con secretos requiere que la propietaria complete esos gates. No se contratará un plan ni se habilitarán cobros para sortearlos.
+La configuración real del proyecto Supabase y OAuth es una dependencia externa: el plan implementa y valida el código sin credenciales primero; después la propietaria crea el proyecto Free, registra credenciales en Google/Supabase y agrega configuración pública de Supabase a Vercel Preview. La persona propietaria compartió una respuesta de Vercel indicando elegibilidad aparente de Hobby para Pixel Crochet. No se contratará un plan ni se habilitarán cobros para sortear cuotas.
