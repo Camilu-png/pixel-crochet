@@ -11,7 +11,10 @@ create table if not exists public.user_projects (
   constraint user_projects_project_is_object
     check (jsonb_typeof(project) = 'object'),
   constraint user_projects_project_id_matches
-    check (project ? 'id' and project ->> 'id' = id),
+    check (
+      jsonb_typeof(project -> 'id') = 'string'
+      and (project ->> 'id' = id) is true
+    ),
   constraint user_projects_project_size_limit
     check (octet_length(project::text) <= 262144)
 );

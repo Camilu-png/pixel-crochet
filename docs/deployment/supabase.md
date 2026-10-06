@@ -24,17 +24,17 @@ El dominio de producción es el destino normal de OAuth. No uses un comodín amp
 
 ## Compilar la web
 
-El cliente lee dos valores al compilar. Para una compilación local, sustituye los marcadores:
+El cliente lee dos valores al compilar. Para una compilación local, usa el wrapper, que valida las claves antes de iniciar Flutter:
 
 ```sh
-flutter build web --release \
-  --dart-define=SUPABASE_URL=https://<project-ref>.supabase.co \
-  --dart-define=SUPABASE_PUBLISHABLE_KEY=<publishable-key>
+SUPABASE_URL=https://<project-ref>.supabase.co \
+SUPABASE_PUBLISHABLE_KEY=<publishable-key> \
+node tools/build_web.mjs
 ```
 
-En Vercel agrega `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY` como variables de entorno del proyecto y ajusta el **Build Command** para pasarlas con `--dart-define` a `flutter build web`. Empieza en **Preview**; agrega las mismas variables al entorno **Production** solo después de validar login, RLS y recuperación de datos.
+En Vercel agrega `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY` como variables de entorno del proyecto y usa `node tools/build_web.mjs` como **Build Command**. El wrapper las pasa a Flutter con `--dart-define` después de validarlas. Empieza en **Preview**; agrega las mismas variables al entorno **Production** solo después de validar login, RLS y recuperación de datos.
 
-No agregues estas variables a Git. No uses `SUPABASE_SERVICE_ROLE_KEY`, `sb_secret_...`, Client Secret de Google ni la contraseña de Postgres en el comando de build. El cliente comprueba que las claves con formato secreto/service-role no se incluyan por accidente.
+No agregues estas variables a Git. No uses `SUPABASE_SERVICE_ROLE_KEY`, `sb_secret_...`, Client Secret de Google ni la contraseña de Postgres en el comando de build. El wrapper detiene la compilación antes de invocar Flutter si detecta un formato conocido de clave secreta/service-role. No ejecutes `flutter build web` directamente con claves de Supabase: una comprobación en tiempo de ejecución no puede evitar que un valor `--dart-define` quede incrustado en el JavaScript.
 
 ## Si faltan variables
 

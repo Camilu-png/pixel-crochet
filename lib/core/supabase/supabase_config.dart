@@ -4,7 +4,9 @@ import 'dart:convert';
 ///
 /// The anonymous/publishable key is intended to be present in a Flutter Web
 /// build. Database access must therefore be protected by Supabase RLS. Secret
-/// and service-role keys are rejected so they cannot be accidentally bundled.
+/// and service-role keys are rejected at build time by tools/build_web.mjs.
+/// Runtime validation only prevents Supabase from initializing with such a
+/// value; it cannot remove a value already embedded in compiled JavaScript.
 class SupabaseConfig {
   const SupabaseConfig._({required this.url, required this.publishableKey});
 
