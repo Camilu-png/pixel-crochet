@@ -56,7 +56,7 @@ No van en un archivo Dart ni en el repositorio Git. Se guardan como variables de
 2. Abre **Settings → Environment Variables**.
 3. En **Key**, escribe `SUPABASE_URL`. En **Value**, pega la `Project URL` de Supabase. Marca solo **Preview** por ahora y guarda.
 4. Añade otra variable: **Key** `SUPABASE_PUBLISHABLE_KEY`; **Value**, la `Publishable key` de Supabase. Marca también solo **Preview** y guarda.
-5. Cuando el código de esta rama esté subido y el **Build Command** del proyecto sea `node tools/build_web.mjs`, inicia un nuevo despliegue Preview para que Vercel compile la app con esos valores.
+5. Cuando el código de esta rama esté subido, inicia un nuevo despliegue Preview. El `vercel.json` del repositorio fija `node tools/build_web.mjs` como **Build Command** y `build/web` como salida, para que Vercel compile los archivos Dart actuales con esas variables.
 
 Si ves el aviso **“Add environment variables in a project’s settings to see them here”**, esa pantalla solo está mostrando variables que ya pertenecen a un proyecto. Vuelve a **All Projects**, abre el proyecto de Pixel Crochet y entra a **Settings → Environment Variables**; allí agrega cada variable con el botón **Add Environment Variable**. Asegúrate de haber seleccionado el equipo correcto en el selector superior y el proyecto, no la página de la integración.
 
