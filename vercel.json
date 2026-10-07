@@ -1,6 +1,6 @@
 {
-  "buildCommand": "node tools/build_web.mjs",
-  "outputDirectory": "build/web",
+  "buildCommand": "",
+  "outputDirectory": ".",
   "rewrites": [
     {
       "source": "/((?!api/|assets/|icons/|favicon.png|manifest.json|robots.txt|sitemap.xml|og-image.png|flutter_bootstrap.js|main.dart.js|flutter.js|flutter_service_worker.js|canvaskit/|llms.txt|llms-full.txt|llms-es.txt|como-hacer-pixel-crochet|convertir-imagen-a-patron-de-crochet|stitch-fiddle-to-crochet-guide).*)",

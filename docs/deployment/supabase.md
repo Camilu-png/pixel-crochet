@@ -48,25 +48,21 @@ Estos valores conectan Pixel Crochet con tu proyecto Supabase:
 - `SUPABASE_URL`: indica a la aplicación **a qué proyecto Supabase conectarse**. Pega aquí la `Project URL` copiada desde Supabase.
 - `SUPABASE_PUBLISHABLE_KEY`: identifica la aplicación cliente ante Supabase. Pega aquí la clave `Publishable` (`sb_publishable_...` o la clave antigua `anon`). Es pública; los permisos de datos los controla RLS.
 
-### Pegarlos en Vercel
+### Despliegue actual: web precompilada
 
-No van en un archivo Dart ni en el repositorio Git. Se guardan como variables de entorno del proyecto Vercel:
+El proyecto Vercel usa **Root Directory: `build/web`**. Vercel publica los archivos que ya están compilados en esa carpeta; no recibe el código Dart ni la carpeta `tools` como parte de su raíz de trabajo.
 
-1. Abre [Vercel Dashboard](https://vercel.com/dashboard) y selecciona el proyecto de Pixel Crochet. No uses **Storage → Marketplace → Supabase → Install**.
-2. Abre **Settings → Environment Variables**.
-3. En **Key**, escribe `SUPABASE_URL`. En **Value**, pega la `Project URL` de Supabase. Marca solo **Preview** por ahora y guarda.
-4. Añade otra variable: **Key** `SUPABASE_PUBLISHABLE_KEY`; **Value**, la `Publishable key` de Supabase. Marca también solo **Preview** y guarda.
-5. Cuando el código de esta rama esté subido, inicia un nuevo despliegue Preview. El `vercel.json` del repositorio fija `node tools/build_web.mjs` como **Build Command** y `build/web` como salida, para que Vercel compile los archivos Dart actuales con esas variables.
+Por eso la URL y la clave pública de Supabase se pasan al **build local**, no al servidor estático. Agregarlas únicamente a Environment Variables de Vercel no modifica un `main.dart.js` ya compilado.
 
-Si ves el aviso **“Add environment variables in a project’s settings to see them here”**, esa pantalla solo está mostrando variables que ya pertenecen a un proyecto. Vuelve a **All Projects**, abre el proyecto de Pixel Crochet y entra a **Settings → Environment Variables**; allí agrega cada variable con el botón **Add Environment Variable**. Asegúrate de haber seleccionado el equipo correcto en el selector superior y el proyecto, no la página de la integración.
-
-No agregues las variables a **Production** todavía. Tampoco pegues una clave `Secret`, `service_role`, el Client Secret de Google ni la contraseña de la base de datos en Vercel.
-
-**Estado actual:** la rama `dev` incluye inicio de sesión Google opcional, guardado local primero y sincronización privada con revisión de cambios. La primera vez que se va a subir la biblioteca invitada, la app pide confirmación explícita. Los cambios aún requieren probarse en Preview antes de activarlos en producción.
+1. Mantén **Root Directory** en `build/web`.
+2. En **Settings → Build and Deployment**, conserva el proyecto estático (Framework Preset **Other**) y deja **Build Command** vacío. El `vercel.json` fija un comando vacío y **Output Directory: `.`** para publicar la propia raíz seleccionada, incluso si el dashboard conserva valores anteriores. No pongas `node tools/build_web.mjs` como comando de Vercel.
+3. Compila desde la raíz local del repositorio usando los dos valores públicos de Supabase y el wrapper de abajo.
+4. Revisa y sube los archivos actualizados de `build/web` en la rama `dev`. El deployment Preview debe corresponder a ese commit; los cambios en `lib/` por sí solos no actualizan esta web precompilada.
+5. Espera a que el deployment esté **Ready**, abre su URL y comprueba **Cuenta y respaldo**, Google OAuth y la restauración en otro navegador antes de autorizar un merge a `main`.
 
 ### Compilación local
 
-El cliente lee los mismos dos valores al compilar. Para una compilación local, usa el wrapper, que valida las claves antes de iniciar Flutter:
+El wrapper valida las claves antes de iniciar Flutter y pasa ambos valores con `--dart-define`:
 
 ```sh
 SUPABASE_URL=https://<project-ref>.supabase.co \
@@ -74,9 +70,15 @@ SUPABASE_PUBLISHABLE_KEY=<publishable-key> \
 node tools/build_web.mjs
 ```
 
-El wrapper pasa las variables a Flutter con `--dart-define` después de validarlas. Agrega las mismas variables al entorno **Production** solo después de validar login, RLS y recuperación de datos en Preview.
+Reemplaza los marcadores por la Project URL y la Publishable key de Supabase. Usa el SDK de Flutter instalado en tu equipo. No guardes un archivo con credenciales administrativas ni pegues secretos en este comando.
 
-No agregues estas variables a Git. No uses `SUPABASE_SERVICE_ROLE_KEY`, `sb_secret_...`, Client Secret de Google ni la contraseña de Postgres en el comando de build. El wrapper detiene la compilación antes de invocar Flutter si detecta un formato conocido de clave secreta/service-role. No ejecutes `flutter build web` directamente con claves de Supabase: una comprobación en tiempo de ejecución no puede evitar que un valor `--dart-define` quede incrustado en el JavaScript.
+La URL y la publishable key son configuración pública: quedan incorporadas al JavaScript del build y pueden ser inspeccionadas por cualquier visitante. El acceso privado lo protegen las políticas RLS, no ocultar esa clave.
+
+No uses `SUPABASE_SERVICE_ROLE_KEY`, `sb_secret_...`, Client Secret de Google ni la contraseña de Postgres. El wrapper rechaza claves secret/service-role reconocibles antes de que Flutter las incorpore al build.
+
+### Si aparece Cannot find module tools/build_web.mjs
+
+Ese comando no existe dentro de la raíz estática `build/web`. Retira el Build Command de Vercel y usa el procedimiento local anterior. No cambies Root Directory a la raíz del repositorio sin preparar también un entorno de compilación con Flutter.
 
 ## Si faltan variables
 
@@ -85,3 +87,13 @@ La aplicación inicia en modo invitado local cuando no recibe configuración Sup
 ## Límites de gasto
 
 Revisa el panel **Usage** de Supabase y mantén el proyecto en Free. No habilites add-ons, upgrades ni uso con cobro por excedente. El modo local y la exportación deben seguir disponibles si Supabase se pausa, queda sin cuota o no hay conexión.
+
+## Si Google muestra redirect_uri_mismatch
+
+En Google Cloud abre **Google Auth Platform → Clients**, selecciona el cliente de tipo **Web application** usado en Supabase y, en **Authorized redirect URIs**, agrega exactamente:
+
+```text
+https://hztdufyrpqgntzveoppc.supabase.co/auth/v1/callback
+```
+
+Guarda el cambio. Esta URL corresponde al callback de Supabase; va en los URI de redirección autorizados del cliente Google, no en los orígenes JavaScript. Las URLs de regreso a Pixel Crochet se configuran por separado en **Supabase → Authentication → URL Configuration → Redirect URLs**.
