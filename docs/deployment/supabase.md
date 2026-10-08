@@ -97,3 +97,7 @@ https://hztdufyrpqgntzveoppc.supabase.co/auth/v1/callback
 ```
 
 Guarda el cambio. Esta URL corresponde al callback de Supabase; va en los URI de redirección autorizados del cliente Google, no en los orígenes JavaScript. Las URLs de regreso a Pixel Crochet se configuran por separado en **Supabase → Authentication → URL Configuration → Redirect URLs**.
+
+## Patrones grandes: ampliar el límite a 1 MiB
+
+El límite original de 256 KiB impide sincronizar patrones grandes como Shadow. Para proyectos Supabase existentes, abre **SQL Editor → New query**, pega todo el contenido de `supabase/migrations/002_increase_project_size_limit.sql` y pulsa **Run**. Para instalaciones nuevas ejecuta primero `001_initial_schema.sql` y luego `002_increase_project_size_limit.sql`. Esta migración conserva los proyectos y las políticas de acceso. También se necesita el build de la aplicación con el límite actualizado.

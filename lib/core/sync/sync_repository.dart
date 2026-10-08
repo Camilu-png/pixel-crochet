@@ -25,7 +25,7 @@ class SyncRepository {
        _saveLocalProject = saveLocalProject,
        _onStateChanged = onStateChanged;
 
-  static const _maxProjectBytes = 262144;
+  static const _maxProjectBytes = 1048576;
   static const _uuid = Uuid();
 
   final ProjectSyncRemote _remote;
@@ -293,7 +293,7 @@ class SyncRepository {
   void _validateSize(CrochetProject project) {
     final bytes = utf8.encode(jsonEncode(project.toJson())).length;
     if (bytes > _maxProjectBytes) {
-      throw StateError('Project exceeds the 256 KiB cloud limit.');
+      throw StateError('Project exceeds the 1 MiB cloud limit.');
     }
   }
 

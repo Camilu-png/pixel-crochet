@@ -119786,7 +119786,7 @@ s=1
 break
 case 1:return A.v(q,r)}})
 return A.w($async$P9,r)},
-a5m(a){if(B.bX.d3(B.K.hj(a.dd(),null)).length>262144)throw A.e(A.ak("Project exceeds the 256 KiB cloud limit."))},
+a5m(a){if(B.bX.d3(B.K.hj(a.dd(),null)).length>1048576)throw A.e(A.ak("Project exceeds the 1 MiB cloud limit."))},
 oD(a,b,c,d){return this.aAh(a,b,c,d)},
 aAh(a,b,c,d){var s=0,r=A.x(t.H),q=this,p,o,n,m
 var $async$oD=A.t(function(e,f){if(e===1)return A.u(f,r)
